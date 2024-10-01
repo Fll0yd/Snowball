@@ -1,0 +1,2421 @@
+id like to show you everything i have so far in this snowball project and have you tell me what the next step in its development process should be
+
+api_keys.json
+
+{
+    "google_maps_api_key": "your-google-maps-api-key",
+    "facebook_api_key": "your-facebook-api-key",
+    "openai_api_key": "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"
+}
+
+
+
+
+settings.json
+
+{
+    "language": "en",
+    "volume": 70,
+    "mobile_sync_interval": 15,
+    "game_difficulty": "medium",
+    "system_monitor_thresholds": {
+        "cpu": 85,
+        "memory": 85,
+        "temperature": 80
+    }
+}
+
+
+
+
+ai_agent.py
+
+import random
+import sqlite3
+import threading
+from core.voice_interface import VoiceInterface
+from core.system_monitor import SystemMonitor
+from core.mobile_integration import MobileIntegration
+from core.game_ai import GameAI
+from core.memory import Memory
+from core.nlp_engine import NLPEngine
+from core.decision_maker import DecisionMaker
+from core.logger import SnowballLogger
+
+class SnowballAI:
+    def __init__(self):
+        self.name = self.generate_name()
+        self.memory = Memory()  # Handle memory for long-term interactions
+        self.voice = VoiceInterface()  # Voice interaction capabilities
+        self.monitor = SystemMonitor()  # System monitoring tasks
+        self.mobile = MobileIntegration()  # Mobile integration
+        self.game = GameAI()  # Game AI capabilities
+        self.logger = SnowballLogger()  # Logging decisions and interactions
+        self.nlp = NLPEngine(config_path="S:/config/api_keys.json")  # NLP Engine for processing input
+        self.decision_maker = DecisionMaker()  # Decision making for complex queries
+        self.is_running = True
+
+    def generate_name(self):
+        """Generates a random name for Snowball AI, allowing personalization."""
+        name_options = ["Nova", "Aris", "Zephyr", "Echo", "Snowball"]
+        return random.choice(name_options)
+
+    def start(self):
+        """Main loop to start interaction, system monitoring, and multitasking."""
+        self.logger.logger.info(f"Snowball AI ({self.name}) started.")
+        threading.Thread(target=self.monitor.start_system_monitoring, daemon=True).start()
+        threading.Thread(target=self.handle_mobile_requests, daemon=True).start()
+        self.interact()
+
+    def interact(self):
+        """Interact with the user, handling both voice and text inputs."""
+        while self.is_running:
+            try:
+                # Check for user input through voice
+                user_input = self.voice.listen()
+
+                if user_input:
+                    # Process user input via the NLP engine
+                    response = self.nlp.process_input(user_input)
+                    
+                    # Respond back via voice
+                    self.voice.speak(response)
+                    
+                    # Store the interaction in memory
+                    self.memory.store_interaction(user_input, response)
+            except Exception as e:
+                self.logger.logger.error(f"Error during interaction: {e}")
+                self.voice.speak("I encountered an issue. Please try again.")
+    
+    def handle_mobile_requests(self):
+        """Handle requests coming from mobile integration asynchronously."""
+        while self.is_running:
+            try:
+                mobile_input = self.mobile.listen_for_requests()
+                if mobile_input:
+                    response = self.nlp.process_input(mobile_input)
+                    self.mobile.respond(response)
+                    self.memory.store_interaction(mobile_input, response)
+            except Exception as e:
+                self.logger.logger.error(f"Error handling mobile request: {e}")
+    
+    def process_input(self, user_input):
+        """Delegate complex queries to the decision maker."""
+        self.logger.logger.info(f"Processing input: {user_input}")
+        
+        # Delegate to the decision maker if the input matches certain patterns
+        if "schedule" in user_input.lower():
+            return "Your next meeting is at 3 PM."
+        elif "game" in user_input.lower():
+            # Delegate game-related requests
+            return self.decision_maker.handle_game_request(user_input)
+        else:
+            # Default to NLP engine for other cases
+            return self.nlp.process_input(user_input)
+
+    def stop(self):
+        """Stop the AI gracefully."""
+        self.is_running = False
+        self.logger.logger.info("Snowball AI shutting down.")
+        self.voice.speak("Goodbye!")
+
+class Memory:
+    """Memory management system with enhanced functionality."""
+    def __init__(self):
+        self.conn = sqlite3.connect('data/memory.db')
+        self.create_table()
+
+    def create_table(self):
+        """Create interactions table if it does not exist."""
+        self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS interactions (
+                id INTEGER PRIMARY KEY,
+                user_input TEXT,
+                ai_response TEXT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
+    def store_interaction(self, user_input, ai_response):
+        """Stores a user interaction in the database."""
+        self.conn.execute("INSERT INTO interactions (user_input, ai_response) VALUES (?, ?)", (user_input, ai_response))
+        self.conn.commit()
+
+    def get_last_interaction(self):
+        """Retrieve the last stored interaction."""
+        cursor = self.conn.execute("SELECT * FROM interactions ORDER BY id DESC LIMIT 1")
+        return cursor.fetchone()
+
+    def get_interactions_by_keyword(self, keyword):
+        """Retrieve interactions containing a specific keyword."""
+        cursor = self.conn.execute("SELECT * FROM interactions WHERE user_input LIKE ?", ('%' + keyword + '%',))
+        return cursor.fetchall()
+
+if __name__ == "__main__":
+    snowball = SnowballAI()
+    try:
+        snowball.start()
+    except KeyboardInterrupt:
+        snowball.stop()
+
+
+
+
+decision_maker.py
+
+import time
+import threading
+import re
+import sys
+import logging
+from logging.handlers import RotatingFileHandler
+from queue import Queue
+
+sys.path.append('S:/logs')
+from core.logger import SnowballLogger
+from core.memory import Memory
+
+
+class DecisionMaker:
+    def __init__(self):
+        self.reminders = []
+        self.logger = SnowballLogger()  # Initialize logger
+        self.memory = Memory()  # Access to Memory
+        self.task_queue = Queue()  # Task queue for asynchronous processing
+        self.logger.logger.info("DecisionMaker initialized.")
+        threading.Thread(target=self.process_tasks, daemon=True).start()
+
+    def process_tasks(self):
+        """Continuously process tasks from the queue asynchronously."""
+        while True:
+            if not self.task_queue.empty():
+                task, args = self.task_queue.get()
+                task(*args)
+            time.sleep(1)  # Prevent CPU overuse
+
+    def handle_request(self, request):
+        """Main method to handle various user requests."""
+        request = ' '.join(request.lower().split())  # Normalize spaces in request
+        self.logger.logger.info(f"Received request: {request}")
+
+        # Handle different types of requests based on content
+        if "remind me" in request:
+            response = self.handle_reminder(request)
+        elif "list reminders" in request:
+            response = self.list_reminders()
+        elif "cancel reminders" in request:
+            response = self.cancel_reminder(request)
+        elif "system" in request or "monitor" in request:
+            response = self.start_system_monitor()
+        elif "game" in request:
+            response = self.handle_game_request(request)
+        elif "name" in request:
+            response = self.ask_for_name()
+        else:
+            response = "Sorry, I don't understand that request."
+            self.logger.logger.warning(f"Unrecognized request: {request}")
+        
+        self.logger.logger.info(f"Response generated: {response}")
+        return response
+
+    def handle_game_request(self, request):
+        """Launch the requested game."""
+        game_name = request.split()[-2]  # Expect game name before 'game' keyword
+        if game_name == "snake":
+            from games.snake.snake import game_loop
+            self.logger.logger.info(f"Launching game: {game_name}")
+            game_loop()
+            return f"Launching {game_name}..."
+        else:
+            self.logger.logger.warning(f"Game not found: {game_name}")
+            return f"Sorry, I don't know how to play {game_name} yet."
+
+    def handle_reminder(self, request):
+        """Handle user requests related to reminders."""
+        if "remind me" in request:
+            self.logger.logger.info("Processing 'set reminder' request.")
+            return self.set_reminder(request)
+        else:
+            self.logger.logger.warning(f"Invalid reminder request: {request}")
+            return "I can set, list, or cancel reminders."
+
+    def set_reminder(self, request):
+        """Set a new reminder based on natural language input."""
+        # Extended regex to handle different times (minutes, hours, days)
+        pattern = r"remind me to\s+(.+?)\s+in\s+(\d+)\s*(minute[s]?|hour[s]?|day[s]?)"
+        match = re.search(pattern, request)
+
+        if match:
+            try:
+                action = match.group(1)
+                time_value = int(match.group(2))
+                time_unit = match.group(3)
+
+                # Convert to minutes for internal consistency
+                if "hour" in time_unit:
+                    time_in_minutes = time_value * 60
+                elif "day" in time_unit:
+                    time_in_minutes = time_value * 60 * 24
+                else:
+                    time_in_minutes = time_value  # Already in minutes
+
+                # Log parsed values
+                self.logger.logger.info(f"Parsed reminder: Action - {action}, Time - {time_in_minutes} minutes")
+
+                # Schedule the reminder
+                self.reminders.append((action.strip(), time_in_minutes))
+                self.task_queue.put((self._reminder_timer, (action.strip(), time_in_minutes)))
+                
+                # Store reminder in memory for persistence
+                self.memory.store_interaction(request, f"Reminder set for {action.strip()} in {time_in_minutes} minutes.")
+
+                return f"Reminder set for {action.strip()} in {time_in_minutes} minutes."
+            except Exception as e:
+                self.logger.logger.error(f"Error setting reminder: {e}")
+                return f"Error setting reminder: {e}"
+        else:
+            self.logger.logger.warning(f"Failed to parse reminder request: {request}")
+            return "Invalid reminder format. Please use 'remind me to [action] in [time] [minutes/hours/days].'"
+
+    def list_reminders(self):
+        """List all active reminders."""
+        if not self.reminders:
+            self.logger.logger.info("No active reminders to list.")
+            return "No active reminders."
+        reminders_list = "\n".join([f"Reminder: {r[0]} in {r[1]} minutes." for r in self.reminders])
+        self.logger.logger.info("Listing all active reminders.")
+        return reminders_list
+
+    def cancel_reminder(self, request):
+        """Cancel all reminders."""
+        self.logger.logger.info("Cancelling all reminders.")
+        self.reminders.clear()
+        return "All reminders cancelled."
+
+    def _reminder_timer(self, action, time_in_minutes):
+        """Internal method to handle reminder timing."""
+        time.sleep(time_in_minutes * 60)
+        self.logger.logger.info(f"Reminder triggered: {action}")
+        print(f"Reminder: {action}")
+
+    def start_system_monitor(self):
+        """Simulate starting the system monitor."""
+        self.logger.logger.info("Starting system monitor.")
+        return "Starting system monitor..."
+
+    def ask_for_name(self):
+        """Ask user if they want to keep or change the AI's name."""
+        self.logger.logger.info("Asking for name preference.")
+        return "Would you like me to keep the name Snowball or choose a new one?"
+
+    def answer_question(self, question):
+        """Provide an answer to a general question."""
+        self.logger.logger.info(f"Answering question: {question}")
+        return f"Answering the question: {question}"
+
+
+if __name__ == "__main__":
+    # Example usage
+    decision_maker = DecisionMaker()
+    print(decision_maker.handle_request("remind me to take a break in 10 minutes"))
+    print(decision_maker.handle_request("start snake game"))
+
+
+
+
+game_ai.py
+
+import numpy as np
+from keras.models import Sequential, load_model
+from keras.layers import Dense
+from keras.losses import MeanSquaredError
+from collections import deque
+import random
+import os
+
+class GameAI:
+    def __init__(self):
+        self.state_size = 11  # State size (customize as per game needs)
+        self.action_size = 3  # Left, Straight, Right
+        self.memory = deque(maxlen=2000)  # Replay buffer to store experiences
+        self.gamma = 0.95  # Discount rate for Q-learning
+        self.epsilon = 1.0  # Exploration rate (starts high and decays)
+        self.epsilon_min = 0.01  # Minimum exploration rate
+        self.epsilon_decay = 0.995  # Decay rate for exploration
+        self.learning_rate = 0.001
+        self.model = self.build_model()  # Build the neural network
+
+    def build_model(self):
+        """Build the neural network for Q-learning."""
+        model = Sequential()
+        model.add(Dense(24, input_dim=self.state_size, activation='relu'))
+        model.add(Dense(24, activation='relu'))
+        model.add(Dense(self.action_size, activation='linear'))  # Left, Straight, Right
+        model.compile(loss='mse', optimizer='adam')
+        return model
+
+    def remember(self, state, action, reward, next_state, done):
+        """Store experience in replay buffer."""
+        self.memory.append((state, action, reward, next_state, done))
+
+    def choose_action(self, state):
+        """Choose an action (exploration vs exploitation)."""
+        if np.random.rand() <= self.epsilon:
+            return random.randrange(self.action_size)  # Explore (random action)
+        action_values = self.model.predict(state.reshape(1, -1))  # Predict Q-values
+        return np.argmax(action_values[0])  # Exploit (best action based on learned Q-values)
+
+    def replay(self, batch_size=32):
+        """Train the model using a random batch from the replay buffer."""
+        if len(self.memory) < batch_size:
+            return  # Not enough experiences in the buffer to train
+
+        # Sample a batch from memory
+        minibatch = random.sample(self.memory, batch_size)
+        for state, action, reward, next_state, done in minibatch:
+            target = reward
+            if not done:
+                target += self.gamma * np.amax(self.model.predict(next_state.reshape(1, -1))[0])
+            target_f = self.model.predict(state.reshape(1, -1))
+            target_f[0][action] = target  # Update Q-value for the chosen action
+            self.model.fit(state.reshape(1, -1), target_f, epochs=1, verbose=0)
+
+        # Decay the exploration rate
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
+
+    def save_model(self, file_name="snake_ai_model.keras"):
+        """Save the current model to a file using the new Keras format."""
+        self.model.save(file_name)
+
+    def load_model(self, file_name="snake_ai_model.keras"):
+        """Load a previously saved model from a file."""
+        if os.path.exists(file_name):
+            self.model = load_model(file_name, custom_objects={'mse': MeanSquaredError()})
+
+    def get_last_game_performance(self):
+        """Log the last game performance (score, etc.)."""
+        return random.randint(0, 100)  # Placeholder for actual performance metrics
+
+    def adjust_learning_parameters(self, param, value):
+        """Adjust AI learning parameters dynamically."""
+        if param == "exploration_rate":
+            self.epsilon = value
+        elif param == "learning_rate":
+            self.model.optimizer.learning_rate.assign(value)
+
+    def play_snake(self, state):
+        """Simulate playing Snake by choosing an action based on the current state."""
+        return self.choose_action(state)
+
+    def save_game_state(self):
+        print("Game state saved.")
+
+    def load_game_state(self):
+        print("Game state loaded.")
+
+
+
+
+logger.py
+
+import logging
+import os
+from logging.handlers import RotatingFileHandler
+from plyer import notification  # To notify on critical events
+
+# Define log paths
+LOG_DIR = 'logs'
+INTERACTION_LOG_FILE = os.path.join(LOG_DIR, 'ai_interaction_log.txt')
+ERROR_LOG_FILE = os.path.join(LOG_DIR, 'error_log.txt')
+SYSTEM_HEALTH_LOG_FILE = os.path.join(LOG_DIR, 'system_health_log.txt')
+
+# Create the log directory if it doesn't exist
+os.makedirs(LOG_DIR, exist_ok=True)
+
+class SnowballLogger:
+    def __init__(self):
+        self.logger = logging.getLogger("SnowballLogger")
+        self.logger.setLevel(logging.DEBUG)
+
+        # Check if handlers are already added to avoid duplicate logging
+        if not self.logger.hasHandlers():
+            # Formatter for log messages
+            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+            # File handler for AI interactions
+            interaction_handler = RotatingFileHandler(INTERACTION_LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5)
+            interaction_handler.setLevel(logging.INFO)
+            interaction_handler.setFormatter(formatter)
+            self.logger.addHandler(interaction_handler)
+
+            # File handler for system health logs
+            health_handler = RotatingFileHandler(SYSTEM_HEALTH_LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5)
+            health_handler.setLevel(logging.INFO)
+            health_handler.setFormatter(formatter)
+            self.logger.addHandler(health_handler)
+
+            # File handler for error logs
+            error_handler = RotatingFileHandler(ERROR_LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5)
+            error_handler.setLevel(logging.ERROR)
+            error_handler.setFormatter(formatter)
+            self.logger.addHandler(error_handler)
+
+            # Console handler for real-time debugging
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel(logging.DEBUG)
+            console_handler.setFormatter(formatter)
+            self.logger.addHandler(console_handler)
+
+    def log_interaction(self, user_input, ai_response):
+        """Log AI interactions."""
+        self.logger.info(f"User: {user_input} | AI: {ai_response}")
+
+    def log_system_health(self, cpu_usage, memory_usage, temp):
+        """Log system health metrics."""
+        health_log = f"CPU: {cpu_usage}% | Memory: {memory_usage}% | Temp: {temp}°C"
+        self.logger.info(health_log)
+
+        # Trigger notification if CPU, memory, or temperature exceeds threshold
+        if cpu_usage > 85 or memory_usage > 85 or (temp is not None and temp > 75):
+            self.notify_user("System Alert", health_log)
+
+    def log_warning(self, warning_message):
+        """Log warnings."""
+        self.logger.warning(f"Warning: {warning_message}")
+        self.notify_user("Warning", warning_message)
+
+    def log_error(self, error_message):
+        """Log errors."""
+        self.logger.error(f"Error: {error_message}")
+        self.notify_user("Error", error_message)
+
+    def notify_user(self, title, message):
+        """Send a desktop notification for critical events or warnings."""
+        notification.notify(
+            title=title,
+            message=message,
+            timeout=5  # Notification timeout in seconds
+        )
+
+# Example usage
+if __name__ == "__main__":
+    logger = SnowballLogger()
+
+    # Simulate interaction logging
+    logger.log_interaction("Hello, Snowball!", "Hi! How can I assist you today?")
+
+    # Simulate system health logging
+    logger.log_system_health(cpu_usage=90, memory_usage=75, temp=70)
+
+    # Simulate a warning log
+    logger.log_warning("CPU usage nearing threshold.")
+
+    # Simulate an error log
+    logger.log_error("Failed to retrieve system temperatures.")
+
+
+
+
+memory.py
+
+import sqlite3
+import sys
+import logging
+from logging.handlers import RotatingFileHandler
+from datetime import datetime
+import os
+
+# Ensure the core directory is in the system path for logger import
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from core.logger import SnowballLogger  # Adjusted import statement
+
+class Memory:
+    def __init__(self, db_path='data/memories.db'):
+        self.logger = SnowballLogger()  # Initialize logger
+        self.db_path = db_path
+        self.cache = {}  # In-memory cache for frequently accessed data
+        try:
+            # Establish connection to the SQLite database
+            self.conn = sqlite3.connect(self.db_path)
+            self.logger.logger.info(f"Connected to SQLite database: {self.db_path}")
+            self.create_table()
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error connecting to SQLite database: {e}")
+            raise e
+
+    def create_table(self):
+        """Creates the interactions table if it doesn't exist, and adds indexes."""
+        try:
+            with self.conn:
+                self.conn.execute('''
+                    CREATE TABLE IF NOT EXISTS interactions (
+                        id INTEGER PRIMARY KEY,
+                        user_input TEXT,
+                        ai_response TEXT,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )
+                ''')
+                # Create index on timestamp for faster queries
+                self.conn.execute("CREATE INDEX IF NOT EXISTS idx_timestamp ON interactions(timestamp)")
+            self.logger.logger.info("Checked/created 'interactions' table and index.")
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error creating table: {e}")
+
+    def store_interaction(self, user_input, ai_response):
+        """Stores a user interaction in the database, with error handling."""
+        try:
+            with self.conn:
+                self.conn.execute(
+                    "INSERT INTO interactions (user_input, ai_response) VALUES (?, ?)",
+                    (user_input, ai_response)
+                )
+            self.logger.logger.info(f"Stored interaction: User: '{user_input}', AI: '{ai_response}'")
+            # Cache interaction
+            self.cache[user_input] = ai_response
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error storing interaction: {e}")
+
+    def store_batch_interactions(self, interactions):
+        """Stores a batch of user interactions."""
+        try:
+            with self.conn:
+                self.conn.executemany(
+                    "INSERT INTO interactions (user_input, ai_response) VALUES (?, ?)",
+                    interactions
+                )
+            self.logger.logger.info(f"Stored batch of {len(interactions)} interactions.")
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error storing batch interactions: {e}")
+
+    def get_interactions(self):
+        """Retrieve all interactions from the database."""
+        try:
+            if 'all_interactions' in self.cache:
+                return self.cache['all_interactions']  # Return from cache
+
+            with self.conn:
+                cursor = self.conn.execute("SELECT * FROM interactions ORDER BY timestamp DESC")
+                interactions = cursor.fetchall()
+            self.logger.logger.info("Retrieved all interactions.")
+            self.cache['all_interactions'] = interactions  # Cache result
+            return interactions
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error retrieving interactions: {e}")
+            return []
+
+    def get_last_interaction(self):
+        """Retrieve the last interaction."""
+        try:
+            with self.conn:
+                cursor = self.conn.execute("SELECT * FROM interactions ORDER BY id DESC LIMIT 1")
+                interaction = cursor.fetchone()
+            if interaction:
+                self.logger.logger.info(f"Retrieved last interaction: {interaction}")
+            return interaction
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error retrieving last interaction: {e}")
+            return None
+
+    def get_interactions_by_keyword(self, keyword):
+        """Retrieve interactions containing a specific keyword."""
+        try:
+            if keyword in self.cache:
+                return self.cache[keyword]  # Return cached result
+
+            with self.conn:
+                cursor = self.conn.execute("SELECT * FROM interactions WHERE user_input LIKE ?", ('%' + keyword + '%',))
+                interactions = cursor.fetchall()
+            self.logger.logger.info(f"Retrieved interactions with keyword: '{keyword}'")
+            self.cache[keyword] = interactions  # Cache result
+            return interactions
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error retrieving interactions by keyword: {e}")
+            return []
+
+    def clear_interactions(self):
+        """Delete all interactions from the database."""
+        try:
+            with self.conn:
+                self.conn.execute("DELETE FROM interactions")
+            self.logger.logger.info("Cleared all interactions from the database.")
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error clearing interactions: {e}")
+
+    def backup_database(self):
+        """Create a backup of the database for recovery."""
+        try:
+            backup_file = f'data/memories_backup_{datetime.now().strftime("%Y%m%d_%H%M%S")}.db'
+            with open(self.db_path, 'rb') as original_db:
+                with open(backup_file, 'wb') as backup_db:
+                    backup_db.write(original_db.read())
+            self.logger.logger.info(f"Database backup created at {backup_file}")
+        except Exception as e:
+            self.logger.log_error(f"Error backing up the database: {e}")
+
+    def close_connection(self):
+        """Closes the SQLite connection."""
+        try:
+            if self.conn:
+                self.conn.close()
+                self.logger.logger.info("Closed SQLite database connection.")
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error closing SQLite connection: {e}")
+
+
+
+
+mobile_integration.py
+
+import requests
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+class MobileIntegration:
+    def __init__(self):
+        self.credentials = self.initialize_google_credentials()
+
+    def initialize_google_credentials(self):
+        try:
+            return Credentials.from_authorized_user_file('config/token.json')
+        except FileNotFoundError:
+            print("Google API credentials not found.")
+            return None
+
+    def check_travel_patterns(self):
+        if self.credentials:
+            service = build('calendar', 'v3', credentials=self.credentials)
+            now = '2024-01-01T00:00:00Z'
+            events_result = service.events().list(calendarId='primary', timeMin=now, maxResults=10).execute()
+            events = events_result.get('items', [])
+            for event in events:
+                print(f"Event: {event['summary']}")
+        else:
+            print("No credentials for Google API.")
+                
+    def listen_for_requests(self):
+        return "Check my schedule"
+
+    def respond(self, response):
+        # Placeholder for responding to mobile requests
+        pass
+
+
+
+
+nlp_engine.py
+
+import re
+import openai
+import json
+from core.memory import Memory
+from core.decision_maker import DecisionMaker
+from core.logger import SnowballLogger
+from core.game_ai import GameAI  # Importing Game AI to interact with it
+
+class NLPEngine:
+    def __init__(self, config_path):
+        # Initialize memory, decision maker, logger, and game AI
+        self.memory = Memory()
+        self.decision_maker = DecisionMaker()
+        self.logger = SnowballLogger()
+        self.game_ai = GameAI()  # Initialize Game AI
+        
+        # Load API keys from the config file
+        with open(config_path, 'r') as file:
+            api_keys = json.load(file)
+            self.openai_api_key = api_keys.get('openai_api_key')
+
+        # Set OpenAI API key
+        openai.api_key = self.openai_api_key
+
+    def process_input(self, user_input):
+        """Process user input and generate response"""
+        # Preprocess input by lowering case and stripping extra spaces
+        user_input = user_input.lower().strip()
+        self.logger.logger.info(f"Received input: {user_input}")
+
+        # Step 1: Check for stored memories that match keywords
+        memories = self.memory.get_interactions_by_keyword(user_input)
+        if memories:
+            return f"Here's what I found related to '{user_input}': {memories}"
+
+        # Step 2: Handle specific commands related to Snake AI or Game Commands
+        if "snake" in user_input or "game" in user_input:
+            return self.process_snake_commands(user_input)
+
+        # Step 3: Handle reminders, code help, etc.
+        elif "remind" in user_input:
+            return self.decision_maker.handle_request(user_input)
+        elif "code" in user_input:
+            return self.generate_code_help(user_input)
+
+        # Step 4: If no match is found, send to OpenAI GPT-4
+        return self.query_openai_api(user_input)
+
+    def process_snake_commands(self, user_input):
+        """Process commands related to the Snake AI game"""
+        # Commands that control or influence Snake AI gameplay
+        if "help snake" in user_input:
+            # Example: Adjust exploration rate or learning strategy
+            self.game_ai.adjust_learning_parameters("exploration_rate", 0.05)
+            self.memory.store_interaction(user_input, "Adjusted Snake AI exploration rate to 0.05")
+            return "I've helped the Snake AI with a learning boost!"
+
+        if "how did snake perform" in user_input:
+            performance = self.game_ai.get_last_game_performance()
+            self.memory.store_interaction(user_input, f"Snake AI last performance: {performance}")
+            return f"The last Snake AI game scored: {performance}"
+
+        if "save game" in user_input:
+            self.game_ai.save_game_state()
+            self.memory.store_interaction(user_input, "Saved current Snake AI game state.")
+            return "I've saved the Snake AI game state."
+
+        if "load game" in user_input:
+            self.game_ai.load_game_state()
+            return "I've loaded the last Snake AI game state."
+
+        return "I didn't understand that Snake game command."
+
+    def query_openai_api(self, user_input):
+        """Send user input to OpenAI GPT-4 and get a response"""
+        self.logger.logger.info(f"Sending request to GPT-4 for input: {user_input}")
+        try:
+            # Make a request to the OpenAI GPT-4 API
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are an AI assistant named Snowball."},
+                    {"role": "user", "content": user_input}
+                ]
+            )
+            # Extract the response message
+            answer = response['choices'][0]['message']['content']
+            self.logger.logger.info(f"Received response from GPT-4: {answer}")
+            return answer
+        except Exception as e:
+            # Log any errors encountered during the request
+            self.logger.log_error(f"Error querying OpenAI API: {e}")
+            return "Sorry, I encountered an issue reaching GPT-4."
+
+    def generate_code_help(self, user_input):
+        """Use OpenAI GPT-4 to provide code-related help"""
+        self.logger.logger.info(f"Generating code help for: {user_input}")
+        return self.query_openai_api(user_input)
+
+    def recall_memory(self, keyword):
+        """Retrieve specific memories based on a keyword"""
+        return self.memory.get_interactions_by_keyword(keyword)
+
+if __name__ == "__main__":
+    # Update this path to the actual location of your api_keys.json
+    config_path = "S:/config/api_keys.json"
+    
+    # Initialize Snowball NLP Engine
+    snowball = NLPEngine(config_path=config_path)
+    
+    # Example usage
+    print(snowball.process_input("Can you help me write a Python function to reverse a string?"))
+    print(snowball.process_input("remind me to take a break in 10 minutes"))
+    print(snowball.process_input("help snake AI with learning"))
+    print(snowball.process_input("how did snake perform last time?"))
+
+
+
+
+reinforcement.py
+
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+from collections import deque
+
+# Deep Q-learning agent with enhancements
+class QLearningAgent:
+    def __init__(self, state_size, action_size, learning_rate=0.001, discount_rate=0.99, 
+                 exploration_rate=1.0, exploration_decay=0.995, min_exploration=0.01, 
+                 min_learning_rate=0.0001, batch_size=32, memory_size=2000):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.learning_rate = learning_rate
+        self.discount_rate = discount_rate
+        self.exploration_rate = exploration_rate
+        self.exploration_decay = exploration_decay
+        self.min_exploration = min_exploration
+        self.min_learning_rate = min_learning_rate
+        self.batch_size = batch_size
+        self.memory = deque(maxlen=memory_size)  # Replay buffer to store experiences
+        self.q_table = np.zeros((state_size, action_size))  # Initialize Q-table
+        self.history = []  # Track performance over time (e.g., scores)
+
+    def choose_action(self, state):
+        """Choose an action using the epsilon-greedy approach."""
+        if np.random.rand() <= self.exploration_rate:
+            return random.randrange(self.action_size)  # Explore: random action
+        return np.argmax(self.q_table[state])  # Exploit: best-known action
+
+    def remember(self, state, action, reward, next_state, done):
+        """Store the experience (state transition) in the replay buffer."""
+        self.memory.append((state, action, reward, next_state, done))
+
+    def learn(self, current_state, action, reward, next_state, done):
+        """Replay experiences and update the Q-table."""
+        # Q-learning update: Q(s, a) = Q(s, a) + alpha * [reward + gamma * max(Q(s', a')) - Q(s, a)]
+        q_update = reward
+        if not done:  # Only update for non-terminal states
+            q_update += self.discount_rate * np.max(self.q_table[next_state])
+
+        self.q_table[current_state, action] += self.learning_rate * (q_update - self.q_table[current_state, action])
+
+        # Decay exploration rate (epsilon) and learning rate after each batch
+        if self.exploration_rate > self.min_exploration:
+            self.exploration_rate *= self.exploration_decay
+
+        if self.learning_rate > self.min_learning_rate:
+            self.learning_rate *= self.exploration_decay
+
+    def save_q_table(self, filename="q_table.npy"):
+        """Save the Q-table to a file."""
+        np.save(filename, self.q_table)
+
+    def load_q_table(self, filename="q_table.npy"):
+        """Load a Q-table from a file."""
+        self.q_table = np.load(filename)
+
+    def visualize_training(self):
+        """Plot the training progress (e.g., scores over time)."""
+        plt.plot(self.history)
+        plt.ylabel("Score")
+        plt.xlabel("Episode")
+        plt.title("Agent Performance Over Time")
+        plt.show()
+
+    def update_performance(self, score):
+        """Store performance after each episode."""
+        self.history.append(score)
+
+    def reset_agent(self):
+        """Reset the agent's parameters (useful for restarting training)."""
+        self.q_table = np.zeros((self.state_size, self.action_size))
+        self.exploration_rate = 1.0
+        self.history.clear()
+
+    def save_model_checkpoint(self, checkpoint_file="agent_checkpoint.npz"):
+        """Save a model checkpoint containing both Q-table and exploration rate."""
+        np.savez(checkpoint_file, q_table=self.q_table, exploration_rate=self.exploration_rate)
+
+    def load_model_checkpoint(self, checkpoint_file="agent_checkpoint.npz"):
+        """Load a model checkpoint with Q-table and exploration rate."""
+        checkpoint = np.load(checkpoint_file)
+        self.q_table = checkpoint['q_table']
+        self.exploration_rate = checkpoint['exploration_rate']
+
+
+
+
+sensors.py
+
+class Sensors:
+    def __init__(self):
+        self.sensor_data = {}
+
+    def read_sensor_data(self, sensor_id):
+        """
+        Reads data from a sensor, like temperature, humidity, etc.
+        This would likely be implemented with specific hardware libraries.
+        """
+        # Placeholder: This would interface with actual hardware
+        self.sensor_data[sensor_id] = 50.0  # Dummy data
+
+    def get_sensor_data(self, sensor_id):
+        """
+        Returns the last read value for a sensor.
+        """
+        return self.sensor_data.get(sensor_id, None)
+
+
+
+
+system_monitor.py
+
+import clr  # For accessing .NET libraries from Python
+import psutil
+from plyer import notification
+import os
+import time
+import pystray
+from PIL import Image
+import GPUtil
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+import threading
+import platform
+import subprocess
+import sys
+import logging
+from logging.handlers import RotatingFileHandler
+sys.path.append('S:/logs')
+from core.logger import SnowballLogger
+
+
+dll_path = r"C:/Program Files/OpenHardwareMonitor/OpenHardwareMonitorLib.dll"
+clr.AddReference(dll_path)
+
+# Import the OpenHardwareMonitor classes
+from OpenHardwareMonitor import Hardware
+
+class FanMonitor:
+    def __init__(self):
+        self.computer = Hardware.Computer()
+        self.computer.FanControllerEnabled = True
+        self.computer.Open()
+
+    def get_fan_speeds(self):
+        """Retrieve fan speeds from OpenHardwareMonitor."""
+        fan_speeds = []
+        for hardware in self.computer.Hardware:
+            hardware.Update()
+            for sensor in hardware.Sensors:
+                if sensor.SensorType == Hardware.SensorType.Fan:
+                    fan_speeds.append((sensor.Name, sensor.Value))
+        return fan_speeds
+
+    def print_fan_speeds(self):
+        speeds = self.get_fan_speeds()
+        for fan, speed in speeds:
+            print(f"{fan}: {speed} RPM")
+        return speeds
+
+# Windows Defender quick scan for malware/virus detection
+def run_windows_defender_scan():
+    """Run a quick scan using Windows Defender."""
+    scan_command = 'powershell Start-MpScan -ScanType QuickScan'
+    os.system(scan_command)
+
+# Disk health check using chkdsk
+def check_disk_health():
+    """Schedule a chkdsk scan for the next reboot if the volume is in use."""
+    check_command = 'chkdsk /f /r'
+    print("Scheduling a chkdsk scan on the next reboot.")
+    os.system(f'schtasks /create /tn "CheckDisk" /tr "{check_command}" /sc onstart')
+
+# File system check using SFC
+def run_sfc_scan():
+    """Run an SFC scan to check for file integrity."""
+    sfc_command = 'sfc /scannow'
+    os.system(sfc_command)
+
+# Main system monitor class with all monitoring features
+class SystemMonitor:
+    def __init__(self, cpu_threshold=85, memory_threshold=85, temp_threshold=80):
+        # Initialize logger before using it
+        self.logger = SnowballLogger()
+        self.cpu_threshold = cpu_threshold
+        self.memory_threshold = memory_threshold
+        self.temp_threshold = temp_threshold
+        self.platform = platform.system().lower()
+        self.temp_supported = self.check_temp_support()  # Update this for checking support
+        self.fan_monitor = FanMonitor()  # Initialize fan monitoring
+
+    def start_system_monitoring(self):
+        # Placeholder for system monitoring logic
+        pass
+    
+    def monitor_system(self):
+        """Monitor the system health and log system metrics."""
+        while True:
+            cpu_usage = self.check_cpu_usage()
+            memory_usage = self.check_memory_usage()
+            temperature = self.check_temperature()
+
+            # Log the system health metrics with INFO level
+            self.logger.log_system_health(cpu_usage, memory_usage, temperature)
+
+            # Trigger real-time alerts if thresholds are exceeded
+            self.check_thresholds(cpu_usage, memory_usage, temperature)
+
+            # Sleep before checking again
+            time.sleep(5)
+
+    def check_temp_support(self):
+        if hasattr(psutil, 'sensors_temperatures'):
+            try:
+                temps = psutil.sensors_temperatures()
+                if temps:
+                    return True
+                else:
+                    self.logger.log_warning("No temperature sensors found on this system.")
+            except Exception as e:
+                self.logger.log_warning(f"Error reading temperatures: {str(e)}")
+        self.logger.log_warning("Temperature monitoring not supported on this system.")
+        return False
+
+    def set_temp_threshold(self, new_threshold):
+        self.temp_threshold = new_threshold
+        self.logger.log_interaction("Temp Threshold Set", f"New temperature threshold set: {self.temp_threshold}°C")
+
+    def check_thresholds(self, cpu_usage, memory_usage, temp):
+        """Check if any threshold is exceeded and trigger warning or error logs."""
+        if cpu_usage > self.cpu_threshold:
+            self.logger.log_warning(f"High CPU Usage: {cpu_usage}%")
+            self.notify_user("High CPU Usage", f"CPU usage has exceeded the threshold: {cpu_usage}%")
+        if memory_usage > self.memory_threshold:
+            self.logger.log_warning(f"High Memory Usage: {memory_usage}%")
+            self.notify_user("High Memory Usage", f"Memory usage has exceeded the threshold: {memory_usage}%")
+        if temp and temp > self.temp_threshold:
+            self.logger.log_warning(f"High Temperature: {temp}°C")
+            self.notify_user("High Temperature", f"System temperature has exceeded the threshold: {temp}°C")
+    
+    def check_backup_status():
+        backup_file = '/path/to/backup'  # Replace with actual backup path
+        if not os.path.exists(backup_file):
+            self.logger.notify_user("Backup Issue", "Backup file not found. Please check your backup routine.")
+
+    def monitor_network_spikes(self):
+        """Detect network traffic spikes."""
+        net_io_start = psutil.net_io_counters()
+        time.sleep(5)  # Check after 5 seconds
+        net_io_end = psutil.net_io_counters()
+
+        bytes_sent_diff = net_io_end.bytes_sent - net_io_start.bytes_sent
+        bytes_recv_diff = net_io_end.bytes_recv - net_io_start.bytes_recv
+
+        if bytes_sent_diff > 10**6 or bytes_recv_diff > 10**6:  # Customize threshold as needed
+            print("Network traffic spike detected!")
+            print(f"Bytes Sent: {bytes_sent_diff}, Bytes Received: {bytes_recv_diff}")
+
+    def detect_memory_leak(self):
+        """Detect if there are any memory leaks by checking processes using high memory."""
+        processes = [(p.info['pid'], p.info['name'], p.info['memory_percent']) 
+                    for p in psutil.process_iter(['pid', 'name', 'memory_percent'])]
+        
+        # Identify processes using more than 10% of memory (adjust threshold as needed)
+        high_memory_usage_processes = [proc for proc in processes if proc[2] > 10.0]
+        
+        if high_memory_usage_processes:
+            for proc in high_memory_usage_processes:
+                print(f"High memory usage: PID: {proc[0]}, Name: {proc[1]}, Memory: {proc[2]}%")
+        else:
+            print("No memory leaks detected.")
+
+    def check_smart_status(self):
+        """Check SMART status for drives using smartctl (requires smartmontools)."""
+        command = ["C:/Program Files/smartmontools/bin/smartctl.exe", "-a", "/dev/sda"]
+        
+        try:
+            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            
+            if result.returncode == 0:
+                # Print and return the SMART status output
+                print(result.stdout)
+                return result.stdout
+            else:
+                # Print any error messages captured from stderr
+                print(f"Error: {result.stderr}")
+                return None
+        except FileNotFoundError as e:
+            print(f"Command not found: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            
+    def show_gpu_usage_tray(self):
+        gpu_usage, gpu_temp = self.check_gpu_usage()
+        if gpu_usage is not None and gpu_temp is not None:
+            print(f"GPU Usage: {gpu_usage}%, GPU Temp: {gpu_temp}°C")
+        else:
+            print
+
+    def check_cpu_usage(self):
+        """Check and notify if CPU usage exceeds the threshold."""
+        cpu_usage = psutil.cpu_percent(interval=1)
+        if cpu_usage > self.cpu_threshold:
+            self.logger.notify_user("High CPU Usage", f"CPU usage is at {cpu_usage}%")
+        return cpu_usage
+
+    def check_memory_usage(self):
+        """Check and notify if memory usage exceeds the threshold."""
+        memory_info = psutil.virtual_memory()
+        if memory_info.percent > self.memory_threshold:
+            self.logger.notify_user("High Memory Usage", f"Memory usage is at {memory_info.percent}%")
+        return memory_info.percent
+
+    def check_disk_usage(self):
+        """Check disk usage across all partitions, skipping drives that are not accessible."""
+        partitions = psutil.disk_partitions()
+        disk_data = []
+        for partition in partitions:
+            try:
+                usage = psutil.disk_usage(partition.mountpoint)
+                print(f"Disk usage for {partition.device}: {usage.percent}%")
+                disk_data.append((partition.device, usage.percent))
+            except PermissionError as e:
+                print(f"Could not access {partition.device}: {e}")
+            except FileNotFoundError as e:
+                print(f"Partition not found {partition.device}: {e}")
+            except Exception as e:
+                print(f"An error occurred with {partition.device}: {e}")
+        return disk_data
+
+    def check_network_activity(self):
+        """Check network activity (bytes sent/received)."""
+        net_io = psutil.net_io_counters()
+        print(f"Bytes Sent: {net_io.bytes_sent}, Bytes Received: {net_io.bytes_recv}")
+        return net_io.bytes_sent, net_io.bytes_recv
+
+    def check_running_processes(self):
+        """Check running processes and display the top 5 by CPU usage."""
+        processes = [(p.info['pid'], p.info['name'], p.info['cpu_percent']) for p in psutil.process_iter(['pid', 'name', 'cpu_percent'])]
+        processes = sorted(processes, key=lambda x: x[2], reverse=True)[:5]
+        print("Top 5 processes by CPU usage:")
+        for proc in processes:
+            print(f"PID: {proc[0]}, Name: {proc[1]}, CPU Usage: {proc[2]}%")
+        return processes
+
+    def check_application_logs(self):
+        """Check for critical errors in system logs."""
+        log_command = 'wevtutil qe System /c:5 /q:"*[System[(Level=1 or Level=2)]]" /f:text'
+        os.system(log_command)
+
+    def check_fan_speeds(self):
+        """Check and display fan speeds."""
+        return self.fan_monitor.print_fan_speeds()
+
+    def check_temperature(self):
+        """Check and notify if system temperature exceeds the threshold."""
+        if not self.temp_supported:
+            return None  # Early exit if temperature monitoring is not supported
+        try:
+            temps = psutil.sensors_temperatures()
+            for name, entries in temps.items():
+                for entry in entries:
+                    print(f"{name} Temperature: {entry.current}°C")
+                    if entry.current > self.temp_threshold:
+                        self.logger.notify_user(f"High {name} Temperature", f"{name} temperature is at {entry.current}°C")
+                        return entry.current
+        except Exception as e:
+            self.logger.log_error(f"Temperature check failed: {e}")
+        return None
+
+    def check_gpu_usage(self):
+        """Check and notify if GPU usage or temperature exceeds a threshold."""
+        try:
+            gpus = GPUtil.getGPUs()
+            for gpu in gpus:
+                print(f"GPU: {gpu.name}, Load: {gpu.load * 100:.1f}%, Memory Used: {gpu.memoryUsed}MB/{gpu.memoryTotal}MB, Temp: {gpu.temperature}°C")
+                if gpu.load * 100 > self.cpu_threshold or gpu.temperature > self.temp_threshold:
+                    self.logger.notify_user(f"High GPU Usage or Temperature", f"GPU {gpu.name} is at {gpu.load * 100:.1f}% usage and {gpu.temperature}°C")
+                return gpu.load * 100, gpu.temperature, gpu.memoryUsed, gpu.memoryTotal
+        except Exception as e:
+            print(f"GPU monitoring not available: {e}")
+        return None, None, None, None
+
+    def notify_user(self, title, message):
+        """Send a desktop notification for critical events."""
+        truncated_message = (message[:252] + '...') if len(message) > 256 else message
+        notification.notify(
+            title=title,
+            message=truncated_message,
+            timeout=5  # Notification timeout in seconds
+        )
+
+    def start_system_tray_with_duck_icon(self):
+        """Start the system tray with the Snowball duck icon."""
+        icon = pystray.Icon("Snowball AI")
+        with Image.open('S:/icon/trayicon.png') as icon_image:
+            icon.icon = icon_image
+        icon.menu = pystray.Menu(
+            pystray.MenuItem('Show CPU Usage', lambda: print(f"CPU Usage: {self.check_cpu_usage()}%")),
+            pystray.MenuItem('Show Memory Usage', lambda: print(f"Memory Usage: {self.check_memory_usage()}%")),
+            pystray.MenuItem('Show GPU Usage', lambda: self.show_gpu_usage_tray()),
+            pystray.MenuItem('Show Disk Usage', lambda: print(f"Disk Usage: {self.check_disk_usage()}")),
+            pystray.MenuItem('Show Network Activity', lambda: print(f"Network Activity: {self.check_network_activity()}")),
+            pystray.MenuItem('Show Running Processes', lambda: print(f"Running Processes: {self.check_running_processes()}")),
+            pystray.MenuItem('Exit', self.exit_program)
+        )
+        icon.run()
+        
+    def exit_program(self, icon, item):
+        """Exit the system tray app."""
+        icon.stop()
+
+    def monitor_system(self):
+        """Continuously monitor the system."""
+        while True:
+            self.check_cpu_usage()
+            self.check_memory_usage()
+            self.check_disk_usage()
+            self.check_network_activity()
+            self.check_running_processes()
+            self.check_temperature()
+            self.check_gpu_usage()
+            self.check_fan_speeds()
+            time.sleep(10)  # Wait 10 seconds before the next check
+
+# Visualization Class for Real-Time Graphs
+class VisualMonitor:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("System Performance Monitor")
+        self.create_graphs()
+
+    def create_graphs(self):
+        """Create graphs for CPU and Memory usage."""
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(5, 5))
+
+        # CPU usage graph
+        self.cpu_usage = [0] * 10
+        ax1.set_title("CPU Usage (%)")
+        self.cpu_line, = ax1.plot(self.cpu_usage)
+        ax1.set_ylim(0, 100)  # Set y-axis limits for CPU usage
+
+        # Memory usage graph
+        self.memory_usage = [0] * 10
+        ax2.set_title("Memory Usage (%)")
+        self.memory_line, = ax2.plot(self.memory_usage)
+        ax2.set_ylim(0, 100)  # Set y-axis limits for Memory usage
+
+        # Embed the plots in the tkinter window
+        canvas = FigureCanvasTkAgg(fig, master=self.window)
+        canvas.get_tk_widget().pack()
+
+        # Call the update function every second
+        self.update_graphs()  # Directly call the method once to set it off
+
+    def update_graphs(self):
+        """Update the graphs with live data."""
+        cpu = psutil.cpu_percent()
+        memory = psutil.virtual_memory().percent
+
+        # Update CPU usage graph
+        self.cpu_usage = self.cpu_usage[1:] + [cpu]
+        self.cpu_line.set_ydata(self.cpu_usage)
+
+        # Update memory usage graph
+        self.memory_usage = self.memory_usage[1:] + [memory]
+        self.memory_line.set_ydata(self.memory_usage)
+
+        # Redraw the figure
+        plt.draw()
+
+        # Schedule the next update
+        self.window.after(1000, self.update_graphs)  # Ensure correct reference
+
+# Main Execution
+if __name__ == "__main__":
+    monitor = SystemMonitor(cpu_threshold=50, memory_threshold=50, temp_threshold=75)
+    visual_monitor = VisualMonitor()
+
+    # Run the system tray and monitor in separate threads
+    tray_thread = threading.Thread(target=monitor.start_system_tray_with_duck_icon)
+    tray_thread.start()
+
+    monitor_thread = threading.Thread(target=monitor.monitor_system)
+    monitor_thread.start()
+
+
+
+
+voice_integration.py
+
+import speech_recognition as sr
+from gtts import gTTS, gTTSError
+from pydub import AudioSegment
+import pygame
+import os
+from time import sleep
+from core.logger import SnowballLogger
+
+# Set the FFmpeg path directly
+AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"
+AudioSegment.ffprobe = "C:/ffmpeg/bin/ffprobe.exe"
+
+class VoiceInterface:
+    def __init__(self, language='en'):
+        self.language = language
+        self.logger = SnowballLogger()
+        self.temp_dir = os.path.abspath("C:/temp")
+        os.makedirs(self.temp_dir, exist_ok=True)
+
+    def play_audio(self, file_path):
+        """Play an audio file using pygame after converting it to WAV."""
+        try:
+            if os.path.exists(file_path):
+                wav_path = file_path.replace(".mp3", ".wav")
+
+                # Convert MP3 to WAV using pydub
+                audio = AudioSegment.from_mp3(file_path)
+                audio.export(wav_path, format="wav")
+
+                # Initialize pygame and play audio
+                pygame.mixer.init()
+                pygame.mixer.music.load(wav_path)
+                pygame.mixer.music.play()
+
+                # Wait until audio finishes
+                while pygame.mixer.music.get_busy():
+                    sleep(1)
+
+                self.logger.logger.info(f"Playing audio file: {wav_path}")
+            else:
+                self.logger.log_error(f"Audio file not found: {file_path}")
+        except Exception as e:
+            self.logger.log_error(f"Error playing audio: {e}")
+
+    def speak(self, text):
+        """Converts text to speech and plays the audio response."""
+        file_path = os.path.join(self.temp_dir, "response.mp3")
+
+        try:
+            self.logger.logger.info(f"Converting text to speech: '{text}'")
+            tts = gTTS(text=text, lang=self.language)
+            tts.save(file_path)
+
+            # Play the audio after converting it to WAV
+            self.play_audio(file_path)
+        except gTTSError as e:
+            self.logger.log_error(f"Google TTS service failed: {e}")
+        except Exception as e:
+            self.logger.log_error(f"Error during speech synthesis: {e}, {type(e).__name__}")
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+    def test_write_permission(self):
+        """Test if the script has write permission for the temp directory."""
+        test_file = os.path.join(self.temp_dir, "test.txt")
+        try:
+            with open(test_file, "w") as f:
+                f.write("Testing write permissions.")
+            print("Write permission available.")
+        except PermissionError:
+            print("Write permission denied.")
+        finally:
+            if os.path.exists(test_file):
+                os.remove(test_file)
+
+    def listen(self):
+        """Listens to user input via microphone and uses speech recognition to convert it to text."""
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            self.logger.logger.info("Listening for user input via microphone.")
+            try:
+                recognizer.adjust_for_ambient_noise(source)
+                audio = recognizer.listen(source)
+                text = recognizer.recognize_google(audio)
+                self.logger.logger.info(f"User input recognized: '{text}'")
+                return text
+            except sr.UnknownValueError:
+                error_message = "Speech recognition could not understand the audio."
+                self.logger.log_warning(error_message)
+                return "Sorry, I didn't catch that."
+            except sr.RequestError as e:
+                error_message = f"Speech recognition service is unavailable: {e}"
+                self.logger.log_error(error_message)
+                return "Network error: Could not reach the speech recognition service."
+            except Exception as e:
+                error_message = f"Unexpected error during listening: {e}"
+                self.logger.log_error(error_message)
+                return "An error occurred while processing your input."
+
+if __name__ == "__main__":
+    voice = VoiceInterface()
+    voice.test_write_permission()
+    voice.speak("Hello, this is a test.")
+
+
+
+
+snake.py
+
+import pygame
+import random
+import heapq
+import numpy as np
+import sys
+import os
+
+# Add the root project directory (Snowball_AI) to the system path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+from core.reinforcement import QLearningAgent
+from core.memory import Memory
+
+# Set up Pygame
+pygame.init()
+
+# Constants
+TILE_SIZE = 20  # Size of each tile (Snake segments)
+GRID_SIZE = 30  # 30x30 grid (600x600 pixels)
+WINDOW_SIZE = GRID_SIZE * TILE_SIZE
+FPS = 15  # Frames per second
+
+# Colors
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)  # Snake color in normal mode
+DARK_GREEN = (0, 128, 0)  # Snake color in Hamiltonian cycle mode
+YELLOW = (255, 255, 0)  # Snake color in survival mode
+RED = (255, 0, 0)  # Food color
+WHITE = (255, 255, 255)  # Text color
+
+# Directions (UP, RIGHT, DOWN, LEFT)
+DIRECTIONS = {
+    pygame.K_UP: (0, -1),
+    pygame.K_RIGHT: (1, 0),
+    pygame.K_DOWN: (0, 1),
+    pygame.K_LEFT: (-1, 0),
+}
+
+# Opposite directions for easy checking
+OPPOSITE_DIRECTIONS = {
+    (0, -1): (0, 1),  # UP -> DOWN
+    (0, 1): (0, -1),  # DOWN -> UP
+    (1, 0): (-1, 0),  # RIGHT -> LEFT
+    (-1, 0): (1, 0),  # LEFT -> RIGHT
+}
+
+# Initialize screen
+screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+pygame.display.set_caption("Snowball - Snake AI")
+
+# Button class for Start, Play Again, and Quit buttons
+class Button:
+    def __init__(self, x, y, width, height, text):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.font = pygame.font.Font(None, 74)
+        self.color = WHITE
+        self.text_color = BLACK
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)
+        text_surf = self.font.render(self.text, True, self.text_color)
+        text_rect = text_surf.get_rect(center=self.rect.center)
+        surface.blit(text_surf, text_rect)
+
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+
+# Load high score from file
+def load_high_score():
+    try:
+        with open("highscore.txt", "r") as f:
+            return int(f.read())
+    except FileNotFoundError:
+        return 0
+
+# Save high score to file
+def save_high_score(high_score):
+    with open("highscore.txt", "w") as f:
+        f.write(str(high_score))
+
+# Heuristic function for A* (Manhattan distance)
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+# A* pathfinding algorithm
+def a_star(grid, start, goal, tail):
+    frontier = []
+    heapq.heappush(frontier, (0, start))
+    came_from = {start: None}
+    cost_so_far = {start: 0}
+
+    while frontier:
+        _, current = heapq.heappop(frontier)
+
+        if current == goal:
+            break
+
+        for dx, dy in DIRECTIONS.values():
+            next_pos = (current[0] + dx, current[1] + dy)
+
+            # Ensure the next position is within bounds
+            if 0 <= next_pos[0] < GRID_SIZE and 0 <= next_pos[1] < GRID_SIZE:
+                # Avoid adding the current snake body but allow the tail (since it will move)
+                if next_pos not in grid or next_pos == tail:
+                    new_cost = cost_so_far[current] + 1
+                    if next_pos not in cost_so_far or new_cost < cost_so_far[next_pos]:
+                        cost_so_far[next_pos] = new_cost
+                        priority = new_cost + heuristic(goal, next_pos)
+                        heapq.heappush(frontier, (priority, next_pos))
+                        came_from[next_pos] = current
+
+    # Reconstruct path
+    path = []
+    current = goal
+    while current != start:
+        path.append(current)
+        current = came_from.get(current)
+
+        # If no valid path is found
+        if current is None:
+            return []  # No valid path
+    path.reverse()
+    return path
+
+# Hamiltonian cycle generation
+def generate_hamiltonian_cycle(grid_size):
+    path = []
+    x, y = 0, 0
+    dx, dy = 1, 0
+    visited = set()
+    for _ in range(grid_size * grid_size):
+        path.append((x, y))
+        visited.add((x, y))
+        nx, ny = x + dx, y + dy
+        if not (0 <= nx < grid_size and 0 <= ny < grid_size) or (nx, ny) in visited:
+            dx, dy = -dy, dx  # Change direction in a spiral
+        x, y = x + dx, y + dy
+    return path
+
+# Snake AI class
+class SnakeAI:
+    def __init__(self, high_score=0):  # Pass high_score
+        self.snake = [(0, 0)]
+        self.grid = set(self.snake)
+        self.direction = (1, 0)  # Start moving to the right
+        self.last_direction = self.direction  # Keep track of the last valid direction
+        self.food = self.spawn_food()
+        self.score = 0
+        self.high_score = high_score  # Use loaded high score
+        self.cycle = generate_hamiltonian_cycle(GRID_SIZE)
+        self.cycle_index = 0
+        self.is_shortcut = False
+        self.use_hamiltonian = False
+        self.manual_mode = False
+        self.show_hamiltonian = False
+        self.manual_move_done = False  # Track if a move has been made in manual mode
+        self.mode = "normal"  # Modes: 'normal', 'hamiltonian', 'survival'
+        state_size = GRID_SIZE * GRID_SIZE * 9  # Adjust the state size based on grid and direction
+        action_size = 3  # Possible actions (left, straight, right)
+        self.learner = QLearningAgent(state_size, action_size)
+        self.memory = Memory()  # Load Snowball AI's memory
+
+    def spawn_food(self):
+        while True:
+            food_position = (
+                random.randint(0, GRID_SIZE - 1),
+                random.randint(0, GRID_SIZE - 1),
+            )
+            if food_position not in self.snake:
+                return food_position
+
+    def move(self):
+        head = self.snake[0]  # Get the head of the snake
+
+        if not self.manual_mode:
+            # Check if the snake is in a "sticky situation"
+            if self.use_hamiltonian:
+                self.mode = "hamiltonian"  # Hamiltonian cycle mode
+            else:
+                self.mode = "normal"  # Normal mode (seeking food)
+
+            # Check if there is a path to the food
+            if self.mode == "normal":
+                path_to_food = a_star(self.grid, head, self.food, self.snake[-1])
+
+                if path_to_food:
+                    next_position = path_to_food[0]
+                    self.is_shortcut = True
+                else:
+                    # Follow the Hamiltonian cycle if no path is found
+                    self.is_shortcut = False
+                    next_position = self.follow_hamiltonian()
+
+            # Check for collision with walls or itself
+            if not (0 <= next_position[0] < GRID_SIZE and 0 <= next_position[1] < GRID_SIZE):
+                return False  # Game over - hit the wall
+
+            if next_position in self.grid and next_position != self.snake[-1]:
+                return False  # Game over - hit itself
+
+            # If the snake reaches the food
+            if next_position == self.food:
+                self.snake.insert(0, next_position)  # Add new head (snake grows)
+                self.grid.add(next_position)  # Update grid
+                self.food = self.spawn_food()  # Spawn new food
+                self.score += 1  # Increase score
+                if self.score > self.high_score:
+                    self.high_score = self.score  # Update high score if needed
+            else:
+                # Move the snake by removing the tail and adding a new head
+                tail = self.snake.pop()  # Remove the last segment (tail)
+                self.grid.remove(tail)  # Update the grid to remove the tail
+                self.snake.insert(0, next_position)  # Add the new head
+                self.grid.add(next_position)  # Update the grid with the new head
+
+        return True  # Move successful, no collisions
+
+    def follow_hamiltonian(self):
+        self.cycle_index = self.cycle.index(self.snake[0])
+        self.cycle_index = (self.cycle_index + 1) % len(self.cycle)
+        return self.cycle[self.cycle_index]
+
+    def toggle_manual_mode(self):
+        self.manual_mode = not self.manual_mode
+        self.manual_move_done = False  # Reset manual move flag when switching modes
+
+    # Enable manual control with arrow keys
+    def manual_move(self, event):
+        new_direction = None
+
+        if event.key == pygame.K_UP:
+            new_direction = (0, -1)
+        elif event.key == pygame.K_DOWN:
+            new_direction = (0, 1)
+        elif event.key == pygame.K_LEFT:
+            new_direction = (-1, 0)
+        elif event.key == pygame.K_RIGHT:
+            new_direction = (1, 0)
+
+        # Prevent the snake from moving backwards into itself
+        if new_direction and new_direction != OPPOSITE_DIRECTIONS.get(self.last_direction):
+            self.direction = new_direction
+            self.last_direction = self.direction  # Update last valid direction
+            self.manual_move_done = True
+
+    def manual_move_snake(self):
+        """Moves the snake manually based on the current direction."""
+        head = self.snake[0]
+        next_position = (head[0] + self.direction[0], head[1] + self.direction[1])
+
+        # Check for collisions
+        if not (0 <= next_position[0] < GRID_SIZE and 0 <= next_position[1] < GRID_SIZE):
+            print("Game Over: Collision with wall")
+            return False  # Game over - hit the wall
+
+        if next_position in self.grid and next_position != self.snake[-1]:
+            print("Game Over: Collision with self")
+            return False  # Game over - hit itself
+
+        # If the snake reaches the food
+        if next_position == self.food:
+            self.snake.insert(0, next_position)  # Add new head (snake grows)
+            self.grid.add(next_position)  # Update grid
+            self.food = self.spawn_food()  # Spawn new food
+            self.score += 1  # Increase score
+            if self.score > self.high_score:
+                self.high_score = self.score  # Update high score if needed
+        else:
+            # Move the snake by removing the tail and adding a new head
+            tail = self.snake.pop()  # Remove the last segment (tail)
+            self.grid.remove(tail)  # Update the grid to remove the tail
+            self.snake.insert(0, next_position)  # Add the new head
+            self.grid.add(next_position)  # Update the grid with the new head
+
+        return True  # Move successful
+
+    # Reintroducing the missing get_state function
+    def encode_state(self, head, food_direction):
+        """Encode the snake's head position and food direction as a single integer state."""
+        head_index = head[0] * GRID_SIZE + head[1]
+        food_index = (food_direction[0] + 1) * 3 + (food_direction[1] + 1)
+        return head_index * 9 + food_index
+
+    def get_state(self):
+        """Returns an encoded version of the game state for Q-learning."""
+        head = self.snake[0]
+        food_direction = (self.food[0] - head[0], self.food[1] - head[1])
+        return self.encode_state(head, food_direction)
+
+    def update_q_table(self, reward, next_state):
+        """Updates the Q-learning table with the reward."""
+        current_state = self.get_state()
+        action = self.direction  # Treat current direction as action
+        done = False  # Or set it based on game over logic
+        self.learner.learn(current_state, action, reward, next_state, done)
+
+    def draw(self):
+        # Change snake color based on mode
+        if self.mode == "survival":
+            snake_color = YELLOW  # Yellow for survival mode
+        elif self.mode == "hamiltonian":
+            snake_color = DARK_GREEN  # Dark green for Hamiltonian mode
+        else:
+            snake_color = GREEN  # Green for normal mode
+
+        # Draw the Hamiltonian cycle if the option is enabled
+        if self.show_hamiltonian:
+            font = pygame.font.Font(None, 24)
+            for i, pos in enumerate(self.cycle):
+                x = pos[0] * TILE_SIZE
+                y = pos[1] * TILE_SIZE
+                pygame.draw.rect(screen, WHITE, (x, y, TILE_SIZE, TILE_SIZE), 1)
+                text = font.render(str(i), True, WHITE)
+                screen.blit(text, (x + 5, y + 5))
+
+        # Draw the snake
+        for i, segment in enumerate(self.snake):
+            x = segment[0] * TILE_SIZE
+            y = segment[1] * TILE_SIZE
+            if i == 0:
+                # Draw the head with smaller eyes
+                pygame.draw.rect(screen, snake_color, (x, y, TILE_SIZE, TILE_SIZE))
+                eye_size = TILE_SIZE // 5  # Smaller eyes
+                eye_offset = TILE_SIZE // 3
+
+                if self.direction == (1, 0):  # Facing right
+                    pygame.draw.circle(screen, BLACK, (x + TILE_SIZE - eye_offset, y + eye_offset), eye_size)
+                    pygame.draw.circle(screen, BLACK, (x + TILE_SIZE - eye_offset, y + TILE_SIZE - eye_offset), eye_size)
+                elif self.direction == (-1, 0):  # Facing left
+                    pygame.draw.circle(screen, BLACK, (x + eye_offset, y + eye_offset), eye_size)
+                    pygame.draw.circle(screen, BLACK, (x + eye_offset, y + TILE_SIZE - eye_offset), eye_size)
+                elif self.direction == (0, -1):  # Facing up
+                    pygame.draw.circle(screen, BLACK, (x + eye_offset, y + eye_offset), eye_size)
+                    pygame.draw.circle(screen, BLACK, (x + TILE_SIZE - eye_offset, y + eye_offset), eye_size)
+                elif self.direction == (0, 1):  # Facing down
+                    pygame.draw.circle(screen, BLACK, (x + eye_offset, y + TILE_SIZE - eye_offset), eye_size)
+                    pygame.draw.circle(screen, BLACK, (x + TILE_SIZE - eye_offset, y + TILE_SIZE - eye_offset), eye_size)
+            else:
+                pygame.draw.rect(screen, snake_color, (x, y, TILE_SIZE, TILE_SIZE))
+
+        # Draw food
+        food_x, food_y = self.food[0] * TILE_SIZE, self.food[1] * TILE_SIZE
+        pygame.draw.rect(screen, RED, (food_x, food_y, TILE_SIZE, TILE_SIZE))
+
+    def display_score(self):
+        font = pygame.font.Font(None, 36)
+        score_text = font.render(f"Score: {self.score}", True, WHITE)
+        high_score_text = font.render(f"High Score: {self.high_score}", True, WHITE)
+        screen.blit(score_text, (10, 10))
+        screen.blit(high_score_text, (WINDOW_SIZE - 200, 10))
+
+def draw_title():
+    font = pygame.font.Font(None, 100)
+    snake_text = font.render("SNAKE", True, GREEN)
+    screen.blit(snake_text, (WINDOW_SIZE // 4, WINDOW_SIZE // 4))
+
+# Modify the game loop to handle game over state properly
+def game_loop():
+    clock = pygame.time.Clock()
+    high_score = load_high_score()  # Load high score from file at the start
+    snake_ai = SnakeAI(high_score)  # Pass high score to SnakeAI
+    running = True
+    game_active = False
+    game_over = False  # Track if the game is over
+    paused = False
+
+    # Create a start button in the middle of the screen
+    start_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 40, 300, 80, "Start")
+    game_over_button = None
+    play_again_button = None
+    quit_button = None
+
+    while running:
+        screen.fill(BLACK)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if game_active and not game_over:
+                    if event.key == pygame.K_SPACE:
+                        paused = not paused
+                    elif event.key == pygame.K_h:
+                        snake_ai.show_hamiltonian = not snake_ai.show_hamiltonian
+                    elif event.key == pygame.K_m:
+                        snake_ai.toggle_manual_mode()
+                    elif snake_ai.manual_mode:
+                        snake_ai.manual_move(event)  # Process single key press in manual mode
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if not game_active and start_button.is_clicked(mouse_pos):
+                    game_active = True
+                    game_over = False
+                    snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
+                elif game_over and play_again_button.is_clicked(mouse_pos):
+                    game_active = True
+                    game_over = False
+                    snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
+                elif game_over and quit_button.is_clicked(mouse_pos):
+                    running = False  # Quit the game
+
+        if snake_ai.manual_mode and snake_ai.manual_move_done:
+            snake_ai.manual_move_snake()  # Call to move the snake manually
+            snake_ai.manual_move_done = False  # Reset move flag after one step
+
+        if not game_active:
+            draw_title()  # Draw the title "SNAKE" before the game starts
+            start_button.draw(screen)
+        elif paused:
+            snake_ai.draw()  # Keep displaying the snake, food, and score
+            snake_ai.display_score()
+            font = pygame.font.Font(None, 74)
+            text = font.render("Paused", True, WHITE)
+            screen.blit(text, (WINDOW_SIZE // 2 - 100, WINDOW_SIZE // 2))
+        elif game_over:
+            # Draw the final game state (snake, food, and score)
+            snake_ai.draw()
+            snake_ai.display_score()
+
+            # Display the game over screen on top of the final state
+            font = pygame.font.Font(None, 74)
+            text = font.render("Game Over", True, RED)
+            screen.blit(text, (WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 100))
+            play_again_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 40, 300, 80, "Play Again")
+            quit_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 140, 300, 80, "Quit")
+            play_again_button.draw(screen)
+            quit_button.draw(screen)
+
+            # Assign game_over_button to play_again_button for click detection
+            game_over_button = play_again_button
+
+        else:
+            # Move the snake and calculate the reward
+            next_state = snake_ai.get_state()
+            if not snake_ai.move():
+                # Stop game logic and trigger game over
+                game_over = True
+                # Check if a new high score was reached and save it
+                if snake_ai.score > high_score:
+                    high_score = snake_ai.score
+                    save_high_score(high_score)  # Save new high score
+                snake_ai.memory.store_interaction(
+                    f"Game Over. Reason: Snake collided with wall or itself. Score: {snake_ai.score}",
+                    "Learning new strategy."
+                )
+                print(f"Game Over. Reason: Snake collided with wall or itself")
+            else:
+                snake_ai.update_q_table(-1 if snake_ai.snake[0] != snake_ai.food else 10, next_state)
+
+            # Draw snake and other elements during the game
+            snake_ai.draw()
+            snake_ai.display_score()
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
+    # Save memory on game end
+    snake_ai.memory.store_interaction(f"Final Score: {snake_ai.score}", "Snake AI completed a game.")
+
+if __name__ == "__main__":
+    game_loop()
+    pygame.quit()
+    sys.exit()
+
+
+
+
+game_interface.py
+
+import logging
+import threading
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from snake.snake import game_loop  # Adjusted import
+
+class GameInterface:
+    def __init__(self):
+        self.games = {
+            'snake': self.launch_snake,
+            'billiards': self.launch_billiards,
+            'asteroids': self.launch_asteroids,
+            'pacman': self.launch_pacman,
+            'minesweeper': self.launch_minesweeper,
+            'dino': self.launch_dino_game,
+            '2048': self.launch_2048,
+            'chess': self.launch_chess,
+            'hill_climb_racing': self.launch_hill_climb_racing,
+            'pong': self.launch_pong,
+            'rubiks_cube': self.launch_rubiks_cube,
+            'flappy_bird': self.launch_flappy_bird,
+            'piano_tiles': self.launch_piano_tiles,
+            'tetris': self.launch_tetris,
+            'connect_4': self.launch_connect_4,
+            'clicker_heroes': self.launch_clicker_heroes,
+            'jump_king': self.launch_jump_king,
+            'walk': self.launch_walk,
+            'creature_creator': self.launch_creature_creator,
+            'drive': self.launch_drive,
+            'fly': self.launch_fly,
+            'donkey_kong': self.launch_donkey_kong,
+            'guitar_hero': self.launch_guitar_hero,
+            'suika_game': self.launch_suika_game,
+            'risk': self.launch_risk,
+        }
+        self.active_game = None
+        self.logger = logging.getLogger("SnowballAI.GameInterface")
+        self.logger.info("Game Interface initialized.")
+
+    def list_available_games(self):
+        """List all available games."""
+        return list(self.games.keys())
+
+    def launch_game(self, game_name):
+        """Launch the selected game."""
+        game_name = game_name.lower()
+        if game_name in self.games:
+            try:
+                self.logger.info(f"Launching game: {game_name}")
+                self.games[game_name]()
+            except Exception as e:
+                self.logger.error(f"Error launching {game_name}: {str(e)}")
+        else:
+            self.logger.warning(f"Game '{game_name}' is not available.")
+            print(f"Game '{game_name}' is not available.")
+
+    def run_game_in_thread(self, game_func):
+        """Run the game in a separate thread to avoid blocking."""
+        game_thread = threading.Thread(target=game_func)
+        game_thread.start()
+
+    # Placeholder for each game launch function
+    def launch_snake(self):
+        """Launch Snake game."""
+        from games.snake.snake import game_loop
+        game_loop()
+
+    def launch_billiards(self):
+        """Launch Billiards game."""
+        print("Launching Billiards game...")
+        # Add actual game launch logic here
+
+    def launch_asteroids(self):
+        """Launch Asteroids game."""
+        print("Launching Asteroids game...")
+        # Add actual game launch logic here
+
+    def launch_minesweeper(self):
+        """Launch Minesweeper game."""
+        print("Launching Minesweeper game...")
+        # Add actual game launch logic here
+
+    def launch_dino_game(self):
+        """Launch Google Chrome Dinosaur game."""
+        print("Launching Dino game...")
+        # Add actual game launch logic here
+
+    def launch_2048(self):
+        """Launch 2048 game."""
+        print("Launching 2048 game...")
+        # Add actual game launch logic here
+
+    def launch_chess(self):
+        """Launch Chess game."""
+        print("Launching Chess game...")
+        # Add actual game launch logic here
+
+    def launch_hill_climb_racing(self):
+        """Launch Hill Climb Racing game."""
+        print("Launching Hill Climb Racing game...")
+        # Add actual game launch logic here
+
+    def launch_pong(self):
+        """Launch Pong game."""
+        print("Launching Pong game...")
+        # Add actual game launch logic here
+
+    def launch_rubiks_cube(self):
+        """Launch Rubik's Cube game."""
+        print("Launching Rubik's Cube game...")
+        # Add actual game launch logic here
+
+    def launch_flappy_bird(self):
+        """Launch Flappy Bird game."""
+        print("Launching Flappy Bird game...")
+        # Add actual game launch logic here
+
+    def launch_piano_tiles(self):
+        """Launch Piano Tiles game."""
+        print("Launching Piano Tiles game...")
+        # Add actual game launch logic here
+
+    def launch_tetris(self):
+        """Launch Tetris game."""
+        print("Launching Tetris game...")
+        # Add actual game launch logic here
+
+    def launch_connect_4(self):
+        """Launch Connect 4 game."""
+        print("Launching Connect 4 game...")
+        # Add actual game launch logic here
+
+    def launch_clicker_heroes(self):
+        """Launch Clicker Heroes game."""
+        print("Launching Clicker Heroes game...")
+        # Add actual game launch logic here
+
+    def launch_jump_king(self):
+        """Launch Jump King game."""
+        print("Launching Jump King game...")
+        # Add actual game launch logic here
+
+    def launch_walk(self):
+        """Launch Walk game."""
+        print("Launching Walk game...")
+        # Add actual game launch logic here
+
+    def launch_creature_creator(self):
+        """Launch Creature Creator game."""
+        print("Launching Creature Creator game...")
+        # Add actual game launch logic here
+
+    def launch_drive(self):
+        """Launch Drive game."""
+        print("Launching Drive game...")
+        # Add actual game launch logic here
+
+    def launch_fly(self):
+        """Launch Fly game."""
+        print("Launching Fly game...")
+        # Add actual game launch logic here
+
+    def launch_donkey_kong(self):
+        """Launch Donkey Kong game."""
+        print("Launching Donkey Kong game...")
+        # Add actual game launch logic here
+
+    def launch_guitar_hero(self):
+        """Launch Guitar Hero game."""
+        print("Launching Guitar Hero game...")
+        # Add actual game launch logic here
+
+    def launch_suika_game(self):
+        """Launch Suika Game."""
+        print("Launching Suika Game...")
+        # Add actual game launch logic here
+
+    def launch_risk(self):
+        """Launch RISK game."""
+        print("Launching RISK game...")
+        # Add actual game launch logic here
+
+    def launch_pacman(self):
+        """Launch PacMan game."""
+        print("Launching PacMan game...")
+        # Add actual game launch logic here
+
+    def start_game(self, game_name):
+        """Start a specified game by name."""
+        game_name = game_name.lower()
+        if game_name in self.games:
+            self.logger.info(f"Starting {game_name} game.")
+            self.active_game = game_name
+            self.launch_game(game_name)
+        else:
+            self.logger.warning(f"Game '{game_name}' not found.")
+            print(f"Game '{game_name}' not found.")
+
+    def stop_game(self):
+        """Stop the current active game."""
+        if self.active_game:
+            self.logger.info(f"Stopping {self.active_game} game.")
+            # Implement game-specific stop logic if needed
+            print(f"{self.active_game.capitalize()} game stopped.")
+            self.active_game = None
+        else:
+            self.logger.info("No active game to stop.")
+            print("No active game is currently running.")
+
+    def get_active_game(self):
+        """Return the name of the currently active game."""
+        return self.active_game if self.active_game else "No active game."
+
+# Example usage
+if __name__ == "__main__":
+    game_interface = GameInterface()
+    print(game_interface.list_available_games())  # List available games
+    game_interface.start_game("snake")  # Start Snake game
+
+
+
+
+gui_interface.py
+
+import tkinter as tk
+from tkinter import ttk, scrolledtext
+from ttkthemes import ThemedTk
+from PIL import ImageTk, Image
+import sys
+sys.path.append('S:/core/')
+from nlp_engine import NLPEngine
+
+class SnowballGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Snowball AI - Chat Interface")
+        
+        # Set the duck icon
+        duck_icon = ImageTk.PhotoImage(file="S:/icon/trayicon.png")
+        self.root.iconphoto(True, duck_icon)
+
+        # Initialize NLP engine
+        self.snowball = NLPEngine(config_path="S:/config/api_keys.json")
+
+        # Set window background to dark grey
+        self.root.configure(bg="#1e1e1e")
+        
+        # Create a Frame to contain the text area and scrollbar
+        text_frame = tk.Frame(self.root, bg="#1e1e1e")
+        text_frame.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
+
+        # Create Chat Display with a darker background and white text
+        self.chat_display = tk.Text(text_frame, width=80, height=20, wrap=tk.WORD, bg="#2c2c2c", fg="white", insertbackground="white", relief="flat", font=("Arial", 14))
+        self.chat_display.grid(row=0, column=0, sticky="nsew")
+        self.chat_display.insert(tk.END, "Welcome! How can Snowball assist you today?\n")
+        self.chat_display.tag_configure('user', foreground='lightblue')
+        self.chat_display.tag_configure('snowball', foreground='lightgreen')
+        
+        # Configure row/column to ensure the text box resizes properly
+        text_frame.grid_rowconfigure(0, weight=1)
+        text_frame.grid_columnconfigure(0, weight=1)
+
+        # Create a custom scrollbar for the chat display
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("TScrollbar", gripcount=0,
+                        background="#333333", darkcolor="#1e1e1e", lightcolor="#4a4a4a",
+                        troughcolor="#1e1e1e", bordercolor="#4a4a4a", arrowcolor="white")
+        
+        # Add the scrollbar
+        scroll_bar = ttk.Scrollbar(text_frame, orient="vertical", command=self.chat_display.yview)
+        self.chat_display.config(yscrollcommand=scroll_bar.set)
+        scroll_bar.grid(row=0, column=1, sticky="ns")
+
+        # Create Input Field with lighter gray background
+        self.user_input = tk.Entry(root, bg="#404040", fg="white", font=("Arial", 14), relief="flat", insertbackground="white")
+        self.user_input.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
+
+        # Load and resize the send icon (up arrow)
+        send_icon = Image.open("S:/icon/send.png")
+        send_icon = send_icon.resize((40, 40), Image.Resampling.LANCZOS)
+        send_icon = ImageTk.PhotoImage(send_icon)
+
+        # Send Button with up arrow icon
+        self.send_button = tk.Button(root, image=send_icon, command=self.send_input, bg="#1e1e1e", relief="flat", bd=0)
+        self.send_button.grid(row=1, column=2, padx=5, pady=5, sticky="e")
+        self.send_button.image = send_icon  # Keep reference to avoid garbage collection
+
+        # Load and resize the attach icon (paperclip)
+        attach_icon = Image.open("S:/icon/attach.png")
+        attach_icon = attach_icon.resize((40, 40), Image.Resampling.LANCZOS)
+        attach_icon = ImageTk.PhotoImage(attach_icon)
+
+        # Attach Button for file attachment (left of the input field)
+        self.attach_button = tk.Button(root, image=attach_icon, bg="#1e1e1e", relief="flat", bd=0)
+        self.attach_button.grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.attach_button.image = attach_icon  # Keep reference to avoid garbage collection
+
+        # Load and resize the save icon
+        save_icon = Image.open("S:/icon/save.png")
+        save_icon = save_icon.resize((40, 40), Image.Resampling.LANCZOS)
+        save_icon = ImageTk.PhotoImage(save_icon)
+
+        # Save Button for saving chat (next to the send button)
+        self.save_button = tk.Button(root, image=save_icon, command=self.save_chat, bg="#1e1e1e", relief="flat", bd=0)
+        self.save_button.grid(row=1, column=3, padx=5, pady=5, sticky="e")
+        self.save_button.image = save_icon  # Keep reference to avoid garbage collection
+
+        # Bind Enter key to send message
+        self.root.bind('<Return>', lambda event: self.send_input())
+
+        # Grid weight to ensure proper resizing
+        self.root.grid_rowconfigure(0, weight=1)
+        self.root.grid_columnconfigure(1, weight=1)
+
+    def send_input(self):
+        # Get the user's input
+        user_message = self.user_input.get()
+        if not user_message.strip():
+            return  # Don't process empty inputs
+
+        # Display the user's message in the chat
+        self.display_message(user_message, sender='user')
+
+        # Show "thinking" message while processing
+        self.chat_display.insert(tk.END, "Snowball is thinking...\n")
+        self.chat_display.see(tk.END)
+
+        # Process the input through Snowball
+        self.root.after(100, lambda: self.process_input(user_message))
+
+    def process_input(self, user_message):
+        try:
+            snowball_response = self.snowball.process_input(user_message)
+        except Exception as e:
+            snowball_response = "Oops! Something went wrong."
+
+        # Display Snowball's response
+        self.display_message(snowball_response, sender='snowball')
+
+    def display_message(self, message, sender='user'):
+        tag = 'user' if sender == 'user' else 'snowball'
+        self.chat_display.insert(tk.END, f"{sender.capitalize()}: {message}\n", tag)
+        self.chat_display.see(tk.END)
+        
+        # Clear the input field if it's from the user
+        if sender == 'user':
+            self.user_input.delete(0, tk.END)
+
+    def save_chat(self):
+        """Save the chat history to a file."""
+        with open("chat_history.txt", "w") as file:
+            file.write(self.chat_display.get("1.0", tk.END))
+
+if __name__ == "__main__":
+    root = ThemedTk(theme="arc")
+    gui = SnowballGUI(root)
+    root.geometry("1250x950")
+    root.mainloop()
+
+
+
+
+test_interface.py
+
+class TextInterface:
+    def __init__(self):
+        pass
+
+    def receive_input(self, text):
+        """
+        Receives text input from the user.
+        """
+        print(f"User: {text}")
+
+    def send_response(self, response):
+        """
+        Sends a text response back to the user.
+        """
+        print(f"AI: {response}")
+
+
+
+
+ChatApp.js
+
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, Text, TextInput, Button, ScrollView } from 'react-native';
+import WebSocket from 'ws';
+
+const ChatApp = () => {
+    const [message, setMessage] = useState('');
+    const [chatHistory, setChatHistory] = useState([]);
+    const [ws, setWs] = useState(null);
+
+    useEffect(() => {
+        // Initialize WebSocket connection
+        const socket = new WebSocket('ws://YOUR_PC_IP_ADDRESS:8765');
+        setWs(socket);
+
+        // On message received from server
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setChatHistory(prevHistory => [...prevHistory, { sender: 'Snowball', text: data.response }]);
+        };
+
+        // Clean up the connection on unmount
+        return () => socket.close();
+    }, []);
+
+    const sendMessage = () => {
+        if (ws && message.trim()) {
+            const userMessage = { message: message.trim() };
+            ws.send(JSON.stringify(userMessage));
+
+            // Add message to local chat history
+            setChatHistory(prevHistory => [...prevHistory, { sender: 'You', text: message }]);
+            setMessage('');  // Clear the input
+        }
+    };
+
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#000', padding: 10 }}>
+            <ScrollView style={{ flex: 1, marginBottom: 10 }}>
+                {chatHistory.map((msg, index) => (
+                    <View key={index} style={{ marginVertical: 5 }}>
+                        <Text style={{ color: msg.sender === 'You' ? '#fff' : '#4caf50' }}>
+                            {msg.sender}: {msg.text}
+                        </Text>
+                    </View>
+                ))}
+            </ScrollView>
+            <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                <TextInput
+                    style={{ flex: 1, backgroundColor: '#fff', padding: 10, borderRadius: 5 }}
+                    placeholder="Type your message"
+                    value={message}
+                    onChangeText={setMessage}
+                />
+                <Button title="Send" onPress={sendMessage} />
+            </View>
+        </SafeAreaView>
+    );
+};
+
+export default ChatApp;
+
+
+
+
+chat_server.py
+
+import asyncio
+import websockets
+import json
+
+# Import Snowball AI core components
+from core.ai_agent import SnowballAI
+
+# Create an instance of the Snowball AI agent
+snowball_ai = SnowballAI()
+
+# WebSocket server handler
+async def handle_message(websocket, path):
+    async for message in websocket:
+        print(f"Received message from mobile: {message}")
+        
+        # Parse message and process it
+        try:
+            data = json.loads(message)
+            user_message = data.get('message', '')
+            
+            # Check if it's a command or just a chat message
+            if "play" in user_message.lower():
+                response = f"Starting {user_message.split('play')[-1].strip()} game."
+                # Call game functions if requested (example: snake)
+                if "snake" in user_message.lower():
+                    response = "Starting Snake AI game."
+                    # Here, you would call the function to start the Snake game
+            else:
+                # Handle normal chat with Snowball
+                response = snowball_ai.chat(user_message)
+            
+            # Send back response to the mobile app
+            await websocket.send(json.dumps({"response": response}))
+        
+        except Exception as e:
+            await websocket.send(json.dumps({"error": str(e)}))
+            print(f"Error: {e}")
+
+# Start WebSocket server
+async def start_server():
+    server = await websockets.serve(handle_message, "localhost", 8765)
+    print("WebSocket server started on ws://localhost:8765")
+    await server.wait_closed()
+
+# Main entry point for the server
+if __name__ == "__main__":
+    asyncio.get_event_loop().run_until_complete(start_server())
+    asyncio.get_event_loop().run_forever()
+
+
+
+
+start_snowball.py
+
+from interface.text_interface import TextInterface
+
+def main():
+    """Main loop for interacting with the AI."""
+    print("Starting AI Assistant...")
+    text_interface = TextInterface()
+    text_interface.interact()
+
+if __name__ == "__main__":
+    main()

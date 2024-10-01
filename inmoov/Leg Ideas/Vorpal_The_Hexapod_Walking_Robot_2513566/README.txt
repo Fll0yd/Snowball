@@ -1,1 +1,0 @@
-Vorpal The Hexapod Walking Robot by vorpal on Thingiverse: https://www.thingiverse.com/thing:2513566
