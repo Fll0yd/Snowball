@@ -1,0 +1,14 @@
+AI/NAS Specs
+
+Motherboard - ASUS P8Z77-V
+Corsair 650w PSU
+24gb DDR3 RAM
+NAS HBA Controller
+2.5Gbe Nic 
+
+*Software*
+
+proxmox?
+TrueNAS vs Unraid($60)
+RUFUS (DDMode!) 
+

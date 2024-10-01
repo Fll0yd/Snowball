@@ -1,0 +1,6 @@
+{
+    "auto_reminder": true,
+    "reminder_interval": 60,
+    "notification_level": "normal",
+    "allow_casual_conversation": true
+}

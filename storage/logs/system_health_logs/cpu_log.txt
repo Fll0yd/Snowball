@@ -1,0 +1,229 @@
+2024-09-30 10:15:15,891 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:15,892 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:15,908 - INFO - Stored interaction: User: 'Backup test', AI: 'This should be backed up.'
+2024-09-30 10:15:15,909 - INFO - Database backup created at data/memories_backup_20240930_101515.db
+2024-09-30 10:15:15,923 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:15,924 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:15,925 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:15,926 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:15,951 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:15,953 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:15,955 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:15,956 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:15,969 - INFO - Stored interaction: User: 'Cached input', AI: 'Cached response'
+2024-09-30 10:15:15,970 - INFO - Retrieved all interactions.
+2024-09-30 10:15:15,973 - INFO - Retrieved interactions with keyword: 'Cached'
+2024-09-30 10:15:15,990 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:15,990 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:15,992 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:15,993 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,006 - INFO - Stored interaction: User: 'Interaction 1', AI: 'Response 1'
+2024-09-30 10:15:16,021 - INFO - Stored interaction: User: 'Interaction 2', AI: 'Response 2'
+2024-09-30 10:15:16,034 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,035 - INFO - Retrieved all interactions.
+2024-09-30 10:15:16,050 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,051 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,053 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,054 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,067 - INFO - Stored interaction: User: 'Hello!', AI: 'Hi there!'
+2024-09-30 10:15:16,082 - INFO - Stored interaction: User: 'How are you?', AI: 'I'm just a program.'
+2024-09-30 10:15:16,083 - INFO - Retrieved all interactions.
+2024-09-30 10:15:16,096 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,097 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,098 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,099 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,114 - INFO - Stored interaction: User: 'What's the weather?', AI: 'It's sunny today!'
+2024-09-30 10:15:16,127 - INFO - Stored interaction: User: 'Tell me about the weather tomorrow.', AI: 'It will be cloudy.'
+2024-09-30 10:15:16,128 - INFO - Retrieved interactions with keyword: 'weather'
+2024-09-30 10:15:16,143 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,144 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,145 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,146 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,160 - INFO - Stored interaction: User: 'First input', AI: 'First response'
+2024-09-30 10:15:16,176 - INFO - Stored interaction: User: 'Second input', AI: 'Second response'
+2024-09-30 10:15:16,179 - INFO - Retrieved last interaction: (2, 'Second input', 'Second response', '2024-09-30 15:15:16')
+2024-09-30 10:15:16,191 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,192 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,194 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,194 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,195 - ERROR - Error: Error connecting to SQLite database: unable to open database file
+2024-09-30 10:15:16,210 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,211 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,213 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,215 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,229 - INFO - Stored batch of 2 interactions.
+2024-09-30 10:15:16,229 - INFO - Retrieved all interactions.
+2024-09-30 10:15:16,245 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,245 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,246 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,247 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,260 - INFO - Stored interaction: User: 'Hello, Snowball!', AI: 'Hi! How can I assist?'
+2024-09-30 10:15:16,261 - INFO - Retrieved all interactions.
+2024-09-30 10:15:16,276 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,277 - INFO - Closed SQLite database connection.
+2024-09-30 10:15:16,278 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:15:16,279 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:15:16,291 - INFO - Stored interaction: User: 'Thread input 1', AI: 'Thread response 1'
+2024-09-30 10:15:16,309 - INFO - Stored interaction: User: 'Thread input 1', AI: 'Thread response 1'
+2024-09-30 10:15:16,405 - INFO - Stored interaction: User: 'Thread input 2', AI: 'Thread response 2'
+2024-09-30 10:15:16,422 - INFO - Stored interaction: User: 'Thread input 2', AI: 'Thread response 2'
+2024-09-30 10:15:16,523 - INFO - Retrieved all interactions.
+2024-09-30 10:15:16,537 - INFO - Cleared all interactions from the database.
+2024-09-30 10:15:16,538 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,695 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,695 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,710 - INFO - Stored interaction: User: 'Backup test', AI: 'This should be backed up.'
+2024-09-30 10:16:58,711 - INFO - Database backup created at data/memories_backup_20240930_101658.db
+2024-09-30 10:16:58,725 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,726 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,727 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,728 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,752 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,753 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,754 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,755 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,769 - INFO - Stored interaction: User: 'Cached input', AI: 'Cached response'
+2024-09-30 10:16:58,769 - INFO - Retrieved all interactions.
+2024-09-30 10:16:58,771 - INFO - Retrieved interactions with keyword: 'Cached'
+2024-09-30 10:16:58,786 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,787 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,788 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,789 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,804 - INFO - Stored interaction: User: 'Interaction 1', AI: 'Response 1'
+2024-09-30 10:16:58,818 - INFO - Stored interaction: User: 'Interaction 2', AI: 'Response 2'
+2024-09-30 10:16:58,833 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,833 - INFO - Retrieved all interactions.
+2024-09-30 10:16:58,848 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,848 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,849 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,850 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,864 - INFO - Stored interaction: User: 'Hello!', AI: 'Hi there!'
+2024-09-30 10:16:58,878 - INFO - Stored interaction: User: 'How are you?', AI: 'I'm just a program.'
+2024-09-30 10:16:58,879 - INFO - Retrieved all interactions.
+2024-09-30 10:16:58,891 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,891 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,893 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,894 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,906 - INFO - Stored interaction: User: 'What's the weather?', AI: 'It's sunny today!'
+2024-09-30 10:16:58,921 - INFO - Stored interaction: User: 'Tell me about the weather tomorrow.', AI: 'It will be cloudy.'
+2024-09-30 10:16:58,922 - INFO - Retrieved interactions with keyword: 'weather'
+2024-09-30 10:16:58,938 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,939 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,940 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,941 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,955 - INFO - Stored interaction: User: 'First input', AI: 'First response'
+2024-09-30 10:16:58,970 - INFO - Stored interaction: User: 'Second input', AI: 'Second response'
+2024-09-30 10:16:58,970 - INFO - Retrieved last interaction: (2, 'Second input', 'Second response', '2024-09-30 15:16:58')
+2024-09-30 10:16:58,985 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:58,985 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:58,987 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:58,987 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:58,989 - ERROR - Error: Error connecting to SQLite database: unable to open database file
+2024-09-30 10:16:59,005 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:59,006 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:59,008 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:59,009 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:59,023 - INFO - Stored batch of 2 interactions.
+2024-09-30 10:16:59,024 - INFO - Retrieved all interactions.
+2024-09-30 10:16:59,039 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:59,040 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:59,041 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:59,043 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:59,059 - INFO - Stored interaction: User: 'Hello, Snowball!', AI: 'Hi! How can I assist?'
+2024-09-30 10:16:59,059 - INFO - Retrieved all interactions.
+2024-09-30 10:16:59,074 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:59,075 - INFO - Closed SQLite database connection.
+2024-09-30 10:16:59,076 - INFO - Connected to SQLite database: data/memories.db
+2024-09-30 10:16:59,077 - INFO - Checked/created 'interactions' table and index.
+2024-09-30 10:16:59,091 - INFO - Stored interaction: User: 'Thread input 1', AI: 'Thread response 1'
+2024-09-30 10:16:59,107 - INFO - Stored interaction: User: 'Thread input 1', AI: 'Thread response 1'
+2024-09-30 10:16:59,209 - INFO - Stored interaction: User: 'Thread input 2', AI: 'Thread response 2'
+2024-09-30 10:16:59,227 - INFO - Stored interaction: User: 'Thread input 2', AI: 'Thread response 2'
+2024-09-30 10:16:59,328 - INFO - Retrieved all interactions.
+2024-09-30 10:16:59,343 - INFO - Cleared all interactions from the database.
+2024-09-30 10:16:59,344 - INFO - Closed SQLite database connection.
+2024-09-30 10:40:16,469 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:16,471 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:16,510 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:16,533 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:16,560 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:27,600 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:27,661 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:27,663 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:27,699 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:27,729 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:38,743 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:38,783 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:38,829 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:38,877 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:40:38,879 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:43:58,578 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:43:58,613 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:43:58,614 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:43:58,640 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:43:58,642 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:09,710 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:09,756 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:09,760 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:09,839 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:09,843 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:20,831 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:20,901 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:20,939 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:20,998 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:21,002 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:31,923 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:32,010 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:32,073 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:32,118 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:32,124 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:43,015 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:43,132 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:43,190 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:43,229 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:43,256 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:54,105 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:54,247 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:54,303 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:54,359 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:44:54,362 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:05,211 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:05,370 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:05,435 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:05,469 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:05,507 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:16,317 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:16,447 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:16,544 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:16,576 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:16,612 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:27,403 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:27,540 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:27,653 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:27,688 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:27,733 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:38,498 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:38,620 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:38,776 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:38,818 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:38,857 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:49,590 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:49,711 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:49,900 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:49,935 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:45:49,973 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:46:00,688 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:46:00,800 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:46:01,034 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:46:01,092 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:46:01,093 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:43,798 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:43,805 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:43,837 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:43,838 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:43,864 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:54,927 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:54,969 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:55,010 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:55,095 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-09-30 10:50:55,098 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'

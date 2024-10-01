@@ -1,0 +1,92 @@
+/Snowball_AI/                                          # Root directory for the AI project
+   /cloud_sync/                                        # Cloud sync data
+       /mobile_sync/
+           gps_data.json          *blank file*
+           messages.json          *blank file*
+   /config/                                            # Configurations and credentials
+       api_keys.json                                   # API keys for external services
+       facebook_token.json        *blank file*
+       google_maps_key.json       *blank file*       
+       settings.json                                   # User preferences and settings
+       token.json                 *blank file*                     
+       voice_settings.json
+   /core/                                              # Core functionality
+       __init__.py       
+       ai_agent.py                                     # Main AI class
+       decision_maker.py                               # Decision-making logic
+       file_monitor.py       
+       game_ai.py                                      # Game-playing AI logic
+       logger.py                   
+       memory.py                                       # AI memory management
+       mobile_integration.py                           # Mobile app integration logic
+       nlp_engine.py                                   # Natural Language Processing (NLP) engine
+       reinforcement.py                                # Reinforcement learning logic                                      
+       system_monitor.py                               
+       voice_interface.py                              # Voice interaction code
+   /data/                                              # Data storage
+       /chat_history/
+           project1.json           *blank file*        # ChatGPT Project conversation histories
+           project2.json           *blank file*
+       interaction_log.txt         *blank file*        # Log of interactions
+       memories.db                                     # AI memory (SQLite DB)
+       name_history.json           *blank file*        # Tracks AI name evolution
+   /games/                                             # Games (pool, risk, snake, etc.)
+       /pool/
+           pool.py                                     # Pool game AI
+       /risk/
+           AIRISK.py                                   # Risk game AI logic
+           Implementations.txt                         # Rules/strategies for Risk
+           territories.txt                             # Map of territories for Risk game
+       /snake/
+           snake.py
+       __init__.py
+    /inmoov/   
+       inmoov_control.py           *blank file*
+       sensors.py                                      # InMoov robot integration
+   /interface/                                         # Interface logic
+       game_interface.py                               # Game interface (GUI for game selection)
+       text_interface.py                               # Text-based interface for Snowball
+       gui_interface.py
+   /scripts/
+       start_snowball.py
+       stop_snowball.py            *blank file*
+       system_maintenance.py       *blank file* 
+   /storage/
+       /audio/
+       /logs/
+           /decision_logs/
+                 decision_log.txt
+           /error_logs
+                 error_log.txt
+           /event_logs/
+                 event_log.txt
+           /file_io_logs/
+                 file_io_log.txt
+           /interaction_logs/
+                 interaction_log.txt                   # Logs AI interactions
+           /system_health_logs/
+                 cpu_log.txt
+                 memory_log.txt     
+       /models/
+           /nlp/
+              bert_model.bin       *blank file*
+           /game/
+              pool_model.h5        *blank file*
+              chess_model.h5       *blank file*
+              snake_model.h5       *blank file*
+   /tests/ 
+       __init__.py
+       test_ai_agent.py
+       test_decision_maker.py
+       test_game_ai.py   
+       test_game_interface.py
+       test_gtts.py
+       test_logging.py
+       test_memory.py   
+       test_mobile_integration.py
+       test_nlp_engine.py 
+       test_reinforcement.py
+       test_sensors.py
+       test_system_monitor.py  
+       test_voice_interface.py 
+       

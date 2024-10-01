@@ -1,0 +1,78 @@
+2024-09-24 11:42:17,322 - INFO - User: Test Input | AI: Test Output
+2024-09-24 11:42:17,323 - INFO - CPU: 70% | Memory: 60% | Temp: 50°C
+2024-09-24 11:42:17,324 - ERROR - Error: Test Error Message
+2024-09-24 12:21:26,649 - WARNING - Warning: Temperature monitoring not supported on this system.
+2024-09-24 12:39:35,362 - INFO - DecisionMaker initialized.
+2024-09-24 12:39:35,363 - INFO - Received request: remind me to take out the trash in 1 minute
+2024-09-24 12:39:35,363 - WARNING - Unrecognized request: remind me to take out the trash in 1 minute
+2024-09-24 12:39:35,363 - INFO - Response generated: Sorry, I don't understand that request.
+2024-09-24 12:39:36,364 - INFO - Received request: remind me to check the oven in 2 minutes
+2024-09-24 12:39:36,367 - WARNING - Unrecognized request: remind me to check the oven in 2 minutes
+2024-09-24 12:39:36,367 - INFO - Response generated: Sorry, I don't understand that request.
+2024-09-24 12:39:37,368 - INFO - Received request: remind me to do laundry in 10 minutes
+2024-09-24 12:39:37,370 - WARNING - Unrecognized request: remind me to do laundry in 10 minutes
+2024-09-24 12:39:37,371 - INFO - Response generated: Sorry, I don't understand that request.
+2024-09-24 12:39:38,373 - INFO - Received request: set a reminder to walk the dog in 5 minutes
+2024-09-24 12:39:38,373 - INFO - Processing 'set reminder' request.
+2024-09-24 12:39:38,374 - INFO - Setting reminder for: walk the dog in 5 minutes.
+2024-09-24 12:39:38,375 - INFO - Response generated: Reminder set for walk the dog in 5 minutes.
+2024-09-24 12:39:39,375 - INFO - Received request: list reminders
+2024-09-24 12:39:39,376 - INFO - Processing 'list reminders' request.
+2024-09-24 12:39:39,376 - INFO - Listing all active reminders.
+2024-09-24 12:39:39,377 - INFO - Response generated: Reminder: walk the dog in 5 minutes.
+2024-09-24 12:39:39,377 - INFO - Received request: cancel reminders
+2024-09-24 12:39:39,377 - INFO - Processing 'cancel reminders' request.
+2024-09-24 12:39:39,378 - INFO - Cancelling all reminders.
+2024-09-24 12:39:39,378 - INFO - Response generated: All reminders cancelled.
+2024-09-24 12:39:39,378 - INFO - Received request: list reminders
+2024-09-24 12:39:39,379 - INFO - Processing 'list reminders' request.
+2024-09-24 12:39:39,379 - INFO - No active reminders to list.
+2024-09-24 12:39:39,379 - INFO - Response generated: No active reminders.
+2024-09-24 12:39:39,379 - INFO - Received request: start system monitor
+2024-09-24 12:39:39,380 - INFO - Starting system monitor.
+2024-09-24 12:39:39,380 - INFO - Response generated: Starting system monitor...
+2024-09-24 12:39:39,380 - INFO - Received request: start game
+2024-09-24 12:39:39,380 - INFO - Starting game module.
+2024-09-24 12:39:39,381 - INFO - Response generated: Starting game module...
+2024-09-24 12:39:39,381 - INFO - Received request: what is your name?
+2024-09-24 12:39:39,381 - INFO - Asking for name preference.
+2024-09-24 12:39:39,381 - INFO - Response generated: Would you like me to keep the name Snowball or choose a new one?
+2024-09-24 12:39:39,382 - INFO - Received request: make me a sandwich
+2024-09-24 12:39:39,382 - WARNING - Unrecognized request: make me a sandwich
+2024-09-24 12:39:39,382 - INFO - Response generated: Sorry, I don't understand that request.
+2024-09-24 12:40:08,011 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:40:08,011 - INFO - Checked/created 'interactions' table.
+2024-09-24 12:40:08,012 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:40:08,012 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:40:08,012 - INFO - Checked/created 'interactions' table.
+2024-09-24 12:40:08,012 - INFO - Checked/created 'interactions' table.
+2024-09-24 12:40:08,026 - INFO - Stored interaction: User: 'Hello, Snowball!', AI: 'Hi! How can I assist you?'
+2024-09-24 12:40:08,026 - INFO - Stored interaction: User: 'Hello, Snowball!', AI: 'Hi! How can I assist you?'
+2024-09-24 12:40:08,040 - INFO - Stored interaction: User: 'What is the weather like?', AI: 'It's sunny today!'
+2024-09-24 12:40:08,040 - INFO - Stored interaction: User: 'What is the weather like?', AI: 'It's sunny today!'
+2024-09-24 12:40:08,041 - INFO - Retrieved all interactions.
+2024-09-24 12:40:08,041 - INFO - Retrieved all interactions.
+2024-09-24 12:40:08,042 - INFO - Retrieved last interaction: (2, 'What is the weather like?', "It's sunny today!", '2024-09-24 17:40:08')
+2024-09-24 12:40:08,042 - INFO - Retrieved last interaction: (2, 'What is the weather like?', "It's sunny today!", '2024-09-24 17:40:08')
+2024-09-24 12:40:08,042 - INFO - Closed SQLite database connection.
+2024-09-24 12:40:08,042 - INFO - Closed SQLite database connection.
+2024-09-24 12:40:08,043 - INFO - Retrieved interactions with keyword: 'weather'
+2024-09-24 12:40:08,043 - INFO - Retrieved interactions with keyword: 'weather'
+2024-09-24 12:40:08,057 - INFO - Cleared all interactions from the database.
+2024-09-24 12:40:08,057 - INFO - Cleared all interactions from the database.
+2024-09-24 12:40:08,059 - INFO - Retrieved all interactions.
+2024-09-24 12:40:08,059 - INFO - Retrieved all interactions.
+2024-09-24 12:40:08,059 - INFO - Closed SQLite database connection.
+2024-09-24 12:40:08,059 - INFO - Closed SQLite database connection.
+2024-09-24 12:45:09,762 - WARNING - Warning: Temperature monitoring not supported on this system.
+2024-09-24 12:45:09,818 - WARNING - Warning: Temperature monitoring not supported on this system.
+2024-09-24 12:45:09,818 - WARNING - Warning: Temperature monitoring not supported on this system.
+2024-09-24 12:47:49,213 - WARNING - Warning: Temperature monitoring not supported on this system.
+2024-09-24 12:47:49,267 - INFO - DecisionMaker initialized.
+2024-09-24 12:47:49,267 - INFO - DecisionMaker initialized.
+2024-09-24 12:47:49,268 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:47:49,268 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:47:49,268 - INFO - Connected to SQLite database: memories.db
+2024-09-24 12:47:49,269 - INFO - Checked/created 'interactions' table.
+2024-09-24 12:47:49,269 - INFO - Checked/created 'interactions' table.
+2024-09-24 12:47:49,269 - INFO - Checked/created 'interactions' table.
