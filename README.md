@@ -43,7 +43,7 @@ Usage
 Requirements
 The project depends on several libraries. The following requirements.txt file lists all the necessary libraries:
 
-      # Required libraries for Snowball project
+      Required libraries for Snowball project
       
       numpy==1.23.5             # For numerical operations
       tensorflow==2.12.0        # For machine learning and deep learning
@@ -70,5 +70,7 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 Contact
 For questions or inquiries, feel free to reach out to the project maintainer:
 
+
 Name: Kenneth Boller
+
 Email: KenLloydB@gmail.com
