@@ -43,7 +43,6 @@ Usage
 Requirements
 The project depends on several libraries. The following requirements.txt file lists all the necessary libraries:
 
-      ```bash
       # Required libraries for Snowball project
       
       numpy==1.23.5             # For numerical operations
