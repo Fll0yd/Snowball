@@ -27,7 +27,50 @@ Make sure you have the following installed:
    git clone https://github.com/Fll0yd/Snowball.git
    cd Snowball
 
+Install the required dependencies:
 
+bash
+Copy code
+pip install -r requirements.txt
+Usage
+To run Snowball, execute the main script:
+
+bash
+Copy code
+python main.py
+Follow the on-screen instructions to interact with Snowball.
+
+Requirements
+To install the necessary libraries, create a requirements.txt file with the following content:
+
+bash
+Copy code
+# Example dependencies
+numpy
+tensorflow
+speechrecognition
+pyttsx3
+pygame
+Note: Replace the example dependencies with actual libraries used in your project.
+
+Contributing
+We welcome contributions! To contribute to Snowball, please follow these steps:
+
+Fork the repository.
+Create a new branch for your feature or bug fix.
+Commit your changes and push to your branch.
+Open a pull request detailing your changes.
+Issues
+If you encounter any issues or have suggestions for improvements, please open an issue in the Issues section.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+Contact
+For questions or inquiries, feel free to reach out to the project maintainer:
+
+Name: Kenneth Boller
+Email: KenLloydB@gmail.com
 
 ### Instructions for Customization
 
