@@ -32,7 +32,7 @@ Make sure you have the following installed:
    ```bash
    pip install -r requirements.txt
 
-Usage
+### Usage
    1. To run Snowball, execute the main script:
 
       ```bash
@@ -40,7 +40,9 @@ Usage
 
    2. Follow the on-screen instructions to interact with Snowball.
 
-Requirements
+
+### Requirements
+
 The project depends on several libraries. The following requirements.txt file lists all the necessary libraries:
 
       Required libraries for Snowball project
@@ -53,7 +55,8 @@ The project depends on several libraries. The following requirements.txt file li
       flask==2.3.2              # For creating a web interface (optional)
       requests==2.28.1          # For making HTTP requests (optional)
 
-Contributing
+### Contributing
+
 We welcome contributions! To contribute to Snowball, please follow these steps:
 
 1. Fork the repository.
@@ -61,15 +64,20 @@ We welcome contributions! To contribute to Snowball, please follow these steps:
 3. Commit your changes and push to your branch.
 4. Open a pull request detailing your changes.
 
-Issues
+
+### Issues
+
 If you encounter any issues or have suggestions for improvements, please open an issue in the Issues section.
 
-License
+
+### License
+
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-Contact
-For questions or inquiries, feel free to reach out to the project maintainer:
 
+### Contact
+
+For questions or inquiries, feel free to reach out to the project maintainer:
 
 Name: Kenneth Boller
 
