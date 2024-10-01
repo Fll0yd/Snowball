@@ -27,39 +27,41 @@ Make sure you have the following installed:
    git clone https://github.com/Fll0yd/Snowball.git
    cd Snowball
 
-Install the required dependencies:
+2. Install the required dependencies:
 
-bash
-Copy code
-pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
+
 Usage
-To run Snowball, execute the main script:
+   1. To run Snowball, execute the main script:
 
-bash
-Copy code
-python main.py
-Follow the on-screen instructions to interact with Snowball.
+      ```bash
+      python main.py
+
+   2. Follow the on-screen instructions to interact with Snowball.
 
 Requirements
-To install the necessary libraries, create a requirements.txt file with the following content:
+The project depends on several libraries. The following requirements.txt file lists all the necessary libraries:
 
-bash
-Copy code
-# Example dependencies
-numpy
-tensorflow
-speechrecognition
-pyttsx3
-pygame
-Note: Replace the example dependencies with actual libraries used in your project.
+      ```bash
+      # Required libraries for Snowball project
+      
+      numpy==1.23.5             # For numerical operations
+      tensorflow==2.12.0        # For machine learning and deep learning
+      speechrecognition==3.8.1  # For speech recognition
+      pyttsx3==2.9              # For text-to-speech conversion
+      pygame==2.1.3             # For game development and handling graphics
+      flask==2.3.2              # For creating a web interface (optional)
+      requests==2.28.1          # For making HTTP requests (optional)
 
 Contributing
 We welcome contributions! To contribute to Snowball, please follow these steps:
 
-Fork the repository.
-Create a new branch for your feature or bug fix.
-Commit your changes and push to your branch.
-Open a pull request detailing your changes.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and push to your branch.
+4. Open a pull request detailing your changes.
+
 Issues
 If you encounter any issues or have suggestions for improvements, please open an issue in the Issues section.
 
@@ -71,12 +73,3 @@ For questions or inquiries, feel free to reach out to the project maintainer:
 
 Name: Kenneth Boller
 Email: KenLloydB@gmail.com
-
-### Instructions for Customization
-
-1. **Fill in Your Email**: Replace `your_email@example.com` with your actual email address.
-2. **Add Additional Sections**: If you have specific sections like a "Features" list or "Known Issues," feel free to include those.
-3. **Expand the Usage Instructions**: You can elaborate on specific commands or options Snowball can accept.
-4. **Dependencies**: Make sure to list all the libraries and tools that your project uses in the `requirements.txt` section.
-
-This README serves as a good starting point to provide clarity to anyone interested in using or contributing to your project. Let me know if you'd like to make any changes!
