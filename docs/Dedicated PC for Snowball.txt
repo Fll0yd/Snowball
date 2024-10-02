@@ -1,0 +1,27 @@
+If You Build a Dedicated PC for Snowball
+
+If you’re building a separate PC specifically to house Snowball, you can focus entirely on the AI's needs. Here’s a recommended build for that:
+
+CPU:
+AMD Ryzen 9 5900X (12-core) or Intel Core i9-12900K (16-core)
+These CPUs will provide the necessary cores and threads for handling multitasking (AI tasks, background processes, etc.) and machine learning workloads.
+
+GPU:
+NVIDIA RTX 3080 Ti or NVIDIA RTX 3090 (for heavier ML tasks)
+For machine learning models, gaming simulations, and any AI tasks involving deep learning, these GPUs will provide excellent performance for training and inference.
+
+RAM:
+64 GB DDR4 at 3200MHz or higher
+This ensures you have plenty of memory to run multiple processes in parallel without slowing down your system.
+
+Storage:
+2 TB NVMe SSD for system operations and quick access to large datasets.
+4 TB HDD for long-term storage of logs, datasets, and model files.
+
+Cooling:
+Liquid Cooling System (for the CPU and possibly the GPU)
+AI workloads can be resource-intensive, generating significant heat over time. A good cooling system will keep the hardware running efficiently without throttling.
+
+Power Supply (PSU):
+750W to 850W 80+ Gold Certified PSU
+You’ll need a powerful and reliable PSU to ensure stable energy supply, especially for a build with a high-end CPU and GPU.
