@@ -1,5 +1,6 @@
 {
     "send_error_logs": true,
-    "email": "kenlloydb@gmail.comm",
-    "auto_restart_on_crash": true
+    "email": "kenlloydb@gmail.com",
+    "auto_restart_on_crash": true,
+    "log_level": "ERROR"
 }

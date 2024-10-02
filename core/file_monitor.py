@@ -1,8 +1,10 @@
 import os
-import shutil
-import time
 import json
 import logging
+import time
+import threading
+import hashlib
+from queue import PriorityQueue
 import cv2  # For video analysis (ensure you have OpenCV installed)
 import pytesseract  # For OCR in text documents
 from PIL import Image  # For image processing
@@ -17,14 +19,56 @@ from PyPDF2 import PdfReader  # For PDF analysis
 import docx  # For DOCX analysis
 from sklearn.metrics import accuracy_score  # For performance evaluation
 from sklearn.model_selection import train_test_split  # For dataset splitting
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+from core.logger import SnowballLogger
+from core.memory import Memory
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+class FileEventHandler(FileSystemEventHandler):
+    """Custom event handler for file system changes."""
+
+    def __init__(self, memory, logger, priority_queue):
+        self.memory = memory
+        self.logger = logger
+        self.priority_queue = priority_queue
+
+    def on_created(self, event):
+        """Handle file creation events."""
+        if not event.is_directory:
+            self.logger.info(f"File created: {event.src_path}")
+            self.priority_queue.put((1, event.src_path))  # Low priority for creation
+
+    def on_modified(self, event):
+        """Handle file modification events."""
+        if not event.is_directory:
+            self.logger.info(f"File modified: {event.src_path}")
+            self.priority_queue.put((0, event.src_path))  # High priority for modification
+
+    def on_deleted(self, event):
+        """Handle file deletion events."""
+        if not event.is_directory:
+            self.logger.info(f"File deleted: {event.src_path}")
+            self.memory.store_interaction(f"File deleted: {event.src_path}", None)
+
+    def on_moved(self, event):
+        """Handle file move events."""
+        if not event.is_directory:
+            self.logger.info(f"File moved: from {event.src_path} to {event.dest_path}")
+            self.memory.store_interaction(f"File moved: from {event.src_path} to {event.dest_path}", None)
+
 class FileMonitor:
     def __init__(self, config_file):
-        """Initialize the file monitor with directory paths from a configuration file."""
+        self.logger = SnowballLogger()
+        self.memory = Memory()
+        self.priority_queue = PriorityQueue()
+        self.processed_hashes = set()  # To track processed files by hash
+        self.observer = Observer()
+        self.running_event = threading.Event()
+
         with open(config_file, 'r') as f:
             config = json.load(f)
             self.download_dir = config['download_dir']
@@ -32,9 +76,9 @@ class FileMonitor:
             self.plex_dir_tv_shows = config['plex_dir_tv_shows']
             logger.info(f"Monitoring started for downloads: {self.download_dir}")
 
-        # Load models
-        self.sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")  # Load a robust sentiment analysis model
-        self.image_model = self.load_image_model()  # Load the image classification model
+            # Load models
+            self.sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+            self.image_model = self.load_image_model()
 
     def load_image_model(self):
         """Load and compile a more advanced image classification model."""
@@ -50,24 +94,29 @@ class FileMonitor:
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         return model
 
+    def hash_file(self, file_path):
+        """Generate a hash for a file to track processed files."""
+        hasher = hashlib.md5()
+        with open(file_path, 'rb') as f:
+            hasher.update(f.read())
+        return hasher.hexdigest()
+
     def monitor_files(self):
         """Continuously monitor the download directory for new files."""
         logger.info("Starting file monitoring loop.")
-        processed_files = set()  # Track processed files to avoid duplicates
-
         while True:
-            for filename in os.listdir(self.download_dir):
-                if filename in processed_files:
-                    continue
-
-                file_path = os.path.join(self.download_dir, filename)
-                if os.path.isfile(file_path):
-                    self.process_file(file_path)
-                    processed_files.add(filename)
+            while not self.priority_queue.empty():
+                _, file_path = self.priority_queue.get()
+                self.process_file(file_path)
             time.sleep(10)  # Check every 10 seconds
 
     def process_file(self, file_path):
         """Process a file based on its type."""
+        file_hash = self.hash_file(file_path)
+        if file_hash in self.processed_hashes:
+            logger.info(f"File already processed: {file_path}")
+            return
+
         _, ext = os.path.splitext(file_path)
         ext = ext.lower()
         logger.info(f"Processing file: {file_path}")
@@ -80,8 +129,14 @@ class FileMonitor:
             self.analyze_image(file_path)
         elif ext in ['.mp4', '.avi', '.mov']:
             self.analyze_video(file_path)
+        elif ext in ['.txt']:
+            self.analyze_text(file_path)
+        elif ext in ['.csv']:
+            self.analyze_csv(file_path)
         else:
             logger.warning(f"Unsupported file type: {ext}")
+
+        self.processed_hashes.add(file_hash)  # Add the hash to the set after processing
 
     def analyze_pdf(self, file_path):
         """Extract and analyze text from a PDF file."""
@@ -101,6 +156,21 @@ class FileMonitor:
         for paragraph in doc.paragraphs:
             text += paragraph.text + ' '
 
+        self.perform_text_analysis(text)
+
+    def analyze_text(self, file_path):
+        """Extract and analyze text from a TXT file."""
+        logger.info(f"Analyzing TXT file: {file_path}")
+        with open(file_path, 'r', encoding='utf-8') as f:
+            text = f.read()
+        self.perform_text_analysis(text)
+
+    def analyze_csv(self, file_path):
+        """Extract and analyze text from a CSV file."""
+        logger.info(f"Analyzing CSV file: {file_path}")
+        import pandas as pd  # Import here to avoid unnecessary loading
+        df = pd.read_csv(file_path)
+        text = df.to_string(index=False)
         self.perform_text_analysis(text)
 
     def perform_text_analysis(self, text):
@@ -124,7 +194,7 @@ class FileMonitor:
             logger.info("Predicted class: Happy")
 
     def analyze_video(self, file_path):
-        """Analyze a video file for facial recognition."""
+        """Analyze a video file for object tracking and facial recognition."""
         logger.info(f"Analyzing video file: {file_path}")
         cap = cv2.VideoCapture(file_path)
         while cap.isOpened():
@@ -136,6 +206,7 @@ class FileMonitor:
             faces = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             detected_faces = faces.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
 
+            # Placeholder for advanced tracking and learning logic
             for (x, y, w, h) in detected_faces:
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
@@ -146,8 +217,21 @@ class FileMonitor:
 
         cap.release()
         cv2.destroyAllWindows()
+    
+    def start_monitoring(self):
+        """Start monitoring the specified directory."""
+        event_handler = FileEventHandler(self.memory, self.logger, self.priority_queue)
+        self.observer.schedule(event_handler, self.download_dir, recursive=True)
+        self.observer.start()
+        self.logger.logger.info(f"Started monitoring directory: {self.download_dir}")
+
+        try:
+            self.monitor_files()
+        except KeyboardInterrupt:
+            self.observer.stop()
+        self.observer.join()
 
 if __name__ == "__main__":
-    config_file_path = 'config.json'  # Adjust this path as needed
-    monitor = FileMonitor(config_file_path)
-    monitor.monitor_files()
+    config_file = 'config.json'  # Adjust to your configuration path
+    file_monitor = FileMonitor(config_file)
+    file_monitor.start_monitoring()

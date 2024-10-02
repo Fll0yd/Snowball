@@ -1,6 +1,7 @@
 {
     "language": "en-US",
     "volume": 70,
+    "dynamic_volume_adjustment": true,  
     "speech_rate": 1.0,
     "voice_gender": "female",
     "engine": "gTTS",
@@ -15,5 +16,6 @@
     },
     "fallback_language": "en",
     "accent": "US",
-    "mute": false
+    "mute": false,
+    "speech_style": "friendly"  
 }

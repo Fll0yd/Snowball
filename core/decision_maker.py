@@ -1,7 +1,7 @@
 import threading
 import re
 import logging
-from queue import Queue, Lock
+from queue import Queue, Empty
 import time
 from core.logger import SnowballLogger
 from core.memory import Memory
@@ -24,20 +24,28 @@ class DecisionMaker:
 
     def __init__(self):
         self.reminders = []
-        self.reminder_lock = Lock()  # Lock for thread-safe access to reminders
+        self.reminder_lock = threading.Lock()  # Lock for thread-safe access to reminders
         self.logger = SnowballLogger()  # Initialize logger
-        self.memory = Memory()  # Access to Memory
+        self.memory = Memory()  # Access to memory system
         self.task_queue = Queue(maxsize=10)  # Limit queue size for performance
         self.logger.logger.info("DecisionMaker initialized.")
+        self._stop_event = threading.Event()  # Event for stopping the thread gracefully
         threading.Thread(target=self.process_tasks, daemon=True).start()
+
+    def stop(self):
+        """Stop the decision maker processing thread."""
+        self._stop_event.set()
+        self.logger.logger.info("Stopping DecisionMaker.")
 
     def process_tasks(self):
         """Continuously process tasks from the queue asynchronously."""
-        while True:
+        while not self._stop_event.is_set():
             try:
-                if not self.task_queue.empty():
-                    task, args = self.task_queue.get()
-                    task(*args)
+                task, args = self.task_queue.get(timeout=1)  # Timeout to check stop event
+                self.logger.logger.info(f"Processing task: {task.__name__}")
+                task(*args)
+            except Empty:
+                continue  # No tasks to process, continue looping
             except Exception as e:
                 self.logger.logger.error(f"Error processing task: {e}")
 
@@ -47,31 +55,35 @@ class DecisionMaker:
         self.logger.logger.info(f"Received request: {request}")
 
         # Handle different types of requests based on content
-        if self.REMIND_ME in request:
-            response = self.handle_reminder(request)
-        elif self.LIST_REMINDERS in request:
-            response = self.list_reminders()
-        elif self.CANCEL_REMINDERS in request:
-            response = self.cancel_reminder()
-        elif self.SYSTEM_MONITOR in request:
-            response = self.start_system_monitor()
-        elif self.GAME_REQUEST in request:
-            response = self.handle_game_request(request)
-        elif self.NAME_REQUEST in request:
-            response = self.ask_for_name()
-        elif self.FEEDBACK_REQUEST in request:
-            response = self.provide_feedback(request)
-        elif self.DAILY_SUMMARY in request:
-            response = self.daily_summary()
-        elif self.CONTEXT_REQUEST in request:
-            response = self.remember_context(request)
-        elif self.FETCH_WEATHER in request:
-            response = self.fetch_weather(request)
-        elif self.CUSTOM_COMMAND in request:
-            response = self.add_custom_command(request)
-        else:
-            response = "Sorry, I don't understand that request."
-            self.logger.logger.warning(f"Unrecognized request: {request}")
+        try:
+            if self.REMIND_ME in request:
+                response = self.handle_reminder(request)
+            elif self.LIST_REMINDERS in request:
+                response = self.list_reminders()
+            elif self.CANCEL_REMINDERS in request:
+                response = self.cancel_reminder()
+            elif self.SYSTEM_MONITOR in request:
+                response = self.start_system_monitor()
+            elif self.GAME_REQUEST in request:
+                response = self.handle_game_request(request)
+            elif self.NAME_REQUEST in request:
+                response = self.ask_for_name()
+            elif self.FEEDBACK_REQUEST in request:
+                response = self.provide_feedback(request)
+            elif self.DAILY_SUMMARY in request:
+                response = self.daily_summary()
+            elif self.CONTEXT_REQUEST in request:
+                response = self.remember_context(request)
+            elif self.FETCH_WEATHER in request:
+                response = self.fetch_weather(request)
+            elif self.CUSTOM_COMMAND in request:
+                response = self.add_custom_command(request)
+            else:
+                response = "Sorry, I don't understand that request."
+                self.logger.logger.warning(f"Unrecognized request: {request}")
+        except Exception as e:
+            response = "An error occurred while processing your request."
+            self.logger.logger.error(f"Error in handle_request: {e}")
 
         self.logger.logger.info(f"Response generated: {response}")
         return response
@@ -86,8 +98,8 @@ class DecisionMaker:
                 self.logger.logger.info(f"Launching game: {game_name}")
                 game_loop()
                 return f"Launching {game_name}..."
-            except (ImportError, AttributeError):
-                self.logger.logger.warning(f"Game not found: {game_name}")
+            except (ImportError, AttributeError) as e:
+                self.logger.logger.warning(f"Game not found: {game_name}, Error: {e}")
                 return f"Sorry, I don't know how to play {game_name} yet."
         return "Please specify a valid game name."
 
@@ -139,11 +151,11 @@ class DecisionMaker:
 
     def convert_to_minutes(self, time_value: int, time_unit: str) -> int:
         """Convert time value to minutes based on the unit."""
-        if "hour" in time_unit:
-            return time_value * 60
-        elif "day" in time_unit:
-            return time_value * 60 * 24
-        return time_value  # Already in minutes
+        conversion_factors = {'minute': 1, 'hour': 60, 'day': 1440}
+        for unit, factor in conversion_factors.items():
+            if unit in time_unit:
+                return time_value * factor
+        return time_value  # Default to minutes if no match
 
     def list_reminders(self) -> str:
         """List all active reminders."""
@@ -164,15 +176,17 @@ class DecisionMaker:
 
     def _reminder_timer(self, action: str, time_in_minutes: int):
         """Wait for the specified time and then notify the user."""
-        time.sleep(time_in_minutes * 60)  # Convert minutes to seconds
-        self.logger.logger.info(f"Reminder for action: {action} triggered.")
-        # Notify the user (this could be a print statement or a more sophisticated notification)
-        print(f"Reminder: {action}")
+        try:
+            time.sleep(time_in_minutes * 60)  # Convert minutes to seconds
+            self.logger.logger.info(f"Reminder for action: {action} triggered.")
+            print(f"Reminder: {action}")  # Notify user, replace with more complex notification as needed
+        except Exception as e:
+            self.logger.logger.error(f"Error in reminder timer: {e}")
 
     def start_system_monitor(self) -> str:
         """Start the system monitoring functionality."""
-        # Implementation of system monitoring functionality
         self.logger.logger.info("System monitoring started.")
+        # Placeholder implementation for system monitoring
         return "System monitoring has started."
 
     def ask_for_name(self) -> str:
@@ -188,6 +202,7 @@ class DecisionMaker:
     def daily_summary(self) -> str:
         """Provide a summary of the day's activities."""
         self.logger.logger.info("Providing daily summary.")
+        # Placeholder for daily summary logic
         return "Here is your daily summary."
 
     def remember_context(self, request: str) -> str:
@@ -198,17 +213,11 @@ class DecisionMaker:
     def fetch_weather(self, request: str) -> str:
         """Fetch the current weather information."""
         self.logger.logger.info("Fetching weather information.")
+        # Placeholder for weather API logic
         return "The current weather is sunny and 72°F."
 
     def add_custom_command(self, request: str) -> str:
         """Add a custom command."""
-        self.logger.logger.info(f"Adding custom command: {request}")
+        self.logger.logger.info("Adding custom command.")
+        # Placeholder for custom command logic
         return "Custom command added."
-
-# Example usage:
-if __name__ == "__main__":
-    decision_maker = DecisionMaker()
-    # Sample request handling
-    print(decision_maker.handle_request("remind me to take out the trash in 10 minutes"))
-    print(decision_maker.handle_request("list reminders"))
-    print(decision_maker.handle_request("cancel reminders"))

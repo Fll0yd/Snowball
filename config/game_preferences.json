@@ -1,12 +1,29 @@
 {
     "snake": {
         "speed": "medium",
-        "grid_size": "20x20"
+        "grid_size": "20x20",
+        "sound_enabled": true,
+        "hints_enabled": false,
+        "difficulty_scaling": {
+            "enabled": true,
+            "scale_rate": "5"  
+        }
     },
     "pool": {
-        "difficulty": "hard"
+        "difficulty": "hard",
+        "sound_enabled": true,
+        "hints_enabled": true,
+        "difficulty_scaling": {
+            "enabled": false
+        }
     },
     "risk": {
-        "ai_opponent": "aggressive"
+        "ai_opponent": "aggressive",
+        "sound_enabled": true,
+        "hints_enabled": true,
+        "difficulty_scaling": {
+            "enabled": true,
+            "scale_rate": "10"  
+        }
     }
 }

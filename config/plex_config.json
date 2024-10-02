@@ -1,4 +1,5 @@
 {
+    "plex_server_address": "http://192.168.40.108:32400",  
     "download_dir": "E:/Downloads",
     "plex_dir_movies": "X:/Movies/",
     "plex_dir_tv_shows": "X:/TV_Shows/"
