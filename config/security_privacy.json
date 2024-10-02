@@ -1,6 +1,0 @@
-{
-    "data_encryption": true,
-    "max_data_storage": "500MB",
-    "delete_data_after": 30,
-    "allow_location_access": true
-}
