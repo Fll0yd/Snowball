@@ -4,3 +4,4 @@ response.mp3
 test_checkpoint.npz
 test_q_table.npy
 Future Integrations/
+decom/
