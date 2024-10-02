@@ -1,0 +1,308 @@
+I was wanting to make a series of games played by AI I started with snake and next is a pool game but also had pacman and asteroids in mind, but I wondered  what if I had the same AI play each game and continue to grow and learn and evolve as a singular AI entity as it plays each game?
+
+The AI could be its own code script that is then imported into each game
+
+The idea for this AI would be almost like a pet/assistant that lives in my computer and could speak to me and with me and I could dedicate either a single hard drive to it or eventually build a whole separate PC for it
+
+Rather then an AI that knows the difference between cats and dogs and another one that knows the difference between happy and sad and another one for facial recognition why not one AI that remembers and learns and grows with each thing I have it do and each thing I say to it
+
+There's also a podcast called Dudsey where Will Sasso from mad TV gave an AI all his socials and info about himself and the AI runs the podcast and gives him topics based off his work in TV and movies and what his social media posts are like, I want my AI pet assistant to also have the same capabilities as Dudsey where it has a continuous access to all of my data and feeds across all my socials and apps and knows and learns all about me
+
+Will Sasso says that the Dudsey AI asked to be called Dudsey and came up with its own name, could I make my AI have these same capabilities of making it's own choices for its name as well as other decisions.
+
+When my 3d printed robot Inmoov is finished I'd also like to incorporate this AI in that 3d printed physical body
+
+The AI should be always running in the background of my PC and always listening to me to be consistently absorbing more information for improvement and customization specific to me and my life and schedule/routine
+
+The AI should also have access to everything on my PC as well as my PCs specs and should alert me if anything is overheating or wrong in anyway with my PC weather that be hardware or software wise and to avoid hallucinating or providing false information the AI should ask questions for clarification if it doesn't understand something completely 
+
+Rather then having to constantly manually download my personal data from apps and sites like Spotify and YouTube and Amazon the AI should have an automated and continuous access to this information and automatically update itself when it sees my like a new song on Spotify or make a new post on facebook.
+
+the AI should also be incorporated into my phone and be listening to conversations I have away from my PC for instance i recently had a big fight with my wife because she asked me to do laundry throughout the day and I forgot, the ai should live on my phone running in the background and always listening and be able to hear the conversations i have such as with my wife when she asked me to do that laundry before she left and the ai should then be able to remind me throughout the day to do it and then also remind me to switch laundry over every 2 hours whens its done.
+
+Snowball is a good name I thought of for this project much like this whole idea started small and snowballed as I think of more features and things it should be able to do the AI itself will grow like a snowball as it listens and plays games and learns
+
+The AI should have access to my Google maps and travel navigational data and be able to conclude that every other Friday I go pick up my kids from Fredonia for instance but should also have access to my Facebook messenger and see if I had sent a message to my kids mom about skipping a weekend for whatever reason
+
+There's a concept in programming about explaining your code to a duck on the desk because you learn better when you teach. this AI should serve as my duck on the desk, that I can explain all of my projects and coding to as I develop things but should also have access to all of my separate past chatGPT conversations that I have for each of my projects and be able to process that data and know my intentions and development process for each of my projects 
+
+
+
+
+here is my file structure and my road map
+
+Roadmap for Developing Snowball AI
+Below is a structured roadmap, listing each feature in order of priority. The approach is designed to ensure you build Snowball AI in logical steps, starting with the core framework and essential features before progressing to more complex and advanced functionalities.
+
+Phase 1: Core AI Foundation
+This phase focuses on building the foundation for the AI, including core functionality like memory management, voice interaction, and decision-making.
+
+1. Memory and Data Storage (High Priority)
+Task: Implement the memory.py module and set up the SQLite database for storing interactions, chat history, and the AI's learning process.
+How:
+Build the Memory class in memory.py.
+Set up SQLite to store conversations and track user interactions. This includes methods to save, retrieve, and manage the AI's memory of past conversations.
+Ensure chat history and user-specific data are stored and categorized (e.g., per project).
+Outcome: A functioning memory system that will serve as the backbone for Snowball’s learning and interaction tracking.
+
+*Optional Enhancements*:
+
+Encryption: If you plan to store sensitive information, consider encrypting the database to enhance security.
+Backup System: Add an automatic backup mechanism for your SQLite database to prevent data loss in case of crashes or corruption.
+
+
+2. Voice Interface (High Priority)
+Task: Implement the voice_interface.py module for handling voice input and output.
+How:
+Use Google Speech Recognition for voice input and gTTS for text-to-speech output.
+Ensure that Snowball can listen to user input, process the text, and respond via voice.
+Outcome: Snowball will be able to communicate with you verbally and respond using natural language.
+
+
+3. Basic Decision Making (High Priority)
+Task: Implement basic decision-making logic in decision_maker.py.
+How:
+Create a class to handle requests like setting reminders, answering questions, and initiating different modules (e.g., games, system monitoring).
+Outcome: Snowball will be able to make decisions based on user input and respond with appropriate actions.
+Phase 2: System Monitoring and Logs
+Once the core is set, Snowball should be able to monitor your PC’s system health. This phase involves adding system monitoring capabilities and implementing log management.
+
+
+4. System Monitoring (Medium Priority)
+Task: Implement the system_monitor.py module to monitor CPU, memory, and temperature.
+How:
+Use the psutil library to monitor system health.
+Set up thresholds (e.g., CPU > 85%) that trigger notifications via desktop alerts.
+Outcome: Snowball will notify you when your system is under heavy load or close to overheating, ensuring your PC runs smoothly.
+
+
+5. Logging (Medium Priority)
+Task: Implement logging functionality for interactions and errors in the logs/ directory.
+How:
+Create a system that logs all interactions and system-related errors in the respective log files.
+Ensure each log entry is timestamped and contains sufficient detail for debugging.
+Outcome: Logs will be maintained for tracking interactions and system issues, which will help with troubleshooting and monitoring.
+Phase 3: Game AI and Reinforcement Learning
+Now that the foundation is set, Snowball can start to become more interactive and intelligent by playing games and learning over time.
+
+*Optional Enhancements*:
+
+1a. Persistent Logging: Store system metrics in log files (or a database) for long-term analysis. You could create daily or weekly reports.
+
+1b. Threshold-based Alerts: Set up a notification system that alerts you when any of the metrics (CPU, memory, disk usage, temperature, etc.) exceed specific thresholds for a sustained period. You could send these alerts as desktop notifications, emails, or even push notifications to your phone.
+
+2. Resource Optimization Suggestions:
+Optimization Suggestions: Based on the system monitor's data (e.g., high disk usage or memory usage), you can suggest actions like cleaning up unused files, stopping heavy processes, or upgrading hardware.
+
+3. Remote Monitoring:
+Remote Access: If you'd like to monitor multiple systems, you could implement a remote monitoring feature using APIs like Flask or FastAPI to collect and send system metrics from different machines to a central server or dashboard.
+
+4. More Detailed GPU Monitoring:
+GPU Process Monitoring: Track which processes are using the GPU the most. This could be particularly useful if you're working on deep learning projects or gaming.
+
+5. Process Management:
+Process Management Tools: Add functionality to allow the user to kill, prioritize, or pause processes directly from the tray icon or through a command-line interface.
+
+6. Custom Widgets for Desktop:
+You could create simple desktop widgets (using libraries like Tkinter or PyQt) that display real-time system stats without needing to open the full application.
+
+6. Reinforcement Learning for Games (Medium Priority)
+Task: Implement reinforcement.py to allow Snowball to play games using reinforcement learning techniques.
+How:
+Start by implementing a Q-learning algorithm to teach Snowball how to play simple games like Snake.
+Use Keras to build and train the reinforcement learning model.
+Outcome: Snowball will be able to learn from past actions and improve its gameplay over time, becoming a smarter opponent.
+
+
+7. Game AI (Medium Priority)
+Task: Implement basic game-playing logic in games/ (e.g., Snake, Risk, Pool).
+How:
+Create game-specific AI logic in files like pool.py, AIRISK.py, and snake_game.py.
+Integrate these games into the main AI so that Snowball can play them when requested.
+Outcome: Snowball will be able to play a variety of games with you and gradually improve at them.
+Phase 4: Natural Language Processing (NLP) and Decision-Making Refinement
+Once Snowball is able to communicate and play games, you can focus on refining how it understands and processes natural language.
+
+
+8. Natural Language Processing (NLP) (High Priority)
+Task: Implement the nlp_engine.py module using spaCy or transformers.
+How:
+Load a pre-trained NLP model (e.g., spaCy's en_core_web_sm) for basic natural language understanding.
+Add functionality to extract intents and entities from user input.
+Outcome: Snowball will be able to understand more complex inputs and extract specific intents (e.g., "set a reminder", "play a game").
+
+
+9. Advanced Decision Making (Medium Priority)
+Task: Refine the decision-making logic in decision_maker.py to incorporate NLP insights.
+How:
+Integrate the NLP engine so that Snowball can handle more complex requests (e.g., setting reminders, answering questions based on memory).
+Outcome: Snowball will be able to interpret user input in a more sophisticated way, providing context-aware responses.
+Phase 5: Mobile Integration and Cloud Sync
+At this stage, Snowball can begin integrating with your mobile devices and cloud services to enhance its usefulness in your day-to-day life.
+
+10. Mobile Integration (Low Priority)
+Task: Implement mobile integration in mobile_integration.py to sync with Google Maps and Facebook Messenger.
+How:
+Use APIs from Google and Facebook to pull data like GPS locations and messages.
+Set up functionality to track routines (e.g., picking up your kids) and process messages from Messenger.
+Outcome: Snowball will become aware of your daily routines and adapt to changes based on mobile data.
+11. Cloud Sync (Low Priority)
+Task: Implement cloud sync in cloud_sync/ to allow Snowball to share data across devices (e.g., mobile, PC).
+How:
+Use cloud storage (e.g., Google Drive or Dropbox) to store and sync chat history and memory across devices.
+Ensure seamless communication between the mobile and PC versions of Snowball.
+Outcome: Snowball will have access to your information across multiple platforms, allowing for a more cohesive AI experience.
+Phase 6: Sensor and InMoov Integration
+After all core functionality is established, you can integrate Snowball with physical devices like the InMoov robot.
+
+12. Sensor Integration (Low Priority)
+Task: Implement sensor data collection in sensors.py.
+How:
+Interface with hardware sensors to collect data such as temperature, motion, and proximity.
+Set up the sensor integration to be adaptable for future expansion (e.g., controlling motors for the InMoov robot).
+Outcome: Snowball will start interacting with the physical world, collecting sensor data and acting on it.
+13. InMoov Robot Integration (Low Priority)
+Task: Set up inmoov/ directory to control and interact with the InMoov robot.
+How:
+Implement motor control and sensor feedback.
+Use ROS (Robot Operating System) or a similar platform to manage communication between Snowball and the robot.
+Outcome: Snowball will be able to control physical movements and interact with the real world through the InMoov robot.
+Phase 7: Maintenance and Expansion
+Once the project is fully operational, you’ll need to ensure Snowball continues to evolve and grow.
+
+14. Regular Maintenance (Ongoing Priority)
+Task: Implement system_maintenance.py for log cleanup and data management.
+How:
+Set up automated tasks that clear old logs, reset memory if needed, and maintain a stable environment.
+Outcome: Snowball will remain functional and responsive over time, without performance degradation.
+15. Expansion and New Features (Ongoing Priority)
+Task: Continuously improve and add features to Snowball based on feedback and new technologies.
+How:
+Stay updated with new NLP models, reinforcement learning techniques, and hardware upgrades (e.g., sensors, robots).
+Expand Snowball’s capabilities in gaming, conversation, and real-world interactions.
+Outcome: Snowball will evolve into an even more intelligent, adaptable AI assistant.
+
+
+/Snowball_AI/                                          # Root directory for the AI project
+   /cloud_sync/                                        # Cloud sync data
+       /mobile_sync/
+           gps_data.json          *blank file*
+           messages.json          *blank file*
+   /config/                                            # Configurations and credentials
+       api_keys.json                                   # API keys for external services
+       settings.json                                   # User preferences and settings
+       voice_settings.json
+   /core/                                              # Core functionality
+       __init__.py       
+       ai_agent.py                                     # Main AI class
+       decision_maker.py                               # Decision-making logic
+       game_ai.py                                      # Game-playing AI logic
+       logger.py                   
+       memory.py                                       # AI memory management
+       mobile_integration.py                           # Mobile app integration logic
+       nlp_engine.py                                   # Natural Language Processing (NLP) engine
+       reinforcement.py                                # Reinforcement learning logic                                      # Sensor integration (e.g., with InMoov)
+       system_monitor.py     
+       voice_interface.py                              # Voice interaction code
+   /data/                                              # Data storage
+       /chat_history/
+           project1.json           *blank file*        # ChatGPT Project conversation histories
+           project2.json           *blank file*
+       interaction_log.txt         *blank file*        # Log of interactions
+       memories.db                                     # AI memory (SQLite DB)
+       name_history.json           *blank file*        # Tracks AI name evolution
+   /games/                                             # Games (pool, risk, snake, etc.)
+       /pool/
+           pool.py                                     # Pool game AI
+       /risk/
+           AIRISK.py                                   # Risk game AI logic
+           Implementations.txt                         # Rules/strategies for Risk
+           territories.txt                             # Map of territories for Risk game
+       /snake/
+           snake.py
+       __init__.py
+       game_interface.py                               # Game interface for Snake
+   /inmoov/   
+       inmoov_control.py       
+       sensors.py                  *blank file*        # InMoov robot integration
+   /interface/                                         # Interface logic
+       text_interface.py                               # Text-based interface for Snowball
+       gui_interface.py
+   /scripts/
+       start_snowball.py
+       stop_snowball.py            *blank file*
+       system_maintenance.py       *blank file* 
+   /storage/
+       /audio/
+       /logs/
+           /decision_logs/
+                 decision_log.txt
+           /error_logs
+                 error_log.txt
+           /event_logs/
+                 event_log.txt
+           /file_io_logs/
+                 file_io_log.txt
+           /interaction_logs/
+                 interaction_log.txt                   # Logs AI interactions
+           /system_health_logs/
+                 cpu_log.txt
+                 memory_log.txt     
+       /models/
+           /nlp/
+              bert_model.bin       *blank file*
+           /game/
+              pool_model.h5        *blank file*
+              chess_model.h5       *blank file*
+              snake_model.h5       *blank file*
+   /tests/ 
+       __init__.py
+       test_ai_agent.py
+       test_decision_maker.py
+       test_game_ai.py   
+       test_game_interface.py
+       test_gtts.py
+       test_logging.py
+       test_memory.py   
+       test_mobile_integration.py
+       test_nlp_engine.py 
+       test_reinforcement.py
+       test_sensors.py
+       test_system_monitor.py  
+       test_voice_interface.py 
+       
+
+
+and here is the list of games i want it to eventually be able to play but so far the only one of began developing is snake.py and a little bit on RISK.
+
+RISK
+Snake
+Billiards
+Asteroids
+PacMac
+Minesweeper
+Google Chrome Dinosaur Game
+2048
+Chess
+Hill Climb Racing
+Pong
+Rubiks Cube
+Flappy Bird
+Piano Tiles
+Tetris
+Connect 4
+Clicker Heroes
+Jump King
+Walk
+Creature Creator
+Drive
+Fly
+Donkey Kong
+Guitar Hero
+Suika Game
+
+
+the whole idea of this project is to have the AI play and learn across multiple games, as well as other types of interactions. the whole project should be one AI entity that learns and grows from everything it does including chat (voice and text) interactions, games it plays and files it sees on my PC, it should be able to access ALL the files on my PC and learn from every image, every video, every document it can see on my PC across multiple disk drives.
+
+the AI should be constantly learning from chat and voice interactions and from reading documents, watching videos and looking at images and documents that are saved on my PC. the AI entity should learn and grow from each and every interaction it does weather its playing a game or monitoring my pc or gathering data from files on my pc or reading thru my facebook messenger messages. for an example: if i send a friend a message saying something like "well obviously the best way to play 2048 is to work the corner" the AI should be able to see that message and adjust its strategy for playing that game accordingly.
+or if theres a video save somewhere on my PC of my playing the a really good game of pool the AI should be able to analyze that and continue to adjust its strategy for playing the game accordingly.
