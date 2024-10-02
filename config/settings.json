@@ -1,9 +1,0 @@
-{
-    "mobile_sync_interval": 15,
-    "game_difficulty": "medium",
-    "system_monitor_thresholds": {
-        "cpu": 90,
-        "memory": 80,
-        "temperature": 70
-    }
-}

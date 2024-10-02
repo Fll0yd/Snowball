@@ -1,6 +1,0 @@
-{
-    "sync_interval": 30,
-    "backup_to_cloud": true,
-    "backup_to_nas": true,
-    "data_retention_period": 365
-}
