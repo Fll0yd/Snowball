@@ -7,6 +7,7 @@ import random
 import os
 import threading
 import time
+import matplotlib.pyplot as plt
 from core.voice_interface import VoiceInterface
 from core.system_monitor import SystemMonitor
 from core.file_monitor import FileMonitor
@@ -16,6 +17,11 @@ from core.decision_maker import DecisionMaker
 from core.logger import SnowballLogger
 from core.config_loader import load_config
 import openai
+
+# Load AI learning mode settings
+learning_settings = load_config('ai_learning_mode.json')
+learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
+training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
 
 # GPT 3.5 turbo for NLP engine
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -51,9 +57,11 @@ class SnowballAI:
             self.epsilon = 1.0
             self.epsilon_min = 0.01
             self.epsilon_decay = 0.995
-            self.learning_rate = 0.001
+            self.learning_rate = learning_rate
             self.model = self.build_model()
             self.game_state_history = []  # Track game state history
+            self.q_table = np.zeros((self.state_size, self.action_size))  # Initialize Q-table
+            self.history = []  # Track performance over time (e.g., scores)
 
         def build_model(self):
             """Build a neural network for Q-learning."""
@@ -68,6 +76,18 @@ class SnowballAI:
             """Store experience in replay buffer."""
             self.memory.append((state, action, reward, next_state, done))
 
+        def learn(self, current_state, action, reward, next_state, done):
+            """Replay experiences and update the Q-table."""
+            q_update = reward
+            if not done:  # Only update for non-terminal states
+                q_update += self.gamma * np.max(self.q_table[next_state])
+
+            self.q_table[current_state, action] += self.learning_rate * (q_update - self.q_table[current_state, action])
+
+            # Decay exploration rate (epsilon) after each batch
+            if self.epsilon > self.epsilon_min:
+                self.epsilon *= self.epsilon_decay
+
         def fine_tune_model(self, interaction_data):
             """Fine-tune the model based on user interactions."""
             for interaction in interaction_data:
@@ -76,20 +96,22 @@ class SnowballAI:
                 # Logic to convert user input to a game state and reward
                 # This is highly context-dependent, customize as needed
                 state = self.extract_state_from_input(user_input)  
+                action = self.choose_action(state)
                 reward = self.calculate_reward_from_response(interaction['ai_response'])
 
                 # Store in memory for learning
-                self.remember(state, self.choose_action(state), reward, state, done=False)
+                self.remember(state, action, reward, state, done=False)
+                self.learn(state, action, reward, state, done=False)
             
             # Optionally, perform a replay after storing interactions
             self.replay()
-            
+
         def choose_action(self, state):
-            """Choose an action (exploration vs exploitation)."""
+            """Choose an action using the epsilon-greedy approach."""
             if np.random.rand() <= self.epsilon:
-                return random.randrange(self.action_size)  # Explore (random action)
+                return random.randrange(self.action_size)  # Explore: random action
             action_values = self.model.predict(state.reshape(1, -1))  # Predict Q-values
-            return np.argmax(action_values[0])  # Exploit (best action based on learned Q-values)
+            return np.argmax(self.q_table[state])  # Exploit: best-known action
 
         def replay(self, batch_size=32):
             """Train the model using a random batch from the replay buffer."""
@@ -137,7 +159,8 @@ class SnowballAI:
         def play_game(self, state):
             """Simulate playing a game by choosing an action based on the current state."""
             self.update_game_state(state)  # Track the game state
-            return self.choose_action(state)
+            action = self.choose_action(state)
+            return action
 
         def save_game_state(self):
             print("Game state saved.")
@@ -158,7 +181,7 @@ class SnowballAI:
                 return 1  # Positive reinforcement
             else:
                 return -1  # Negative reinforcement
-        
+
     class NLPEngine:
         def __init__(self):
             # Initialize NLP model and configurations
@@ -169,10 +192,8 @@ class SnowballAI:
             try:
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content": "You are a helpful AI assistant."},
-                        {"role": "user", "content": user_input}
-                    ]
+                    messages=[{"role": "system", "content": "You are a helpful AI assistant."},
+                              {"role": "user", "content": user_input}]
                 )
                 return response.choices[0].message['content']
             except Exception as e:
@@ -225,7 +246,8 @@ class SnowballAI:
         """Process user input, triggering appropriate actions or games."""
         # Log interaction in memory
         self.memory.store_interaction(user_input, None)
-        
+        self.logger.logger.info(f"User input: {user_input}")
+
         # Use integrated NLP to get a response
         nlp_response = self.nlp.process_input(user_input)
 
@@ -235,6 +257,8 @@ class SnowballAI:
             action = self.game.play_game(state)
             return f"Playing game with action: {action}. {nlp_response}"
         
+        # Call the respond_to_user function
+        return self.respond_to_user(user_input)
         return nlp_response
 
     def handle_mobile_requests(self):
