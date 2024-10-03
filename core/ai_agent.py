@@ -4,7 +4,6 @@ from keras.layers import Dense
 from keras.losses import MeanSquaredError
 from collections import deque
 import random
-import os
 import threading
 import time
 import matplotlib.pyplot as plt
@@ -15,11 +14,14 @@ from core.mobile_integration import MobileIntegration
 from core.memory import Memory
 from core.decision_maker import DecisionMaker
 from core.logger import SnowballLogger
-from core.config_loader import load_config
+from core.config_loader import ConfigLoader
 import openai
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Load AI learning mode settings
-learning_settings = load_config('ai_learning_mode.json')
+learning_settings = ConfigLoader('ai_learning_mode.json')
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
 
@@ -27,8 +29,8 @@ training_sessions = learning_settings['daily_training_sessions'] if learning_set
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Load user customization settings
-customizations = load_config('user_customizations.json')
-interaction_settings = load_config('interaction_settings.json')
+customizations = ConfigLoader('user_customizations.json')
+interaction_settings = ConfigLoader('interaction_settings.json')
 
 nickname = customizations.get('nickname', 'User')
 response_tone = customizations.get('response_tone', 'neutral')

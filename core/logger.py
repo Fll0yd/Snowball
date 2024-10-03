@@ -5,13 +5,19 @@ import threading
 import smtplib
 from email.mime.text import MIMEText
 from logging.handlers import RotatingFileHandler
-from plyer import notification  # To notify on critical events
-from core.config_loader import load_config
+from plyer import notification  # For notifications
+
+# Adjust the import to match your project structure
+from config_loader import ConfigLoader  # Assuming config_loader.py is in the same directory
 
 # Load error reporting settings
-error_settings = load_config('error_reporting.json')
+try:
+    error_settings = ConfigLoader.load_config('error_reporting.json')
+except Exception as e:
+    print(f"Failed to load error settings: {e}")
+    error_settings = {}  # Set default empty if failed
 
-# Define log paths using absolute paths
+# Define log paths using absolute paths (Adjust these as necessary)
 LOG_DIR = os.path.abspath(r'storage/logs')
 
 INTERACTION_LOG_PATH = os.path.join(LOG_DIR, "interaction_logs", "interaction_log.txt")
@@ -33,23 +39,23 @@ os.makedirs(os.path.dirname(DECISION_LOG_PATH), exist_ok=True)
 SETTINGS_PATH = os.path.abspath(r'config/settings.json')
 
 class SnowballLogger:
-    _instance = None  # Class variable to hold the single instance of the logger
-    _lock = threading.Lock()  # Lock for thread-safe logging
+    _instance = None  # Class variable for the singleton logger instance
+    _lock = threading.Lock()  # Lock for thread-safe operations
 
     def __new__(cls):
         if cls._instance is None:
-            with cls._lock:  # Ensure thread safety when initializing the logger instance
+            with cls._lock:  # Ensure thread safety when initializing
                 if cls._instance is None:  # Double-checked locking
                     cls._instance = super(SnowballLogger, cls).__new__(cls)
-                    cls._instance._initialize_logger()  # Initialize logger only once
+                    cls._instance._initialize_logger()  # Initialize the logger
         return cls._instance
 
     def _initialize_logger(self):
-        # Initialize the logger instance
+        # Initialize the logger
         self.logger = logging.getLogger('SnowballLogger')
         self.logger.setLevel(logging.DEBUG)
 
-        # Load thresholds and email settings from settings.json
+        # Load settings.json for thresholds and email settings
         try:
             with open(SETTINGS_PATH, 'r') as file:
                 settings = json.load(file)
@@ -63,14 +69,15 @@ class SnowballLogger:
             self.cpu_threshold, self.memory_threshold, self.temp_threshold = 85, 85, 80
             self.email_settings = {}
 
+        # Setup the log handlers
         self._setup_handlers()
 
     def _setup_handlers(self):
         """Set up different file handlers for each type of log."""
-        if not self.logger.handlers:  # Ensure no handlers are added multiple times
+        if not self.logger.handlers:  # Avoid adding handlers multiple times
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
-            # Adding different log handlers
+            # Adding file handlers
             self._add_handler(INTERACTION_LOG_PATH, logging.INFO, formatter)
             self._add_handler(SYSTEM_HEALTH_LOG_PATH, logging.INFO, formatter)
             self._add_handler(ERROR_LOG_PATH, logging.ERROR, formatter)
@@ -87,6 +94,7 @@ class SnowballLogger:
     def _add_handler(self, log_path, level, formatter):
         """Add a file handler to the logger."""
         try:
+            # Avoid adding multiple handlers for the same log file
             if not any(isinstance(handler, RotatingFileHandler) and handler.baseFilename == log_path for handler in self.logger.handlers):
                 handler = RotatingFileHandler(log_path, maxBytes=5 * 1024 * 1024, backupCount=5)
                 handler.setLevel(level)
@@ -102,22 +110,23 @@ class SnowballLogger:
             self.logger.info(f"Event: {event_message}")
 
     def log_error(self, message):
-        """Log errors and notify user."""
+        """Log errors, notify the user, and send email if configured."""
         with self._lock:
             self.logger.error(f"Error: {message}")
             self.notify_user("Error", message)
             self.send_error_email(message)
-            if error_settings.get('auto_restart_on_crash'):
+            if error_settings.get('auto_restart_on_crash', False):
                 self.restart_system_on_crash()
 
     def notify_user(self, title, message):
+        """Show a notification to the user for critical events."""
         if len(message) > 255:
             message = message[:252] + '...'
         notification.notify(title=title, message=message, timeout=5)
 
     def send_error_email(self, message):
         """Send an email notification for critical errors."""
-        if self.email_settings.get('send_error_logs'):
+        if self.email_settings.get('send_error_logs', False):
             try:
                 msg = MIMEText(message)
                 msg['Subject'] = 'Critical Error in Snowball'
@@ -133,12 +142,12 @@ class SnowballLogger:
                 print(f"Failed to send error email: {e}")
 
     def restart_system_on_crash(self):
-        """Restart the system to recover from critical errors."""
+        """Restart the system in case of a crash."""
         print("Restarting system...")
-        os.system('shutdown /r /t 1')  # This will work on Windows; adjust for other OS
+        os.system('shutdown /r /t 1')  # Adjust command for your OS
 
     def log_interaction(self, user_message, ai_response):
-        """Log interactions between the user and Snowball."""
+        """Log interactions between the user and the AI."""
         with self._lock:
             self.logger.info(f"User: {user_message} | AI: {ai_response}")
 
