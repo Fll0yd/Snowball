@@ -4,22 +4,28 @@
            gps_data.json          *blank file*
            messages.json          *blank file*
    /config/                                            # Configurations and credentials
-       api_keys.json                                   # API keys for external services
-       facebook_token.json        *blank file*
-       google_maps_key.json       *blank file*       
+       ai_learning_mode.json       
+       api_keys.json                                   # API keys for external services 
+       error_reporting.json                           
+       facebook_token.json
+       game_preferences.json        
+       google_maps_key.json
+       interaction_settings.json
+       plex_config.json
+       security_privacy.json              
        settings.json                                   # User preferences and settings
-       token.json                 *blank file*                     
+       token.json    
+       user_customizations.json                                  
        voice_settings.json
    /core/                                              # Core functionality
        __init__.py       
        ai_agent.py                                     # Main AI class
+       config_loader.py                                   
        decision_maker.py                               # Decision-making logic
-       file_monitor.py       
-       game_ai.py                                      # Game-playing AI logic
+       file_monitor.py                                             
        logger.py                   
        memory.py                                       # AI memory management
        mobile_integration.py                           # Mobile app integration logic
-       nlp_engine.py                                   # Natural Language Processing (NLP) engine
        reinforcement.py                                # Reinforcement learning logic                                      
        system_monitor.py                               
        voice_interface.py                              # Voice interaction code
@@ -34,23 +40,30 @@
        /pool/
            pool.py                                     # Pool game AI
        /risk/
-           AIRISK.py                                   # Risk game AI logic
-           Implementations.txt                         # Rules/strategies for Risk
-           territories.txt                             # Map of territories for Risk game
+           risk.py                                     # Risk game AI logic
        /snake/
            snake.py
        __init__.py
-    /inmoov/   
+    /inmoov/                                           # InMoov robot integration
        inmoov_control.py           *blank file*
-       sensors.py                                      # InMoov robot integration
+       sensors.py                                      
    /interface/                                         # Interface logic
        game_interface.py                               # Game interface (GUI for game selection)
        text_interface.py                               # Text-based interface for Snowball
        gui_interface.py
+   /mobile_integration/
+       /chat_app/
+           ChatApp.js
+       chat_server.py
    /scripts/
        start_snowball.py
        stop_snowball.py            *blank file*
        system_maintenance.py       *blank file* 
+   /SnowballMobileApp
+       /node_modules/
+       App.js
+       package-lock.json
+       package.json
    /storage/
        /audio/
        /logs/

@@ -1,3 +1,51 @@
+Project Overview: Snowball AI
+Concept and Vision
+Snowball AI is designed to be a singular, evolving artificial intelligence that integrates seamlessly into everyday life. The AI acts as a personal assistant and pet, living on your computer and mobile devices while continuously learning and growing from your interactions. It will play a series of games, starting with Snake and expanding to Pool, Pac-Man, and Asteroids, using the same AI entity for all. This allows for a consistent learning experience, where the AI develops skills and memory as it interacts with different environments.
+
+Inspired by the podcast "Dudsey," where Will Sasso's AI interacts based on his social media and preferences, Snowball AI will similarly have continuous access to your data and feed across all your applications and social networks. This project aims to create an AI capable of self-awareness, name recognition, and personal decision-making, making it more interactive and tailored to your lifestyle.
+
+Core Features
+Unified AI Entity: Unlike traditional AIs that specialize in separate tasks (like facial recognition or sentiment analysis), Snowball AI will remember and grow from every interaction and task it undertakes.
+
+Continuous Learning: The AI will always be running in the background, absorbing information from your voice commands and interactions, updating its knowledge base without needing manual inputs. This enables it to serve reminders and assist you based on real-life conversations.
+
+Voice Interaction: Implementing voice recognition and speech synthesis will allow the AI to communicate naturally, making it feel more like a companion.
+
+Game Integration: The AI will be incorporated into various games, learning and adapting as it plays, reinforcing its capabilities through experience.
+
+System Monitoring: Snowball AI will monitor your computer's performance, alerting you of any issues such as overheating or hardware malfunctions.
+
+Automated Data Access: The AI will continuously gather data from applications like Spotify, YouTube, and social media, automating the updating process for your preferences and routines.
+
+Home Integration: The AI will also be integrated into your mobile device, listening to important conversations, like reminders from your wife, and ensuring that tasks are completed as requested.
+
+Duck on the Desk: This AI will function as a "duck on the desk," allowing you to explain your projects and code to it, effectively helping you learn and refine your programming skills.
+
+File Structure
+The project will utilize a modular file structure to maintain organization and facilitate development:
+
+Roadmap for Development
+The development of Snowball AI will follow a structured roadmap, focusing on key phases that gradually build the functionality of the AI:
+
+Phase 1: Core AI Foundation
+Memory and Data Storage: Build the memory management system using SQLite to store user interactions and AI learning data.
+Voice Interface: Integrate voice recognition and text-to-speech capabilities for natural communication.
+Basic Decision Making: Implement logic for handling tasks like setting reminders and responding to user commands.
+Phase 2: System Monitoring and Logs
+System Monitoring: Monitor CPU, memory, and temperatures, sending alerts when thresholds are crossed.
+Logging: Maintain detailed logs of interactions and errors for troubleshooting.
+Phase 3: Game AI and Reinforcement Learning
+Game Integration: Develop each game as a module, with the AI controlling gameplay and learning from each interaction.
+Future Enhancements
+Physical Integration: Once your InMoov robot is completed, Snowball AI will be incorporated into its physical body, creating a tangible assistant.
+Self-Identity and Decision-Making: The AI will have capabilities to choose its name and make decisions based on user preferences and learned behavior, creating a more personalized experience.
+Expanded Integration: The AI will integrate with home automation systems, smart devices, and other applications, making it a central hub for personal organization and assistance.
+Conclusion
+The goal of Snowball AI is to create a comprehensive, self-evolving personal assistant that integrates into your daily life, learns from your interactions, and ultimately assists you in managing tasks, projects, and entertainment seamlessly. This project aims to enhance productivity, learning, and user experience through intelligent design and continuous improvement.
+
+
+
+
 I was wanting to make a series of games played by AI I started with snake and next is a pool game but also had pacman and asteroids in mind, but I wondered  what if I had the same AI play each game and continue to grow and learn and evolve as a singular AI entity as it plays each game?
 
 The AI could be its own code script that is then imported into each game
@@ -302,7 +350,7 @@ Guitar Hero
 Suika Game
 
 
-the whole idea of this project is to have the AI play and learn across multiple games, as well as other types of interactions. the whole project should be one AI entity that learns and grows from everything it does including chat (voice and text) interactions, games it plays and files it sees on my PC, it should be able to access ALL the files on my PC and learn from every image, every video, every document it can see on my PC across multiple disk drives.
+the whole idea of this project is to have one singular AI play and learn across multiple games, as well as other types of interactions. the whole project should be one AI entity that learns and grows from everything it does including chat (voice and text) interactions, games it plays and files it sees on my PC, it should be able to access ALL the files on my PC and learn from every image, every video, every document it can see on my PC across multiple disk drives.
 
-the AI should be constantly learning from chat and voice interactions and from reading documents, watching videos and looking at images and documents that are saved on my PC. the AI entity should learn and grow from each and every interaction it does weather its playing a game or monitoring my pc or gathering data from files on my pc or reading thru my facebook messenger messages. for an example: if i send a friend a message saying something like "well obviously the best way to play 2048 is to work the corner" the AI should be able to see that message and adjust its strategy for playing that game accordingly.
-or if theres a video save somewhere on my PC of my playing the a really good game of pool the AI should be able to analyze that and continue to adjust its strategy for playing the game accordingly.
+this one AI entity should be constantly learning from chat and voice interactions and from reading documents, watching videos and looking at images and documents that are saved on my PC. the AI should learn and grow from each and every interaction, weather its playing a game, monitoring my pc, gathering data from files on my pc or reading thru my facebook messenger messages. for an example: if i send a friend a message saying something like "well obviously the best way to play 2048 is to work the corner" the AI should be able to see that message and adjust its strategy for playing that game accordingly.
+or if theres a video save somewhere on my PC of me playing a really good game of pool the AI should be able to analyze that and continue to adjust its strategy for playing that game accordingly.
