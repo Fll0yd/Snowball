@@ -72,7 +72,6 @@ class FileMonitor:
         self.observer = Observer()
         self.running_event = threading.Event()
 
-        # Use plex_config.json instead of file_monitor_settings.json
         with open(config_file, 'r') as f:
             config = json.load(f)
             self.download_dir = config['download_dir']

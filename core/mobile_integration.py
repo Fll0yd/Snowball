@@ -1,8 +1,10 @@
 import requests
 import json
-import os
 import logging
 from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+import os
 from plyer import notification  # For push notifications
 from core.config_loader import ConfigLoader  # Importing the ConfigLoader class
 
@@ -10,13 +12,14 @@ from core.config_loader import ConfigLoader  # Importing the ConfigLoader class
 logging.basicConfig(level=logging.INFO)
 
 # Load mobile sync settings using ConfigLoader
-settings = ConfigLoader.load_config('settings.json')
+settings = ConfigLoader.load_config('S:/Snowball/config/settings.json')
 mobile_sync_interval = settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
 
 # Load sync and backup settings using ConfigLoader
-backup_settings = ConfigLoader.load_config('sync_and_backup.json')
+backup_settings = ConfigLoader.load_config('S:/Snowball/config/sync_and_backup.json')
 cloud_backup_enabled = backup_settings.get('backup_to_cloud', False)
 nas_backup_enabled = backup_settings.get('backup_to_nas', False)
+
 
 class MobileIntegration:
     def __init__(self):
@@ -24,17 +27,34 @@ class MobileIntegration:
         self.facebook_access_token = self.load_facebook_token()
         self.google_maps_api_key = self.load_google_maps_key()
         self.facebook_api_url = "https://graph.facebook.com/v15.0/me/messages"
-        self.gps_data_file = os.environ.get('GPS_DATA_FILE', 'S:/cloud_sync/mobile_sync/gps_data.json')
+        self.gps_data_file = os.environ.get('GPS_DATA_FILE', 'S:/Snowball/cloud_sync/mobile_sync/gps_data.json')
         self.notification_service = self.initialize_notification_service()
 
     def initialize_google_credentials(self):
-        try:
-            return Credentials.from_authorized_user_file('config/token.json')
-        except FileNotFoundError:
-            logging.error("Google API credentials not found.")
-            return None
+        """Initialize Google API credentials and handle OAuth flow."""
+        token_path = 'config/token.json'
+        credentials_path = 'config/credentials.json'
+        creds = None
+
+        # Check if token.json exists
+        if os.path.exists(token_path):
+            creds = Credentials.from_authorized_user_file(token_path)
+
+        # If there are no valid credentials, go through the OAuth flow
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes=['https://www.googleapis.com/auth/drive'])
+                creds = flow.run_local_server(port=0)
+            # Save the credentials to token.json for future use
+            with open(token_path, 'w') as token_file:
+                token_file.write(creds.to_json())
+        
+        return creds
 
     def load_facebook_token(self):
+        """Load Facebook API access token from a JSON file."""
         try:
             with open("config/facebook_token.json", 'r') as file:
                 data = json.load(file)
@@ -44,6 +64,7 @@ class MobileIntegration:
             return None
 
     def load_google_maps_key(self):
+        """Load Google Maps API key from a JSON file."""
         try:
             with open("config/google_maps_key.json", 'r') as file:
                 data = json.load(file)
@@ -53,6 +74,7 @@ class MobileIntegration:
             return None
 
     def get_facebook_message_history(self):
+        """Fetch Facebook message history using the Graph API."""
         if self.facebook_access_token:
             try:
                 params = {'access_token': self.facebook_access_token, 'limit': 100}
@@ -63,6 +85,7 @@ class MobileIntegration:
                 logging.error(f"Error fetching Facebook messages: {e}")
         else:
             logging.warning("Facebook token not available.")
+        return None
     
     def update_gps_data_file(self, location_data):
         """Update the GPS data file with new location information."""

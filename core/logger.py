@@ -22,7 +22,7 @@ for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, E
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
 # Path to settings.json
-SETTINGS_PATH = os.path.abspath(r'config/settings.json')
+SETTINGS_PATH = os.path.abspath(r'S:/Snowball/config/settings.json')
 
 class SnowballLogger:
     _instance = None  # Class variable for the singleton logger instance

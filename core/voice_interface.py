@@ -14,7 +14,7 @@ AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"
 AudioSegment.ffprobe = "C:/ffmpeg/bin/ffprobe.exe"
 
 class VoiceInterface:
-    def __init__(self, config_path="S:/config/voice_settings.json"):
+    def __init__(self, config_path="S:/Snowball/config/voice_settings.json"):
         self.recognizer = sr.Recognizer()
         self.engine = pyttsx3.init()
         self.logger = SnowballLogger()

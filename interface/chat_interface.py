@@ -3,7 +3,7 @@ from tkinter import ttk, scrolledtext
 from ttkthemes import ThemedTk
 from PIL import ImageTk, Image
 import sys
-sys.path.append('S:/core/')
+sys.path.append('S:/Snowball/core/')
 from nlp_engine import NLPEngine
 
 class SnowballGUI:
@@ -12,11 +12,11 @@ class SnowballGUI:
         self.root.title("Snowball AI - Chat Interface")
         
         # Set the duck icon
-        duck_icon = ImageTk.PhotoImage(file="S:/icon/trayicon.png")
+        duck_icon = ImageTk.PhotoImage(file="S:/Snowball/icon/trayicon.png")
         self.root.iconphoto(True, duck_icon)
 
         # Initialize NLP engine
-        self.snowball = NLPEngine(config_path="S:/config/api_keys.json")
+        self.snowball = NLPEngine(config_path="S:/Snowball/config/api_keys.json")
 
         # Set window background to dark grey
         self.root.configure(bg="#1e1e1e")
@@ -53,7 +53,7 @@ class SnowballGUI:
         self.user_input.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
         # Load and resize the send icon (up arrow)
-        send_icon = Image.open("S:/icon/send.png")
+        send_icon = Image.open("S:/Snowball/icon/send.png")
         send_icon = send_icon.resize((40, 40), Image.Resampling.LANCZOS)
         send_icon = ImageTk.PhotoImage(send_icon)
 
@@ -63,7 +63,7 @@ class SnowballGUI:
         self.send_button.image = send_icon  # Keep reference to avoid garbage collection
 
         # Load and resize the attach icon (paperclip)
-        attach_icon = Image.open("S:/icon/attach.png")
+        attach_icon = Image.open("S:/Snowball/icon/attach.png")
         attach_icon = attach_icon.resize((40, 40), Image.Resampling.LANCZOS)
         attach_icon = ImageTk.PhotoImage(attach_icon)
 
@@ -73,7 +73,7 @@ class SnowballGUI:
         self.attach_button.image = attach_icon  # Keep reference to avoid garbage collection
 
         # Load and resize the save icon
-        save_icon = Image.open("S:/icon/save.png")
+        save_icon = Image.open("S:/Snowball/icon/save.png")
         save_icon = save_icon.resize((40, 40), Image.Resampling.LANCZOS)
         save_icon = ImageTk.PhotoImage(save_icon)
 
