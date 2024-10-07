@@ -6,8 +6,8 @@ import pygame
 import os
 import io
 from time import sleep
-from core.logger import SnowballLogger
 import pyttsx3
+from core.logger import SnowballLogger
 
 # Set the FFmpeg path directly (if using FFmpeg for audio conversion)
 AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"
@@ -21,17 +21,46 @@ class VoiceInterface:
         self.temp_dir = os.path.abspath("C:/temp")
         os.makedirs(self.temp_dir, exist_ok=True)
 
-        # Load voice settings from the new JSON config
-        with open(config_path, 'r') as file:
-            voice_settings = json.load(file)
+        # Try to load voice settings, fall back to defaults if the file is missing
+        try:
+            with open(config_path, 'r') as file:
+                voice_settings = json.load(file)
+            self.logger.logger.info(f"Loaded voice settings from {config_path}")
+        except FileNotFoundError:
+            self.logger.logger.error(f"Voice settings file not found: {config_path}, using default settings.")
+            voice_settings = self.load_default_settings()
 
         # Voice settings
         self.language = voice_settings.get("language", "en")
         self.volume = voice_settings.get("volume", 70)
         self.speech_rate = voice_settings.get("speech_rate", 1.0)
         self.voice_gender = voice_settings.get("voice_gender", "female")
-        self.engine = voice_settings.get("engine", "gTTS")
+        self.engine_choice = voice_settings.get("engine", "gTTS")
         self.error_voice = voice_settings.get("error_voice", "Sorry, I didn't catch that.")
+
+        # Configure pyttsx3 for offline TTS if chosen
+        self.setup_pyttsx3()
+
+    def load_default_settings(self):
+        """Load default settings when config file is not found."""
+        return {
+            "language": "en",
+            "volume": 70,
+            "speech_rate": 1.0,
+            "voice_gender": "female",
+            "engine": "gTTS",
+            "error_voice": "Sorry, I didn't catch that."
+        }
+
+    def setup_pyttsx3(self):
+        """Configure the pyttsx3 engine based on the chosen voice gender."""
+        voices = self.engine.getProperty('voices')
+        if self.voice_gender.lower() == 'female':
+            self.engine.setProperty('voice', voices[1].id)  # Typically, index 1 is female
+        else:
+            self.engine.setProperty('voice', voices[0].id)  # Typically, index 0 is male
+        self.engine.setProperty('rate', self.speech_rate * 200)  # Adjust rate
+        self.engine.setProperty('volume', self.volume / 100)  # Set volume
 
     def play_audio(self, file_path):
         """Play an audio file using pygame after converting it to WAV."""
@@ -67,56 +96,54 @@ class VoiceInterface:
                 os.remove(wav_path)
 
     def speak(self, message):
-        """Respond with speech."""
-        self.engine.say(message)
-        self.engine.runAndWait()
         """Converts text to speech and plays the audio response."""
         file_path = os.path.join(self.temp_dir, "response.mp3")
-        
-        print(f"Saving speech to: {file_path}")  # Debug statement
 
         try:
-            self.logger.logger.info(f"Converting text to speech: '{text}'")
-            tts = gTTS(text=text, lang=self.language, slow=self.speech_rate < 1.0)
-            tts.save(file_path)
-            print(f"File {file_path} created: {os.path.exists(file_path)}")  # Debug to check if save worked
+            self.logger.logger.info(f"Converting text to speech: '{message}'")
 
-            # Play the audio after converting it to WAV
-            self.play_audio(file_path)
+            if self.engine_choice == "gTTS":
+                # Use Google TTS (gTTS)
+                tts = gTTS(text=message, lang=self.language, slow=self.speech_rate < 1.0)
+                tts.save(file_path)
+                self.play_audio(file_path)
+            else:
+                # Use pyttsx3 for offline TTS
+                self.engine.say(message)
+                self.engine.runAndWait()
+
+            self.logger.logger.info(f"Speech synthesized: '{message}'")
         except gTTSError as e:
             self.logger.log_error(f"Google TTS service failed: {e}")
         except Exception as e:
             self.logger.log_error(f"Error during speech synthesis: {e}, {type(e).__name__}")
         finally:
-            # Only remove the .mp3 file here
             if os.path.exists(file_path):
                 os.remove(file_path)
 
     def listen(self):
-        """Listen for voice commands."""
+        """Listen for voice commands and return recognized text."""
         with sr.Microphone() as source:
-            print("Listening...")
             self.logger.logger.info("Listening for user input via microphone.")
+            print("Listening...")
             try:
-                recognizer.adjust_for_ambient_noise(source)
+                self.recognizer.adjust_for_ambient_noise(source)
                 audio = self.recognizer.listen(source)
-                text = recognizer.recognize_google(audio)
+                text = self.recognizer.recognize_google(audio)
                 self.logger.logger.info(f"User input recognized: '{text}'")
                 return text
             except sr.UnknownValueError:
-                self.logger.log_warning(self.error_voice)
+                self.logger.logger.warning("Could not understand the audio")
                 return self.error_voice
             except sr.RequestError as e:
-                self.logger.log_error(f"Speech recognition service is unavailable: {e}")
+                self.logger.logger.error(f"Speech recognition service error: {e}")
                 return "Network error: Could not reach the speech recognition service."
             except Exception as e:
-                self.logger.log_error(f"Unexpected error during listening: {e}")
+                self.logger.logger.error(f"Unexpected error during listening: {e}")
                 return "An error occurred while processing your input."
-            try:
-                command = self.recognizer.recognize_google(audio)
-                print(f"Recognized command: {command}")
-                return command
-            except sr.UnknownValueError:
-                print("Could not understand audio")
-            except sr.RequestError as e:
-                print(f"Could not request results; {e}")
+
+# Example usage
+if __name__ == "__main__":
+    voice_interface = VoiceInterface()
+    text = voice_interface.listen()
+    voice_interface.speak(f"You said: {text}")

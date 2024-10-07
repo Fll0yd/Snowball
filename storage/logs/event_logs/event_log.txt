@@ -227,3 +227,27 @@
 2024-09-30 10:50:55,010 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
 2024-09-30 10:50:55,095 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
 2024-09-30 10:50:55,098 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-10-07 11:47:13,883 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 12:39:40,924 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 12:39:40,957 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:09:56,876 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:09:56,877 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:12:46,545 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:12:46,546 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:12:46,656 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:25:06,191 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:25:06,192 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:25:06,302 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:27:11,712 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:27:11,713 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:27:11,826 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:31:18,736 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:31:18,737 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:31:18,843 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:31:20,912 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:31:20,913 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:44:44,769 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:44:44,771 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 13:44:44,883 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:44:46,936 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 13:44:46,937 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.

@@ -85,3 +85,8 @@
 2024-09-30 10:50:55,010 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
 2024-09-30 10:50:55,095 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
 2024-09-30 10:50:55,098 - ERROR - Error: Error accessing D:\: [WinError 21] The device is not ready: 'D:\\'
+2024-10-07 13:12:46,656 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:25:06,302 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:27:11,826 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:31:18,843 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 13:44:44,883 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.

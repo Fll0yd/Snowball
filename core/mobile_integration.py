@@ -3,20 +3,18 @@ import json
 import os
 import logging
 from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
 from plyer import notification  # For push notifications
-
-from core.config_loader import load_config
+from core.config_loader import ConfigLoader  # Importing the ConfigLoader class
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
-# Load mobile sync settings
-settings = load_config('settings.json')
+# Load mobile sync settings using ConfigLoader
+settings = ConfigLoader.load_config('settings.json')
 mobile_sync_interval = settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
 
-# Load sync and backup settings
-backup_settings = load_config('sync_and_backup.json')
+# Load sync and backup settings using ConfigLoader
+backup_settings = ConfigLoader.load_config('sync_and_backup.json')
 cloud_backup_enabled = backup_settings.get('backup_to_cloud', False)
 nas_backup_enabled = backup_settings.get('backup_to_nas', False)
 
@@ -120,7 +118,7 @@ class MobileIntegration:
 
     def initialize_notification_service(self):
         """Initialize push notification service (like Firebase)."""
-        # Firebase setup code would go here
+        # Firebase setup code would go here if needed
         pass
 
     def send_push_notification(self, title, message):
@@ -142,3 +140,9 @@ class MobileIntegration:
     def send_alert(self, message):
         """Send alerts via push notification."""
         self.send_push_notification("Snowball AI Alert", message)
+
+
+# If running standalone
+if __name__ == "__main__":
+    mobile_integration = MobileIntegration()
+    mobile_integration.check_travel_patterns()

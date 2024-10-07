@@ -1,91 +1,137 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-import importlib.util
 import sys
 import os
+import logging
 
-# Ensure the root directory is in the sys.path
-root_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory of the current script
-sys.path.append(os.path.join(root_dir, '..'))  # Add the parent directory
+# Set up logging
+logging.basicConfig(level=logging.INFO)
 
-from core import ai_agent, decision_maker  # Import from core now
+# Add the Snowball directory to the system path
+sys.path.append('S:/Snowball')
 
-# Print the current working directory for debugging purposes
-print("Current working directory:", os.getcwd())
-print("Current sys.path:", sys.path)
+# Debugging output to confirm path
+logging.info(f"Current Python Path: {sys.path}")
 
-# Define the full path to your ai_agent module
-module_path = 'ai_agent.py'  # File name since we're in the core directory
-
-# Load the module from the specified path
 try:
-    module_full_path = os.path.join(root_dir, module_path)
-    print(f"Loading module from: {module_full_path}")  # Debug statement
-    spec = importlib.util.spec_from_file_location("SnowballAI", module_full_path)
-    SnowballAI = importlib.util.module_from_spec(spec)
-    sys.modules["SnowballAI"] = SnowballAI
-    spec.loader.exec_module(SnowballAI)
-except Exception as e:
-    print("Error loading module:", e)
-
+    logging.info("Attempting to import SnowballAI...")
+    from core.ai_agent import SnowballAI
+except ImportError as e:
+    logging.error(f"ImportError: {e}")
+    sys.exit(1)
 class SnowballGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Snowball AI - Main Menu")
-        
-        # Set the main window's dimensions and background color
         self.root.geometry("1250x950")
-        self.root.configure(bg="#1e1e1e")  # Dark background
+        self.root.configure(bg="#1e1e1e")
 
-        # Load background image
-        try:
-            self.background_image = Image.open("S:/Snowball/icon/background.png")  # Path to background image
-            self.background_image = self.background_image.resize((1250, 950), Image.Resampling.LANCZOS)
-            self.background_photo = ImageTk.PhotoImage(self.background_image)
-            self.background_label = tk.Label(self.root, image=self.background_photo)
-            self.background_label.place(x=0, y=0, relwidth=1, relheight=1)  # Cover the entire window
-        except Exception as e:
-            print("Error loading background image:", e)
+        # Load the background image for a purgatory-like feel (placeholder)
+        self.bg_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/background.png"))
+        self.bg_label = tk.Label(root, image=self.bg_image)
+        self.bg_label.place(relwidth=1, relheight=1)
 
-        # Load the AI character image
-        try:
-            self.character_image = Image.open("S:/Snowball/icon/character_placeholder.png")  # Path to AI character image
-            self.character_image = self.character_image.resize((300, 500), Image.Resampling.LANCZOS)
-            self.character_photo = ImageTk.PhotoImage(self.character_image)
+        # Set the duck icon
+        duck_icon_path = os.path.join("S:/Snowball/icon/trayicon.png")
+        self.duck_icon = ImageTk.PhotoImage(file=duck_icon_path)
+        self.root.iconphoto(True, self.duck_icon)
 
-            self.character_label = tk.Label(self.root, image=self.character_photo, bg="#1e1e1e")
-            self.character_label.place(relx=0.5, rely=0.4, anchor=tk.CENTER)  # Center character in the window
-        except Exception as e:
-            print("Error loading character image:", e)
+        # Initialize Snowball AI
+        self.snowball = SnowballAI()
 
-        # Create a Frame for buttons
+        # Create Chat Display
+        self.chat_display = tk.Text(root, width=80, height=20, wrap=tk.WORD, bg="#2c2c2c", fg="white", insertbackground="white", relief="flat", font=("Arial", 14))
+        self.chat_display.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
+
+        # Scrollbar for chat display
+        scroll_bar = ttk.Scrollbar(root, orient="vertical", command=self.chat_display.yview)
+        self.chat_display.config(yscrollcommand=scroll_bar.set)
+        scroll_bar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Input Field
+        self.user_input = tk.Entry(root, bg="#404040", fg="white", font=("Arial", 14), relief="flat", insertbackground="white")
+        self.user_input.pack(pady=10, padx=10, fill=tk.X)
+
+        # Load and resize the send icon
+        send_icon_path = os.path.join("S:/Snowball/icon/send.png")
+        send_icon = Image.open(send_icon_path).resize((30, 30), Image.Resampling.LANCZOS)
+        self.send_icon = ImageTk.PhotoImage(send_icon)
+
+        # Send Button with up arrow icon
+        self.send_button = tk.Button(root, image=self.send_icon, command=self.send_input, bg="#1e1e1e", relief="flat", bd=0)
+        self.send_button.pack(side=tk.RIGHT, padx=5)
+
+        # Bind Enter key to send message
+        self.root.bind('<Return>', lambda event: self.send_input())
+
+        # Initial welcome message
+        self.chat_display.insert(tk.END, "Welcome! How can Snowball assist you today?\n")
+
+        # Buttons for additional functionalities
+        self.create_functionality_buttons()
+
+        # Load Snowball avatar (placeholder)
+        self.snowball_avatar = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/snowball_avatar.png"))  # Placeholder for the animated avatar
+        self.avatar_label = tk.Label(root, image=self.snowball_avatar, bg="#1e1e1e")
+        self.avatar_label.place(x=50, y=150)  # Position it as needed
+
+    def create_functionality_buttons(self):
         button_frame = tk.Frame(self.root, bg="#1e1e1e")
-        button_frame.pack(side=tk.BOTTOM, pady=50)  # Position at the bottom
+        button_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=10)
 
-        # Create buttons for "Games," "System Monitor," and "Chat"
-        self.games_button = tk.Button(button_frame, text="Games", command=self.open_games,
-                                       bg="#4a4a4a", fg="white", font=("Arial", 16), width=15)
-        self.system_monitor_button = tk.Button(button_frame, text="System Monitor", command=self.open_system_monitor,
-                                               bg="#4a4a4a", fg="white", font=("Arial", 16), width=15)
-        self.chat_button = tk.Button(button_frame, text="Chat", command=self.open_chat,
-                                     bg="#4a4a4a", fg="white", font=("Arial", 16), width=15)
+        # Button to toggle system monitor
+        self.monitor_toggle = tk.BooleanVar(value=False)
+        self.monitor_button = tk.Checkbutton(button_frame, text="System Monitor", variable=self.monitor_toggle, command=self.toggle_system_monitor, bg="#1e1e1e", fg="white")
+        self.monitor_button.pack(side=tk.LEFT, padx=10)
 
-        # Place buttons in the button frame
-        self.games_button.pack(side=tk.LEFT, padx=20)
-        self.system_monitor_button.pack(side=tk.LEFT, padx=20)
-        self.chat_button.pack(side=tk.LEFT, padx=20)
+        # Other buttons
+        buttons = ["Games", "Minecraft", "File Monitor", "Edit Memory", "Config"]
+        for button_name in buttons:
+            button = tk.Button(button_frame, text=button_name, command=lambda name=button_name: self.open_module(name), bg="#1e1e1e", fg="white")
+            button.pack(side=tk.LEFT, padx=10)
 
-    def open_games(self):
-        print("Opening Games interface...")  # Placeholder functionality
+    def toggle_system_monitor(self):
+        if self.monitor_toggle.get():
+            self.chat_display.insert(tk.END, "System Monitor activated.\n")
+            # Here, you would call the system monitor module
+        else:
+            self.chat_display.insert(tk.END, "System Monitor deactivated.\n")
 
-    def open_system_monitor(self):
-        print("Opening System Monitor interface...")  # Placeholder functionality
+    def open_module(self, module_name):
+        self.chat_display.insert(tk.END, f"Opening {module_name} module...\n")
+        # Implement the functionality to open each module here
 
-    def open_chat(self):
-        print("Opening Chat interface...")  # Placeholder functionality
+    def send_input(self):
+        user_message = self.user_input.get()
+        if not user_message.strip():
+            return  # Don't process empty inputs
+
+        self.display_message(user_message, sender='user')
+        self.chat_display.insert(tk.END, "Snowball is thinking...\n")
+        self.chat_display.see(tk.END)
+
+        # Process the input through Snowball
+        self.root.after(100, lambda: self.process_input(user_message))
+
+    def process_input(self, user_message):
+        try:
+            snowball_response = self.snowball.nlp.process_input(user_message)
+        except Exception as e:
+            snowball_response = "Oops! Something went wrong. " + str(e)
+
+        self.display_message(snowball_response, sender='snowball')
+
+    def display_message(self, message, sender='user'):
+        tag = 'user' if sender == 'user' else 'snowball'
+        self.chat_display.insert(tk.END, f"{sender.capitalize()}: {message}\n", tag)
+        self.chat_display.see(tk.END)
+
+        # Clear the input field if it's from the user
+        if sender == 'user':
+            self.user_input.delete(0, tk.END)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    gui = SnowballGUI(root)
+    app = SnowballGUI(root)
     root.mainloop()

@@ -21,8 +21,11 @@ from sklearn.metrics import accuracy_score  # For performance evaluation
 from sklearn.model_selection import train_test_split  # For dataset splitting
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+
+# Import SnowballLogger from the core.logger module
 from core.logger import SnowballLogger
-from core.memory import Memory
+# Import Memory from core.memory module
+from core.memory import Memory  # This is the missing import
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -65,16 +68,17 @@ class FileMonitor:
         self.logger = SnowballLogger()
         self.memory = Memory()
         self.priority_queue = PriorityQueue()
-        self.processed_hashes = set()  # To track processed files by hash
+        self.processed_hashes = set()
         self.observer = Observer()
         self.running_event = threading.Event()
 
+        # Use plex_config.json instead of file_monitor_settings.json
         with open(config_file, 'r') as f:
             config = json.load(f)
             self.download_dir = config['download_dir']
             self.plex_dir_movies = config['plex_dir_movies']
             self.plex_dir_tv_shows = config['plex_dir_tv_shows']
-            logger.info(f"Monitoring started for downloads: {self.download_dir}")
+            self.logger.logger.info(f"Monitoring started for downloads: {self.download_dir}")
 
             # Load models
             self.sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
@@ -93,7 +97,7 @@ class FileMonitor:
 
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         return model
-
+    
     def hash_file(self, file_path):
         """Generate a hash for a file to track processed files."""
         hasher = hashlib.md5()

@@ -21,16 +21,16 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Load AI learning mode settings
-learning_settings = ConfigLoader('ai_learning_mode.json')
+learning_settings = ConfigLoader.load_config('ai_learning_mode.json')
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
 
+# Load user customization settings
+customizations = ConfigLoader.load_config('user_customizations.json')
+interaction_settings = ConfigLoader.load_config('interaction_settings.json')
+
 # GPT 3.5 turbo for NLP engine
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# Load user customization settings
-customizations = ConfigLoader('user_customizations.json')
-interaction_settings = ConfigLoader('interaction_settings.json')
 
 nickname = customizations.get('nickname', 'User')
 response_tone = customizations.get('response_tone', 'neutral')
@@ -42,7 +42,11 @@ class SnowballAI:
         self.memory = Memory()
         self.voice = VoiceInterface()
         self.monitor = SystemMonitor()
-        self.file_monitor = FileMonitor()
+
+        # Pass config file to FileMonitor
+        file_monitor_config = "S:/config/plex_config.json"  # Specify the correct path
+        self.file_monitor = FileMonitor(config_file=file_monitor_config)
+
         self.mobile = MobileIntegration()
         self.game = GameAI()
         self.logger = SnowballLogger()

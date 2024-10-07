@@ -7,16 +7,6 @@ from email.mime.text import MIMEText
 from logging.handlers import RotatingFileHandler
 from plyer import notification  # For notifications
 
-# Adjust the import to match your project structure
-from config_loader import ConfigLoader  # Assuming config_loader.py is in the same directory
-
-# Load error reporting settings
-try:
-    error_settings = ConfigLoader.load_config('error_reporting.json')
-except Exception as e:
-    print(f"Failed to load error settings: {e}")
-    error_settings = {}  # Set default empty if failed
-
 # Define log paths using absolute paths (Adjust these as necessary)
 LOG_DIR = os.path.abspath(r'storage/logs')
 
@@ -28,12 +18,8 @@ FILE_IO_LOG_PATH = os.path.join(LOG_DIR, "file_io_logs", "file_io_log.txt")
 DECISION_LOG_PATH = os.path.join(LOG_DIR, "decision_logs", "decision_log.txt")
 
 # Create the log directories if they don't exist
-os.makedirs(os.path.dirname(INTERACTION_LOG_PATH), exist_ok=True)
-os.makedirs(os.path.dirname(ERROR_LOG_PATH), exist_ok=True)
-os.makedirs(os.path.dirname(SYSTEM_HEALTH_LOG_PATH), exist_ok=True)
-os.makedirs(os.path.dirname(EVENT_LOG_PATH), exist_ok=True)
-os.makedirs(os.path.dirname(FILE_IO_LOG_PATH), exist_ok=True)
-os.makedirs(os.path.dirname(DECISION_LOG_PATH), exist_ok=True)
+for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH]:
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
 # Path to settings.json
 SETTINGS_PATH = os.path.abspath(r'config/settings.json')
@@ -56,6 +42,13 @@ class SnowballLogger:
         self.logger.setLevel(logging.DEBUG)
 
         # Load settings.json for thresholds and email settings
+        self._load_settings()
+
+        # Setup the log handlers
+        self._setup_handlers()
+
+    def _load_settings(self):
+        """Load system thresholds and email settings from the settings file."""
         try:
             with open(SETTINGS_PATH, 'r') as file:
                 settings = json.load(file)
@@ -68,9 +61,6 @@ class SnowballLogger:
             print(f"Settings file {SETTINGS_PATH} not found.")
             self.cpu_threshold, self.memory_threshold, self.temp_threshold = 85, 85, 80
             self.email_settings = {}
-
-        # Setup the log handlers
-        self._setup_handlers()
 
     def _setup_handlers(self):
         """Set up different file handlers for each type of log."""
@@ -100,7 +90,6 @@ class SnowballLogger:
                 handler.setLevel(level)
                 handler.setFormatter(formatter)
                 self.logger.addHandler(handler)
-                print(f"Handler added for {log_path}")
         except Exception as e:
             print(f"Failed to add handler for {log_path}: {e}")
 
@@ -120,8 +109,7 @@ class SnowballLogger:
 
     def notify_user(self, title, message):
         """Show a notification to the user for critical events."""
-        if len(message) > 255:
-            message = message[:252] + '...'
+        message = (message[:252] + '...') if len(message) > 255 else message
         notification.notify(title=title, message=message, timeout=5)
 
     def send_error_email(self, message):
