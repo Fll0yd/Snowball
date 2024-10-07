@@ -251,3 +251,9 @@
 2024-10-07 13:44:44,883 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
 2024-10-07 13:44:46,936 - INFO - Connected to SQLite database: data/memories.db
 2024-10-07 13:44:46,937 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 14:02:42,007 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 14:02:42,010 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 14:02:42,248 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 14:02:44,306 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 14:02:44,307 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 14:02:44,315 - INFO - Monitoring started for downloads: E:/Downloads

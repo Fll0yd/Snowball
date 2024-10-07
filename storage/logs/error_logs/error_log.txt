@@ -90,3 +90,4 @@
 2024-10-07 13:27:11,826 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
 2024-10-07 13:31:18,843 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
 2024-10-07 13:44:44,883 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-07 14:02:42,248 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.

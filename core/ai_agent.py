@@ -44,7 +44,7 @@ class SnowballAI:
         self.monitor = SystemMonitor()
 
         # Pass config file to FileMonitor
-        file_monitor_config = "S:/config/plex_config.json"  # Specify the correct path
+        file_monitor_config = 'S:/Snowball/config/plex_config.json'  # Corrected path
         self.file_monitor = FileMonitor(config_file=file_monitor_config)
 
         self.mobile = MobileIntegration()
