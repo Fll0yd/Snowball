@@ -1,12 +1,15 @@
 import requests
-import json
-import logging
-from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 import os
+import json
+import logging
 from plyer import notification  # For push notifications
 from core.config_loader import ConfigLoader  # Importing the ConfigLoader class
+
+# Define the scope for Google OAuth
+SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -31,28 +34,37 @@ class MobileIntegration:
         self.notification_service = self.initialize_notification_service()
 
     def initialize_google_credentials(self):
-        """Initialize Google API credentials and handle OAuth flow."""
-        token_path = 'config/token.json'
-        credentials_path = 'config/credentials.json'
+        """Initialize Google OAuth credentials or prompt for authentication if needed."""
         creds = None
+        token_path = 'S:/Snowball/config/token.json'
+        credentials_path = 'S:/Snowball/config/credentials.json'
 
-        # Check if token.json exists
+        # Load token from file if it exists
         if os.path.exists(token_path):
-            creds = Credentials.from_authorized_user_file(token_path)
+            creds = Credentials.from_authorized_user_file(token_path, SCOPES)
 
-        # If there are no valid credentials, go through the OAuth flow
+        # If there are no valid credentials available, let the user log in.
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
+                # Try to refresh the token if it's expired
+                try:
+                    creds.refresh(Request())
+                    logging.info("Token refreshed successfully.")
+                except Exception as e:
+                    logging.error(f"Error refreshing token: {e}")
+                    return None
             else:
-                flow = InstalledAppFlow.from_client_secrets_file(credentials_path, scopes=['https://www.googleapis.com/auth/drive'])
+                # If no valid token exists, start the OAuth flow to generate a new token
+                flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
                 creds = flow.run_local_server(port=0)
-            # Save the credentials to token.json for future use
-            with open(token_path, 'w') as token_file:
-                token_file.write(creds.to_json())
-        
-        return creds
 
+                # Save the new credentials to token.json
+                with open(token_path, 'w') as token_file:
+                    token_file.write(creds.to_json())
+                    logging.info(f"New token saved to {token_path}")
+
+        return creds
+    
     def load_facebook_token(self):
         """Load Facebook API access token from a JSON file."""
         try:

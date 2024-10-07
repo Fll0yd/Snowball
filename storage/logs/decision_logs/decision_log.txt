@@ -287,3 +287,87 @@
 2024-10-07 15:32:33,452 - INFO - Connected to SQLite database: data/memories.db
 2024-10-07 15:32:33,452 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
 2024-10-07 15:32:33,453 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:41:12,457 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:41:12,458 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:41:12,557 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:41:14,611 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:41:14,612 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:41:14,613 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:44:49,634 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:44:49,635 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:44:49,733 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:44:51,787 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:44:51,788 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:44:51,790 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:46:48,905 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:46:48,906 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:46:49,006 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:46:51,063 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:46:51,064 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:46:51,064 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:47:38,187 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:47:38,188 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:47:38,287 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:47:40,342 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:47:40,343 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:47:40,343 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:47:42,526 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:47:42,527 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:47:42,528 - INFO - DecisionMaker initialized.
+2024-10-07 15:49:16,446 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:49:16,447 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:49:16,549 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:49:18,601 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:49:18,602 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:49:18,603 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:49:21,099 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:49:21,099 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:49:21,100 - INFO - DecisionMaker initialized.
+2024-10-07 15:53:38,214 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:53:38,216 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:53:38,314 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:58:03,205 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:58:03,206 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:58:03,315 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:58:05,376 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:58:05,376 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:58:05,377 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:58:07,708 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:58:07,709 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:58:07,710 - INFO - DecisionMaker initialized.
+2024-10-07 15:59:41,476 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:59:41,477 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:59:41,578 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 15:59:43,629 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:59:43,629 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:59:43,630 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 15:59:45,923 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 15:59:45,924 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 15:59:45,925 - INFO - DecisionMaker initialized.
+2024-10-07 16:02:46,208 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:02:46,209 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:02:46,308 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:02:48,363 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:02:48,364 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:02:48,365 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:02:50,686 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:02:50,687 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:02:50,688 - INFO - DecisionMaker initialized.
+2024-10-07 16:03:41,601 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:03:41,602 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:03:41,702 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:03:43,754 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:03:43,755 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:03:43,755 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:03:46,018 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:03:46,019 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:03:46,020 - INFO - DecisionMaker initialized.
+2024-10-07 16:05:15,492 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:05:15,493 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:05:15,599 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:05:17,650 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:05:17,651 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:05:17,651 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:05:19,897 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:05:19,897 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:05:19,898 - INFO - DecisionMaker initialized.

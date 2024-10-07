@@ -3,6 +3,8 @@ import re
 import logging
 from queue import Queue, Empty
 import time
+from core.logger import SnowballLogger  # Added import for SnowballLogger
+from core.memory import Memory
 
 class DecisionMaker:
     """Class to handle user requests and make decisions based on input."""

@@ -48,12 +48,12 @@ class SnowballAI:
         self.file_monitor = FileMonitor(config_file=file_monitor_config)
 
         self.mobile = MobileIntegration()
-        self.game = GameAI()
+        self.game = self.GameAI()  # Fixing the GameAI initialization here
         self.logger = SnowballLogger()
         self.nlp = self.NLPEngine()  # Integrated NLP engine
         self.decision_maker = DecisionMaker()
         self.running_event = threading.Event()
-
+        
     class GameAI:
         def __init__(self):
             self.state_size = 11  # Customize for your game
@@ -193,18 +193,19 @@ class SnowballAI:
             # Initialize NLP model and configurations
             pass
 
-        def process_input(self, user_input):
-            """Process user input using GPT 3.5 Turbo."""
-            try:
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=[{"role": "system", "content": "You are a helpful AI assistant."},
-                              {"role": "user", "content": user_input}]
-                )
-                return response.choices[0].message['content']
-            except Exception as e:
-                print(f"Error processing NLP input: {e}")
-                return "Sorry, I couldn't process that."
+    def process_input(self, user_input):
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",  
+                messages=[
+                    {"role": "system", "content": "You are a helpful AI assistant."},
+                    {"role": "user", "content": user_input}
+                ]
+            )
+            return response['choices'][0]['message']['content']
+        except Exception as e:
+            print(f"Error processing NLP input: {e}")
+            return "Sorry, I couldn't process that."
 
     def generate_name(self):
         """Generate a name for the AI."""

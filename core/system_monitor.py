@@ -82,6 +82,9 @@ class SystemMonitor:
         self.temp_label = tk.Label(self.root, text="Temperature: ")
         self.temp_label.pack()
 
+        # Flags for tracking unsupported features
+        self.temperature_supported = True
+                
         # Initialize metrics lists for logging
         self.cpu_usage: List[float] = []
         self.memory_usage: List[float] = []
@@ -147,16 +150,25 @@ class SystemMonitor:
             return 0
 
     def get_temperature(self) -> float:
-        """Get CPU temperature."""
+        """Get CPU temperature, return a default if not supported or available."""
+        if not self.temperature_supported:
+            return 65.0  # Return default value if sensors are not supported
+
         try:
             temps = psutil.sensors_temperatures()
-            if 'coretemp' in temps:
-                return temps['coretemp'][0].current
-            else:
-                return 65  # Placeholder temperature
+            if temps:
+                for entries in temps.values():
+                    for entry in entries:
+                        if entry.current:  # Return the first available temperature
+                            return entry.current
+            self.logger.warning("Temperature sensors not available on this system.")
+        except AttributeError:
+            self.logger.error("sensors_temperatures not supported by psutil on this system.")
+            self.temperature_supported = False  # Disable future attempts to get temperatures
         except Exception as e:
             self.logger.error(f"Error getting temperature: {e}")
-            return 0
+        
+        return 65.0  # Return a default temperature if there are errors or no sensors
 
     def check_alerts(self):
         """Check if system metrics exceed thresholds and send alerts."""
@@ -207,7 +219,7 @@ class SystemMonitor:
         self.log_network_usage()
         self.log_running_processes()
         self.log_gpu_usage()
-        self.log_fan_speed()
+        self.fan_monitor.log_fan_speed()
 
     def log_cpu_usage(self) -> None:
         """Logs the current CPU usage."""
