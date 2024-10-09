@@ -2,23 +2,21 @@ import psutil
 import tkinter as tk
 from tkinter import messagebox
 import logging
-import json
 import time
 import statistics
 from logging.handlers import RotatingFileHandler
 from plyer import notification
 import GPUtil
 import requests
-import os
 import smtplib
 from email.mime.text import MIMEText
 from matplotlib import pyplot as plt
 from apscheduler.schedulers.background import BackgroundScheduler
 from typing import List, Dict, Any
-
-# Import the ConfigLoader and SnowballLogger classes
-from core.config_loader import ConfigLoader
+import os
+import json
 from core.logger import SnowballLogger
+from core.config_loader import ConfigLoader
 
 class Config:
     EMAIL_SUBJECT = 'System Performance Report'
@@ -77,40 +75,48 @@ def setup_logging() -> logging.Logger:
 
 class SystemMonitor:
     def __init__(self):
+        # Replace with custom Snowball logger
         self.logger = SnowballLogger()
-        self.settings = load_settings()
 
-        # Update to use the new structure from system_monitor_settings.json
+        # Load configuration settings for system monitoring
+        try:
+            self.settings = ConfigLoader().load_config("system_monitor_settings.json")
+        except FileNotFoundError:
+            self.logger.log_error("Configuration file for system monitoring not found.")
+            self.settings = {}  # Default to an empty dict if settings file is not available
+        except json.JSONDecodeError:
+            self.logger.log_error("Error parsing system monitoring configuration file.")
+            self.settings = {}  # Default to an empty dict if JSON is not valid
+
+        # Ensure settings contain the expected keys
         if "resource_thresholds" not in self.settings:
-            raise ValueError("Missing 'resource_thresholds' in settings.")
+            self.settings["resource_thresholds"] = {
+                "cpu": 90,  # Default CPU threshold
+                "memory": 80  # Default Memory threshold
+            }
 
+        # Extract thresholds from settings
         thresholds = self.settings["resource_thresholds"]
-        self.cpu_threshold = thresholds["cpu_usage_percent"]["critical_threshold"]
-        self.memory_threshold = thresholds["memory_usage_percent"]["critical_threshold"]
-        self.disk_threshold = thresholds["disk_space_percent"]["critical_threshold"]
-        self.temperature_threshold = thresholds["temperature_celsius"]["critical_threshold"]
+        self.cpu_threshold = thresholds.get("cpu_usage_percent", {}).get("critical_threshold", 90)
+        self.memory_threshold = thresholds.get("memory_usage_percent", {}).get("critical_threshold", 85)
+        self.disk_threshold = thresholds.get("disk_space_percent", {}).get("critical_threshold", 95)
+        self.temperature_threshold = thresholds.get("temperature_celsius", {}).get("critical_threshold", 90)
 
-        # Continue initializing other necessary parts of the SystemMonitor
-        self.logger = setup_logging()
-        self.running = True
-
-        # Flags for tracking unsupported features
-        self.temperature_supported = True
+        # Log that the system monitor has been initialized
+        self.logger.logger.info("SystemMonitor initialized.")
 
         # Initialize metrics lists for logging
         self.cpu_usage: List[float] = []
         self.memory_usage: List[float] = []
         self.disk_usage: List[float] = []
         self.network_usage: List[float] = []
-        self.process_stats: Dict[str, Any] = {}
         self.running_processes: List[str] = []
 
-        # Initialize the fan monitor
-        self.fan_monitor = self.FanMonitor()
+        # Flags for tracking unsupported features
+        self.temperature_supported = True
 
         # Start monitoring
         self.running = True
-        self.logger.log_event("SystemMonitor initialized.")
         self.schedule_reports(interval=60)  # Schedule reports every minute
 
     class FanMonitor:
@@ -174,12 +180,12 @@ class SystemMonitor:
                     for entry in entries:
                         if entry.current:
                             return entry.current
-            self.logger.log_warning("Temperature sensors not available on this system.")
+            self.logger.logger.warning("Temperature sensors not available on this system.")
         except AttributeError:
-            self.logger.log_warning("sensors_temperatures not supported by psutil on this system.")
+            self.logger.logger.warning("sensors_temperatures not supported by psutil on this system.")
             self.temperature_supported = False
         except Exception as e:
-            self.logger.log_error(f"Error getting temperature: {e}")
+            self.logger.logger.error(f"Error getting temperature: {e}")
 
         return 65.0
 
@@ -247,12 +253,9 @@ class SystemMonitor:
 
     def log_metrics(self) -> None:
         """Log current CPU, memory, and disk usage."""
-        self.logger.log_system_health(cpu_usage=self.get_cpu_usage(),
-                                      memory_usage=self.get_memory_usage(),
-                                      disk_usage=self.get_disk_usage(),
-                                      temp=self.get_temperature(),
-                                      network_bandwidth=self.get_network_usage())
-        self.fan_monitor.log_fan_speed()
+        self.logger.logger.info(f"CPU Usage: {self.get_cpu_usage()}%")
+        self.logger.logger.info(f"Memory Usage: {self.get_memory_usage()}%")
+        self.logger.logger.info(f"Temperature: {self.get_temperature()}°C")
 
     def log_cpu_usage(self) -> None:
         """Logs the current CPU usage."""

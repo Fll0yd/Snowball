@@ -6,18 +6,17 @@ from collections import deque
 import random
 import threading
 import time
-from openai import OpenAI
 import sys
 import os
+from openai import OpenAI
 from core.voice_interface import VoiceInterface
 from core.system_monitor import SystemMonitor
 from core.file_monitor import FileMonitor
 from core.mobile_integration import MobileIntegration
 from core.memory import Memory
 from core.decision_maker import DecisionMaker
+from core.logger import SnowballLogger
 from core.config_loader import ConfigLoader
-
-client = OpenAI()  # This will automatically use the `OPENAI_API_KEY` from the environment
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -25,11 +24,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 learning_settings = ConfigLoader.load_config('ai_settings.json')
 settings = ConfigLoader.load_config('interface_settings.json')
 interaction_settings = ConfigLoader.load_config('S:/Snowball/config/mobile_settings.json')
-
-# Pass the settings to the SnowballLogger
-from core.logger import SnowballLogger
-logger_settings = settings.get('system_monitor_thresholds', {})
-snowball_logger = SnowballLogger(settings=logger_settings)
 
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
@@ -40,21 +34,28 @@ response_length = settings.get('response_length', 'normal')
 
 default_temperature = 0.9  # Default temperature for more creative responses
 
+
 class SnowballAI:
-    def __init__(self):
+    def __init__(self, api_key):
+        # Replace logger with SnowballLogger for consistency
+        self.logger = SnowballLogger()
+        self.api_key = api_key
+
+        # Initialize components
+        self.client = OpenAI(api_key=api_key)
         self.memory = Memory()
-        self.voice = VoiceInterface()
+        self.voice = VoiceInterface(api_key=api_key)
         self.monitor = SystemMonitor()
         self.file_monitor = FileMonitor(config_file='S:/Snowball/config/plex_config.json')
         self.mobile = MobileIntegration()
         self.game = self.GameAI()
-        self.logger = snowball_logger
+        self.logger = SnowballLogger()
         self.nlp = self.NLPEngine()
         self.decision_maker = DecisionMaker()
         self.running_event = threading.Event()
-        
+
         self.name = self.generate_name()
-        self.logger.logger.info(f"Initialized SnowballAI with name: {self.name}")
+        self.logger.log_event("SnowballAI initialized with provided API key.")
 
     def generate_name(self):
         """Generate a name for the AI instance by considering suggestions from a .txt file."""

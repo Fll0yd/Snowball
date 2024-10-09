@@ -13,23 +13,27 @@ from core.config_loader import ConfigLoader
 import concurrent.futures
 import uuid
 
-client = OpenAI()  # This will automatically use the `OPENAI_API_KEY` from the environment
-
 # Set the FFmpeg path directly (if using FFmpeg for audio conversion)
 AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"
 AudioSegment.ffprobe = "C:/ffmpeg/bin/ffprobe.exe"
 
 class VoiceInterface:
-    def __init__(self):
+    def __init__(self, api_key):
+        # Initialize the OpenAI client using the provided API key
+        self.client = OpenAI(api_key=api_key)
+        self.api_key = api_key
+
+        # Initialize the Snowball logger
+        self.logger = SnowballLogger()
+
         self.recognizer = sr.Recognizer()
         self.engine = pyttsx3.init()
-        self.logger = SnowballLogger()
         self.temp_dir = os.path.abspath("C:/temp")
         os.makedirs(self.temp_dir, exist_ok=True)
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 
         # Load voice settings using ConfigLoader
-        voice_settings = ConfigLoader.load_config("interface_settings.json")
+        voice_settings = ConfigLoader().load_config("interface_settings.json")
 
         # Voice settings
         self.language = voice_settings.get("language", "en-US")
@@ -48,7 +52,7 @@ class VoiceInterface:
 
         # Configure pyttsx3 for offline TTS if chosen
         self.setup_pyttsx3()
-
+        
     def setup_pyttsx3(self):
         """Configure the pyttsx3 engine based on the chosen voice gender."""
         voices = self.engine.getProperty('voices')
@@ -169,26 +173,25 @@ class VoiceInterface:
             except Exception as e:
                 self.logger.log_error(f"Unexpected error during listening: {e}")
                 return "An error occurred while processing your input."
-
+    
     def generate_greeting(self):
-        """Generate a unique greeting using OpenAI's GPT."""
+        """Generate a greeting using OpenAI GPT-3.5."""
         try:
-            response = client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are a friendly AI assistant."},
-                    {"role": "user", "content": "Generate a greeting for a user who has just launched me."}
+                    {"role": "system", "content": "You are a friendly AI."},
+                    {"role": "user", "content": "Generate a warm and friendly greeting."}
                 ],
                 max_tokens=50,
                 temperature=0.7
             )
-            greeting = response.choices[0].message.content.strip()
-            self.logger.log_event(f"Generated greeting: {greeting}")
-            return greeting
+            return response.choices[0].message.content.strip()
         except Exception as e:
+            # Log the error or handle it accordingly
             self.logger.log_error(f"Error generating greeting: {e}")
-            return "Hello! I'm Snowball, your personal AI assistant. How can I help you today?"
-
+            return "Hello!"
+        
     def speak_greeting(self):
         """Generate and speak a unique greeting asynchronously."""
         greeting = self.generate_greeting()
@@ -196,5 +199,5 @@ class VoiceInterface:
 
 # Example usage
 if __name__ == "__main__":
-    voice_interface = VoiceInterface()
+    voice_interface = VoiceInterface(api_key="YOUR_API_KEY")
     voice_interface.speak_greeting()

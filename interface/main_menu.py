@@ -1,13 +1,14 @@
-import tkinter as tk
-from tkinter import ttk
-from PIL import ImageTk, Image
-import sys
-import logging
+from openai import OpenAI
 import time
 import threading
 import pygame
 import json
 import os
+import sys
+import tkinter as tk
+from tkinter import ttk
+from PIL import ImageTk, Image
+import logging
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -25,9 +26,11 @@ try:
     logger.info("Attempting to import SnowballAI and ConfigLoader...")
     from core.ai_agent import SnowballAI
     from core.config_loader import ConfigLoader
+    from interface.config_interface import ConfigInterface  # Import ConfigInterface here
 except ImportError as e:
     logger.error(f"ImportError: {e}")
     sys.exit(1)
+
 
 # Load API keys from JSON file
 try:
@@ -35,11 +38,12 @@ try:
         api_keys = json.load(file)
 
     # Check if the OpenAI API key is available
-    if not api_keys.get('api_keys', {}).get('openai_api_key'):
+    openai_api_key = api_keys.get('api_keys', {}).get('openai_api_key')
+    if not openai_api_key:
         raise ValueError("OpenAI API key not found in S:/Snowball/config/account_integrations.json")
 
     # Set environment variable for OpenAI key
-    os.environ['OPENAI_API_KEY'] = api_keys['api_keys']['openai_api_key']
+    os.environ['OPENAI_API_KEY'] = openai_api_key
 
 except FileNotFoundError:
     logger.error("The API keys file was not found at S:/Snowball/config/account_integrations.json")
@@ -50,6 +54,10 @@ except json.JSONDecodeError:
 except Exception as e:
     logger.error(f"An unexpected error occurred: {e}")
     sys.exit(1)
+
+# Initialize SnowballAI with the API key
+snowball_ai = SnowballAI(api_key=openai_api_key)  # Pass API key to SnowballAI
+
 
 class SnowballGUI:
     def __init__(self, root):
@@ -82,8 +90,8 @@ class SnowballGUI:
         except FileNotFoundError:
             logger.error("Duck icon not found at S:/Snowball/icon/trayicon.png")
 
-        # Initialize Snowball AI
-        self.snowball = SnowballAI()
+        # Initialize Snowball AI and pass the API key to it
+        self.snowball = snowball_ai  # Use the initialized SnowballAI
 
         # Create Chat Display (takes up the bottom of the screen)
         self.chat_display_frame = tk.Frame(root, bg="#2c2c2c", bd=2, relief="ridge")
@@ -154,14 +162,10 @@ class SnowballGUI:
 
     def open_module(self, module_name):
         if module_name == "Config":
-            try:
-                # Open the ConfigInterface when "Config" button is pressed
-                config_window = tk.Toplevel(self.root)
-                config_window.title("Configuration")
-                ConfigInterface(config_window)  # This creates an instance of the ConfigInterface window
-            except NameError:
-                logger.error("ConfigInterface class is not defined.")
-                self.chat_display.insert(tk.END, "Configuration module could not be opened.\n")
+            # Open the ConfigInterface when "Config" button is pressed
+            config_window = tk.Toplevel(self.root)
+            config_window.title("Configuration")
+            ConfigInterface(config_window)  # Create an instance of the ConfigInterface window
         elif module_name == "System Monitor":
             if not hasattr(self, 'system_monitor_active') or not self.system_monitor_active:
                 self.system_monitor_active = True

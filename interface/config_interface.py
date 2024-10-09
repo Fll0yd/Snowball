@@ -4,14 +4,23 @@ import json
 import os
 import sys
 
-# Assuming 'core' is in the parent directory of the current script
-core_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../core'))
-sys.path.insert(0, core_path)
+# Get the base directory of the project, which should be the Snowball directory
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
+print(f"Base path: {base_dir}")  # Debugging path reference
 
+# Add the base directory to sys.path if it's not already in it
+if base_dir not in sys.path:
+    sys.path.insert(0, base_dir)
+
+# Print sys.path to debug if the core directory is visible
+print(f"Current sys.path: {sys.path}")
+
+# Import ConfigLoader directly from core package
 try:
-    from config_loader import ConfigLoader
-except ModuleNotFoundError:
-    messagebox.showerror("Error", "ConfigLoader module not found. Please ensure the core directory is in the correct location.")
+    from core.config_loader import ConfigLoader
+except ModuleNotFoundError as e:
+    messagebox.showerror("Error", f"ConfigLoader module not found. Please ensure the core directory is in the correct location. {str(e)}")
+    sys.exit(1)  # Exit the script if the required module is not found
 
 class ConfigInterface:
     def __init__(self, master):
@@ -21,6 +30,7 @@ class ConfigInterface:
         self.master.configure(bg="#2c2c2c")
 
         # Load consolidated configuration files into a dictionary
+        self.config_loader = ConfigLoader()  # Create an instance of ConfigLoader
         self.config_files = {}
         self.load_consolidated_files()
 
@@ -88,7 +98,7 @@ class ConfigInterface:
 
         for file_name in consolidated_files:
             try:
-                config_data = ConfigLoader.load_config(file_name)
+                config_data = self.config_loader.load_config(file_name)
                 self.config_files[file_name] = config_data
             except FileNotFoundError:
                 self.config_files[file_name] = None  # File not found
@@ -99,7 +109,6 @@ class ConfigInterface:
         """
         Load the contents of the selected configuration file into the text box.
         """
-        # Define the mapping between section name and actual filenames
         section_to_file_map = {
             "AI Settings": "ai_settings.json",
             "Interface Settings": "interface_settings.json",
@@ -112,10 +121,7 @@ class ConfigInterface:
             "Contact the Developer": "contact_developer.json"
         }
 
-        # Get the correct filename based on the selected section
         selected_file = section_to_file_map.get(config_name)
-
-        # Retrieve the loaded configuration data
         config_data = self.config_files.get(selected_file)
 
         if config_data is not None:

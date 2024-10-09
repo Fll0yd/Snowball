@@ -233,3 +233,5 @@ A detailed migration guide is available here: https://github.com/openai/openai-p
 2024-10-08 15:31:17,132 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
 2024-10-08 15:40:10,229 - ERROR - Error during speech synthesis: name 'concurrent' is not defined, NameError
 2024-10-08 15:43:58,227 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-09 16:00:17,211 - ERROR - Error processing input: name 'client' is not defined
+2024-10-09 16:32:46,967 - ERROR - Error generating name with GPT: name 'client' is not defined

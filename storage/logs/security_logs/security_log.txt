@@ -1,0 +1,3 @@
+2024-10-09 16:00:17,211 - ERROR - Error processing input: name 'client' is not defined
+2024-10-09 16:00:41,169 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-09 16:32:46,967 - ERROR - Error generating name with GPT: name 'client' is not defined
