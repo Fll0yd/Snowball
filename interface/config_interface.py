@@ -181,6 +181,11 @@ class ConfigInterface:
         """
         logs_path = 'S:/Snowball/storage/logs'
         full_path = os.path.join(logs_path, log_file)
+
+        if not os.access(full_path, os.R_OK):
+            messagebox.showerror("Error", f"Cannot read log file: '{full_path}'. Check file permissions.")
+            return
+
         try:
             with open(full_path, 'r') as f:
                 log_content = f.read()
