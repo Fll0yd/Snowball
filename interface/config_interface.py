@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 import json
 import os
 import sys
@@ -16,7 +16,7 @@ except ModuleNotFoundError:
 class ConfigInterface:
     def __init__(self, master):
         self.master = master
-        self.master.geometry("900x600")
+        self.master.geometry("1000x700")
         self.master.title("Snowball Configuration")
         self.master.configure(bg="#2c2c2c")
 
@@ -24,20 +24,25 @@ class ConfigInterface:
         self.config_files = {}
         self.load_consolidated_files()
 
-        # Create a frame for the sidebar
+        # Create a frame for the sidebar with grid layout
         self.sidebar_frame = tk.Frame(self.master, bg="#1e1e1e", width=200)
-        self.sidebar_frame.pack(fill=tk.Y, side=tk.LEFT, padx=10, pady=10)
+        self.sidebar_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        # Configure grid weights to stretch the sidebar evenly
+        self.master.grid_columnconfigure(0, weight=1)
+        self.master.grid_columnconfigure(1, weight=4)
+        self.master.grid_rowconfigure(0, weight=1)
 
         # Create a frame for the main content
         self.main_frame = tk.Frame(self.master, bg="#2c2c2c")
-        self.main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+        self.main_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
 
         # Label for main content
         self.header_label = tk.Label(self.main_frame, text="Configuration Settings", font=("Arial", 16), fg="white", bg="#2c2c2c")
         self.header_label.pack(anchor="nw", pady=10)
 
         # Display selected config content
-        self.config_text = tk.Text(self.main_frame, wrap=tk.WORD, width=80, height=20, font=("Consolas", 10), bg="#3e3e3e", fg="white", relief="flat")
+        self.config_text = tk.Text(self.main_frame, wrap=tk.WORD, font=("Consolas", 10), bg="#3e3e3e", fg="white", relief="flat")
         self.config_text.pack(fill=tk.BOTH, expand=True, pady=10, padx=10)
 
         # Save Button
@@ -58,10 +63,12 @@ class ConfigInterface:
             "Contact the Developer"
         ]
 
-        for option in sidebar_options:
+        # Create buttons dynamically and place them using grid layout
+        for i, option in enumerate(sidebar_options):
             button = tk.Button(self.sidebar_frame, text=option, command=lambda opt=option: self.change_section(opt),
-                               bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=18, pady=10)
-            button.pack(pady=5)
+                               bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=18)
+            button.grid(row=i, column=0, sticky="ew", padx=5, pady=5)
+            self.sidebar_frame.grid_rowconfigure(i, weight=1)
 
     def load_consolidated_files(self):
         """
@@ -157,7 +164,7 @@ class ConfigInterface:
 
     def display_log_buttons(self):
         """
-        Display buttons for each log file available.
+        Display buttons for each log file available, arranged in two rows of three.
         """
         logs_path = 'S:/Snowball/storage/logs'
         if hasattr(self, 'log_buttons_frame'):
@@ -166,14 +173,27 @@ class ConfigInterface:
         self.log_buttons_frame = tk.Frame(self.main_frame, bg="#2c2c2c")
         self.log_buttons_frame.pack(pady=10)
 
-        if os.path.exists(logs_path):
-            log_files = os.listdir(logs_path)
-            for log_file in log_files:
-                button = tk.Button(self.log_buttons_frame, text=log_file, command=lambda lf=log_file: self.load_log_file(lf),
-                                   bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=20, pady=5)
-                button.pack(pady=5)
-        else:
-            messagebox.showerror("Error", "Logs directory not found.")
+        log_file_mapping = {
+            "Decision Log": "decision_logs/decision_log.txt",
+            "Error Log": "error_logs/error_log.txt",
+            "Event Log": "event_logs/event_log.txt",
+            "File Log": "file_io_logs/file_io_log.txt",
+            "Interaction Log": "interaction_logs/interaction_log.txt",
+            "CPU Log": "system_health_logs/cpu_log.txt",
+            "Memory Log": "system_health_logs/memory_log.txt"
+        }
+
+        # Rearrange buttons into two rows of three
+        row = 0
+        col = 0
+        for log_name, log_file in log_file_mapping.items():
+            button = tk.Button(self.log_buttons_frame, text=log_name, command=lambda lf=log_file: self.load_log_file(lf),
+                               bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=20, pady=5)
+            button.grid(row=row, column=col, padx=5, pady=5)
+            col += 1
+            if col > 2:  # Create a new row after every three buttons
+                col = 0
+                row += 1
 
     def load_log_file(self, log_file):
         """
