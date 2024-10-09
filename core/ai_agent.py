@@ -15,7 +15,6 @@ from core.file_monitor import FileMonitor
 from core.mobile_integration import MobileIntegration
 from core.memory import Memory
 from core.decision_maker import DecisionMaker
-from core.logger import SnowballLogger
 from core.config_loader import ConfigLoader
 
 client = OpenAI()  # This will automatically use the `OPENAI_API_KEY` from the environment
@@ -26,6 +25,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 learning_settings = ConfigLoader.load_config('ai_settings.json')
 settings = ConfigLoader.load_config('interface_settings.json')
 interaction_settings = ConfigLoader.load_config('S:/Snowball/config/mobile_settings.json')
+
+# Pass the settings to the SnowballLogger
+from core.logger import SnowballLogger
+logger_settings = settings.get('system_monitor_thresholds', {})
+snowball_logger = SnowballLogger(settings=logger_settings)
 
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
@@ -44,7 +48,7 @@ class SnowballAI:
         self.file_monitor = FileMonitor(config_file='S:/Snowball/config/plex_config.json')
         self.mobile = MobileIntegration()
         self.game = self.GameAI()
-        self.logger = SnowballLogger()
+        self.logger = snowball_logger
         self.nlp = self.NLPEngine()
         self.decision_maker = DecisionMaker()
         self.running_event = threading.Event()

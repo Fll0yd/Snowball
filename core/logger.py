@@ -1,30 +1,25 @@
 import logging
 import os
-import json
 import threading
-import smtplib
-from email.mime.text import MIMEText
+import datetime
 from logging.handlers import RotatingFileHandler
 from plyer import notification  # For notifications
-from core.config_loader import ConfigLoader
-import psutil  # For system health tracking
-import datetime
+import smtplib
+from email.mime.text import MIMEText
 
-# Load the log directory from config or use a default value
-CONFIG = ConfigLoader.load_config("interface_settings.json")
-LOG_DIR = CONFIG.get("log_directory", os.path.abspath('storage/logs'))
+# Define log paths using the default value (it can be overridden later by passing config)
+DEFAULT_LOG_DIR = os.path.abspath('storage/logs')
 
-# Define log paths using the loaded configuration
-INTERACTION_LOG_PATH = os.path.join(LOG_DIR, "interaction_logs", "interaction_log.txt")
-ERROR_LOG_PATH = os.path.join(LOG_DIR, "error_logs", "error_log.txt")
-SYSTEM_HEALTH_LOG_PATH = os.path.join(LOG_DIR, "system_health_logs", "cpu_log.txt")
-EVENT_LOG_PATH = os.path.join(LOG_DIR, "event_logs", "event_log.txt")
-FILE_IO_LOG_PATH = os.path.join(LOG_DIR, "file_io_logs", "file_io_log.txt")
-DECISION_LOG_PATH = os.path.join(LOG_DIR, "decision_logs", "decision_log.txt")
-CONFIG_CHANGE_LOG_PATH = os.path.join(LOG_DIR, "config_logs", "config_log.txt")  # New log path for configuration changes
-WARNING_LOG_PATH = os.path.join(LOG_DIR, "warning_logs", "warning_log.txt")  # New warning log path
-SECURITY_LOG_PATH = os.path.join(LOG_DIR, "security_logs", "security_log.txt")  # New security log path
-TASK_LOG_PATH = os.path.join(LOG_DIR, "task_logs", "task_log.txt")  # New task log path
+INTERACTION_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt")
+ERROR_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "error_logs", "error_log.txt")
+SYSTEM_HEALTH_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "system_health_logs", "cpu_log.txt")
+EVENT_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "event_logs", "event_log.txt")
+FILE_IO_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "file_io_logs", "file_io_log.txt")
+DECISION_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "decision_logs", "decision_log.txt")
+CONFIG_CHANGE_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "config_logs", "config_log.txt")  
+WARNING_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "warning_logs", "warning_log.txt")  
+SECURITY_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "security_logs", "security_log.txt")  
+TASK_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "task_logs", "task_log.txt")  
 
 # Create the log directories if they don't exist
 for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH, CONFIG_CHANGE_LOG_PATH, WARNING_LOG_PATH, SECURITY_LOG_PATH, TASK_LOG_PATH]:
@@ -34,36 +29,26 @@ class SnowballLogger:
     _instance = None  # Class variable for the singleton logger instance
     _lock = threading.Lock()  # Lock for thread-safe operations
 
-    def __new__(cls):
+    def __new__(cls, settings=None):
         if cls._instance is None:
             with cls._lock:  # Ensure thread safety when initializing
                 if cls._instance is None:  # Double-checked locking
                     cls._instance = super(SnowballLogger, cls).__new__(cls)
-                    cls._instance._initialize_logger()  # Initialize the logger
+                    cls._instance._initialize_logger(settings)  # Initialize the logger with settings
         return cls._instance
 
-    def _initialize_logger(self):
+    def _initialize_logger(self, settings=None):
         # Initialize the logger
         self.logger = logging.getLogger('SnowballLogger')
         self.logger.setLevel(logging.DEBUG)
 
-        # Load settings from the configuration file using ConfigLoader
-        try:
-            settings = ConfigLoader.load_config("interface_settings.json")
-            thresholds = settings.get('system_monitor_thresholds', {})
-            self.cpu_threshold = thresholds.get('cpu', 85)
-            self.memory_threshold = thresholds.get('memory', 85)
-            self.temp_threshold = thresholds.get('temperature', 80)
-            self.email_settings = settings.get('email_settings', {})
-            self.error_settings = settings.get('error_settings', {})
-            self.logger.info("Successfully loaded logger settings from interface_settings.json")
-        except Exception as e:
-            self.logger.error(f"Settings file could not be loaded: {e}")
-            self.cpu_threshold, self.memory_threshold, self.temp_threshold = 85, 85, 80
-            self.email_settings = {}
-            self.error_settings = {}
+        # Use the provided settings or default values
+        self.cpu_threshold = settings.get('cpu', 85) if settings else 85
+        self.memory_threshold = settings.get('memory', 85) if settings else 85
+        self.temp_threshold = settings.get('temperature', 80) if settings else 80
+        self.email_settings = settings.get('email_settings', {}) if settings else {}
+        self.error_settings = settings.get('error_settings', {}) if settings else {}
 
-        # Setup the log handlers
         self._setup_handlers()
 
     def _setup_handlers(self):
@@ -94,7 +79,7 @@ class SnowballLogger:
         try:
             # Avoid adding multiple handlers for the same log file
             if not any(isinstance(handler, RotatingFileHandler) and handler.baseFilename == log_path for handler in self.logger.handlers):
-                handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)  # Use smaller chunks for rotation
+                handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)
                 handler.setLevel(level)
                 handler.setFormatter(formatter)
                 self.logger.addHandler(handler)
