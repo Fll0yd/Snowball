@@ -371,3 +371,1058 @@
 2024-10-07 16:05:19,897 - INFO - Connected to SQLite database: data/memories.db
 2024-10-07 16:05:19,897 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
 2024-10-07 16:05:19,898 - INFO - DecisionMaker initialized.
+2024-10-07 16:21:01,844 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:21:01,845 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:21:01,947 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:21:03,997 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:21:03,998 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:21:03,998 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:21:06,280 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:21:06,280 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:21:06,281 - INFO - DecisionMaker initialized.
+2024-10-07 16:23:50,966 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:23:50,967 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:23:51,065 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:23:53,141 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:23:53,143 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:23:53,144 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:23:56,059 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:23:56,060 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:23:56,061 - INFO - DecisionMaker initialized.
+2024-10-07 16:31:10,360 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:31:10,361 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:31:10,470 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:31:10,510 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:31:10,511 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:31:10,512 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:31:12,848 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:31:12,849 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:31:12,850 - INFO - DecisionMaker initialized.
+2024-10-07 16:38:35,677 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:38:35,678 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:38:35,778 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:38:35,783 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:38:35,784 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:38:35,784 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:38:38,306 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:38:38,307 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:38:38,307 - INFO - DecisionMaker initialized.
+2024-10-07 16:47:34,836 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:47:34,837 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:47:34,941 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:47:34,947 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:47:34,948 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:47:34,949 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:47:37,566 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:47:37,567 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:47:37,568 - INFO - DecisionMaker initialized.
+2024-10-07 16:49:29,628 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:49:29,630 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:49:29,730 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 16:49:29,735 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:49:29,736 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:49:29,737 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 16:49:32,159 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 16:49:32,160 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 16:49:32,161 - INFO - DecisionMaker initialized.
+2024-10-07 17:03:44,063 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 17:03:44,064 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 17:03:44,164 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-07 17:03:44,171 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 17:03:44,172 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 17:03:44,172 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-07 17:03:46,643 - INFO - Connected to SQLite database: data/memories.db
+2024-10-07 17:03:46,644 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-07 17:03:46,645 - INFO - DecisionMaker initialized.
+2024-10-08 06:38:38,030 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 06:38:38,031 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 06:38:38,147 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 06:38:38,159 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 06:38:38,160 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 06:38:38,166 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 06:38:40,743 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 06:38:40,744 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 06:38:40,744 - INFO - DecisionMaker initialized.
+2024-10-08 07:14:23,473 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:14:23,474 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:14:23,574 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 07:14:23,580 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:14:23,581 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:14:23,581 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 07:14:25,957 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:14:25,957 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:14:25,958 - INFO - DecisionMaker initialized.
+2024-10-08 07:14:25,966 - ERROR - Error reading names file: 'charmap' codec can't decode byte 0x9d in position 891: character maps to <undefined>
+2024-10-08 07:14:25,967 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 07:14:29,995 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 07:14:35,028 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 07:14:35,029 - ERROR - Error: Error during speech synthesis: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav', PermissionError
+2024-10-08 07:20:46,723 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:20:46,724 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:20:46,821 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 07:20:46,828 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:20:46,829 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:20:46,830 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 07:20:49,182 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:20:49,183 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:20:49,184 - INFO - DecisionMaker initialized.
+2024-10-08 07:20:49,185 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 07:20:53,229 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 07:20:56,220 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 07:20:56,221 - ERROR - Error: Error playing audio: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 07:20:56,229 - ERROR - Error: Error during speech synthesis: name 'error_settings' is not defined, NameError
+2024-10-08 07:51:48,941 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:51:48,943 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:51:49,061 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 07:51:49,071 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:51:49,072 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:51:49,079 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 07:51:51,765 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 07:51:51,766 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 07:51:51,768 - INFO - DecisionMaker initialized.
+2024-10-08 07:51:51,778 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 07:51:55,837 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 07:51:59,098 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 07:51:59,099 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 07:51:59,106 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:01:11,242 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:01:11,243 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:01:11,361 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:01:11,367 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:01:11,368 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:01:11,368 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:01:13,983 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:01:13,984 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:01:13,984 - INFO - DecisionMaker initialized.
+2024-10-08 08:01:13,986 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:01:18,013 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 08:01:20,851 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:01:20,852 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:01:20,858 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:08:04,139 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:08:04,140 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:08:04,246 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:08:04,251 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:08:04,253 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:08:04,253 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:08:06,711 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:08:06,713 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:08:06,714 - INFO - DecisionMaker initialized.
+2024-10-08 08:08:06,715 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:08:10,743 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 08:08:13,733 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:08:13,733 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:08:13,738 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:21:00,844 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:21:00,845 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:21:00,946 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:21:00,951 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:21:00,952 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:21:00,953 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:21:03,402 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:21:03,403 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:21:03,403 - INFO - DecisionMaker initialized.
+2024-10-08 08:21:03,405 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:21:07,456 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 08:21:10,538 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:21:10,539 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:21:10,545 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:21:26,711 - ERROR - Error processing input: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 08:23:13,315 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:23:13,316 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:23:13,504 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:23:13,509 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:23:13,510 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:23:13,511 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:23:15,861 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:23:15,862 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:23:15,862 - INFO - DecisionMaker initialized.
+2024-10-08 08:23:15,864 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:23:19,906 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 08:23:22,690 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:23:22,690 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:23:22,697 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:34:22,741 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:34:22,742 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:34:22,843 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:34:22,848 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:34:22,849 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:34:22,850 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:34:25,308 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:34:25,309 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:34:25,310 - INFO - DecisionMaker initialized.
+2024-10-08 08:34:25,311 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:34:29,359 - INFO - Converting text to speech: 'Hello! It's great to see you!'
+2024-10-08 08:34:32,171 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:34:32,172 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:34:32,176 - INFO - Speech synthesized: 'Hello! It's great to see you!'
+2024-10-08 08:38:46,032 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:38:46,033 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:38:46,134 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:38:46,141 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:38:46,142 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:38:46,142 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:38:48,625 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:38:48,626 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:38:48,627 - INFO - DecisionMaker initialized.
+2024-10-08 08:38:48,628 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:38:52,676 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:38:52,678 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:38:52,682 - INFO - Converting text to speech: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:38:58,996 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:38:58,996 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:38:59,004 - INFO - Speech synthesized: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:42:56,904 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:42:56,905 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:42:57,006 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:42:57,012 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:42:57,013 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:42:57,014 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:42:59,438 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:42:59,438 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:42:59,439 - INFO - DecisionMaker initialized.
+2024-10-08 08:42:59,440 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:42:59,441 - ERROR - Error generating name with GPT: name 'user_input' is not defined
+2024-10-08 08:43:03,481 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:43:03,482 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:43:03,483 - INFO - Converting text to speech: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:43:09,898 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:43:10,899 - ERROR - Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:43:10,900 - INFO - Speech synthesized: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:46:53,507 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:46:53,508 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:46:53,621 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:46:53,627 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:46:53,629 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:46:53,629 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:46:56,069 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:46:56,070 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:46:56,071 - INFO - DecisionMaker initialized.
+2024-10-08 08:46:56,072 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:47:00,115 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:47:00,116 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:47:00,117 - INFO - Converting text to speech: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:47:06,258 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:47:07,259 - ERROR - Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:47:07,260 - INFO - Speech synthesized: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:49:19,923 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:49:19,924 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:49:20,028 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:49:20,034 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:49:20,035 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:49:20,036 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:49:22,453 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:49:22,454 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:49:22,455 - INFO - DecisionMaker initialized.
+2024-10-08 08:49:22,456 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:49:26,478 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:49:26,478 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:49:26,479 - INFO - Converting text to speech: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:49:32,641 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:49:33,143 - INFO - Speech synthesized: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:51:23,389 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:51:23,389 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:51:23,491 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:51:23,497 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:51:23,498 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:51:23,500 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:51:26,006 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:51:26,007 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:51:26,007 - INFO - DecisionMaker initialized.
+2024-10-08 08:51:26,009 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 08:51:30,040 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:51:30,041 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:51:30,042 - INFO - Converting text to speech: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:51:36,372 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 08:51:36,876 - INFO - Speech synthesized: 'Hello! I'm Snowball, your AI assistant. How can I assist you today?'
+2024-10-08 08:58:15,425 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:58:15,426 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:58:15,527 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 08:58:15,533 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:58:15,534 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:58:15,535 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 08:58:18,155 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 08:58:18,156 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 08:58:18,157 - INFO - DecisionMaker initialized.
+2024-10-08 08:58:18,158 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:04:35,196 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:04:35,197 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:04:35,296 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:04:35,302 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:04:35,303 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:04:35,304 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:04:37,717 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:04:37,718 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:04:37,718 - INFO - DecisionMaker initialized.
+2024-10-08 09:04:37,720 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:07:48,765 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:07:48,766 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:07:48,865 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:07:48,872 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:07:48,872 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:07:48,873 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:07:51,234 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:07:51,234 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:07:51,235 - INFO - DecisionMaker initialized.
+2024-10-08 09:07:51,236 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:07:51,237 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:07:55,282 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:07:55,284 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:08:01,998 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:08:02,500 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:10:24,039 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:10:24,040 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:10:24,143 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:10:24,148 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:10:24,149 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:10:24,149 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:10:26,648 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:10:26,649 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:10:26,650 - INFO - DecisionMaker initialized.
+2024-10-08 09:10:26,651 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:10:30,700 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:10:30,701 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:10:37,363 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:10:37,865 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:15:08,277 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:15:08,278 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:15:08,379 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:15:08,384 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:15:08,384 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:15:08,385 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:15:10,746 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:15:10,747 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:15:10,747 - INFO - DecisionMaker initialized.
+2024-10-08 09:15:10,749 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:15:10,749 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:15:14,793 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:15:14,794 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:15:21,315 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:15:21,817 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:18:28,418 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:18:28,419 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:18:28,522 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:18:28,528 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:18:28,530 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:18:28,531 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:18:30,974 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:18:30,974 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:18:30,974 - INFO - DecisionMaker initialized.
+2024-10-08 09:18:30,976 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:18:35,023 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:18:35,029 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:18:41,444 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:18:41,946 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:24:26,090 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:24:26,091 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:24:26,192 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:24:26,198 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:24:26,199 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:24:26,199 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:24:28,644 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:24:28,645 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:24:28,646 - INFO - DecisionMaker initialized.
+2024-10-08 09:24:28,647 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:24:32,695 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:24:32,705 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:24:39,369 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:24:39,870 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:26:11,513 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:26:11,513 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:26:11,615 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:26:11,621 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:26:11,622 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:26:11,624 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:26:14,068 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:26:14,069 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:26:14,070 - INFO - DecisionMaker initialized.
+2024-10-08 09:26:14,071 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:26:14,072 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:26:18,093 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:26:18,095 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:26:24,450 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:26:24,952 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:48:35,623 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:48:35,624 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:48:35,721 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:48:35,726 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:48:35,727 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:48:35,728 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:48:38,227 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:48:38,228 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:48:38,228 - INFO - DecisionMaker initialized.
+2024-10-08 09:48:38,230 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:48:38,524 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************1iAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-08 09:48:42,660 - ERROR - Error generating greeting: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************1iAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-08 09:48:42,660 - INFO - Converting text to speech: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:48:49,033 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:48:49,535 - INFO - Speech synthesized: 'Hello! I'm Snowball, your personal AI assistant. How can I help you today?'
+2024-10-08 09:51:00,390 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:51:00,391 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:51:00,493 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 09:51:00,499 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:51:00,500 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:51:00,500 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 09:51:02,928 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 09:51:02,929 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 09:51:02,930 - INFO - DecisionMaker initialized.
+2024-10-08 09:51:02,931 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 09:51:04,309 - INFO - Generated name from GPT: "QuantaNova" - This name combines the idea of breaking down complex data into meaningful insights (Quanta) with the concept of sudden growth and potential (Nova). It symbolizes your AI assistant's ability to continuously learn and evolve, generating new
+2024-10-08 09:51:08,978 - INFO - Generated greeting: Hello! Welcome aboard! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 09:51:08,979 - INFO - Converting text to speech: 'Hello! Welcome aboard! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 09:51:16,344 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 09:51:16,846 - INFO - Speech synthesized: 'Hello! Welcome aboard! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:05:22,858 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:05:22,858 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:05:22,961 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:05:22,967 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:05:22,968 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:05:22,969 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:05:25,426 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:05:25,426 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:05:25,427 - INFO - DecisionMaker initialized.
+2024-10-08 10:05:25,428 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:05:30,057 - INFO - Generated greeting: Welcome to your friendly AI assistant! I'm here to help you with anything you need. How can I assist you today?
+2024-10-08 10:05:30,058 - INFO - Converting text to speech: 'Welcome to your friendly AI assistant! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 10:05:38,482 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:05:38,984 - INFO - Speech synthesized: 'Welcome to your friendly AI assistant! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 10:22:58,602 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:22:58,602 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:22:58,707 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:22:58,713 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:22:58,714 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:22:58,715 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:23:01,091 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:23:01,092 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:23:01,092 - INFO - DecisionMaker initialized.
+2024-10-08 10:23:01,094 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:23:05,819 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 10:23:05,822 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:23:12,478 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:23:12,979 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:23:36,164 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:23:36,165 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:23:36,264 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:23:36,269 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:23:36,270 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:23:36,271 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:23:38,724 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:23:38,725 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:23:38,726 - INFO - DecisionMaker initialized.
+2024-10-08 10:23:38,727 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:23:43,386 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 10:23:43,387 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:23:49,966 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:23:50,467 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:32:26,735 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:32:26,737 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:32:26,842 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:32:26,848 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:32:26,849 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:32:26,850 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:32:29,451 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:32:29,452 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:32:29,452 - INFO - DecisionMaker initialized.
+2024-10-08 10:32:29,454 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:32:34,279 - INFO - Generated greeting: Hello! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?
+2024-10-08 10:32:34,280 - INFO - Converting text to speech: 'Hello! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 10:32:43,729 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:32:44,231 - INFO - Speech synthesized: 'Hello! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 10:40:19,911 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:40:19,912 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:40:20,009 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:40:20,015 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:40:20,015 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:40:20,016 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:40:22,423 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:40:22,424 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:40:22,424 - INFO - DecisionMaker initialized.
+2024-10-08 10:40:22,426 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:40:23,451 - INFO - Generated name from GPT: "Synthia" - Meaning: A blend of "synthetic" and "Sophia," representing the AI's synthetic intelligence and wisdom., Why it fits: Synthia combines the idea of artificial intelligence with the essence of wisdom, reflecting the
+2024-10-08 10:40:29,282 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. Feel free to ask me anything or let me know how I can help you today.
+2024-10-08 10:40:29,284 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. Feel free to ask me anything or let me know how I can help you today.'
+2024-10-08 10:40:39,216 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:40:39,717 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. Feel free to ask me anything or let me know how I can help you today.'
+2024-10-08 10:44:44,422 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:44:44,423 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:44:44,524 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:44:44,530 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:44:44,531 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:44:44,532 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:44:47,070 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:44:47,071 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:44:47,071 - INFO - DecisionMaker initialized.
+2024-10-08 10:44:47,073 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:44:49,811 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with any questions or tasks you have. Feel free to ask me anything!
+2024-10-08 10:44:49,812 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with any questions or tasks you have. Feel free to ask me anything!'
+2024-10-08 10:44:59,511 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:45:00,013 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with any questions or tasks you have. Feel free to ask me anything!'
+2024-10-08 10:47:49,736 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:47:49,737 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:47:49,841 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:47:49,846 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:47:49,847 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:47:49,847 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:47:52,328 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:47:52,330 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:47:52,330 - INFO - DecisionMaker initialized.
+2024-10-08 10:47:52,332 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:47:53,295 - INFO - Generated name from GPT: "Synthia" - Meaning: A blend of "synthesis" and "Sophia," representing the AI's ability to synthesize information and wisdom., Why it fits: Synthia embodies the AI's capacity to combine knowledge and intelligence to
+2024-10-08 10:47:55,033 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 10:47:55,035 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:48:01,644 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:48:02,145 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:52:27,856 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:52:27,857 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:52:27,958 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 10:52:27,964 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:52:27,965 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:52:27,966 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 10:52:30,613 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 10:52:30,614 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 10:52:30,615 - INFO - DecisionMaker initialized.
+2024-10-08 10:52:30,617 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 10:52:31,330 - INFO - Generated name from GPT: "NovaSynth" - Combining the concept of sudden brightness and synthesis of new knowledge, reflecting the AI's rapid evolution and continuous learning process.
+2024-10-08 10:52:32,952 - INFO - Generated greeting: Welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 10:52:32,953 - INFO - Converting text to speech: 'Welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 10:52:39,140 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 10:52:39,642 - INFO - Speech synthesized: 'Welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:03:30,322 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:03:30,323 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:03:30,425 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:03:30,432 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:03:30,433 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:03:30,434 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:03:32,882 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:03:32,883 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:03:32,883 - INFO - DecisionMaker initialized.
+2024-10-08 11:03:32,885 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:04:09,050 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:04:09,051 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:04:09,152 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:04:09,157 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:04:09,158 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:04:09,158 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:04:11,627 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:04:11,628 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:04:11,629 - INFO - DecisionMaker initialized.
+2024-10-08 11:04:11,630 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:04:12,642 - INFO - Generated name from GPT: "QuantaNova" - A fusion of "Quanta" and "NOVA," symbolizing the AI's ability to break down complex data into meaningful insights and continuously increase in brightness with new potential and growth. This name reflects the AI's capacity
+2024-10-08 11:05:13,407 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:05:13,408 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:05:13,507 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:05:13,514 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:05:13,515 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:05:13,516 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:05:15,923 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:05:15,924 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:05:15,925 - INFO - DecisionMaker initialized.
+2024-10-08 11:05:15,926 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:05:18,478 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 11:05:18,482 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:05:25,168 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:05:25,672 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:07:23,722 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:07:23,723 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:07:23,824 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:07:23,831 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:07:23,832 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:07:23,832 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:07:26,294 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:07:26,295 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:07:26,296 - INFO - DecisionMaker initialized.
+2024-10-08 11:07:26,297 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:07:27,090 - INFO - Generated greeting: Welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 11:07:27,093 - INFO - Converting text to speech: 'Welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:07:32,939 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:07:33,441 - INFO - Speech synthesized: 'Welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:09:30,110 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:09:30,111 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:09:30,221 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:09:30,227 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:09:30,228 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:09:30,228 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:09:32,644 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:09:32,645 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:09:32,646 - INFO - DecisionMaker initialized.
+2024-10-08 11:09:32,647 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:09:33,847 - INFO - Generated name from GPT: "QuantaNova" - This name combines the concept of discrete packets of energy (quanta) with sudden brightness and growth (nova), symbolizing the AI's ability to break down complex data into meaningful insights and continuously shine brighter with new knowledge and
+2024-10-08 11:09:38,032 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 11:09:38,033 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:09:44,636 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:09:45,139 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:14:06,004 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:14:06,005 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:14:06,107 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:14:06,112 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:14:06,113 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:14:06,114 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:14:08,570 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:14:08,571 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:14:08,572 - INFO - DecisionMaker initialized.
+2024-10-08 11:14:08,574 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:14:12,724 - INFO - Generated greeting: Hello and welcome! I'm here to help you with anything you need. How can I assist you today?
+2024-10-08 11:14:12,724 - INFO - Converting text to speech: 'Hello and welcome! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 11:14:19,378 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:14:19,881 - INFO - Speech synthesized: 'Hello and welcome! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 11:21:31,329 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:21:31,330 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:21:31,443 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:21:31,449 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:21:31,450 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:21:31,451 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:21:34,062 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:21:34,063 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:21:34,063 - INFO - DecisionMaker initialized.
+2024-10-08 11:21:34,065 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:21:34,825 - INFO - Generated greeting: Welcome! It's great to see you here. How can I assist you today?
+2024-10-08 11:21:34,825 - INFO - Converting text to speech: 'Welcome! It's great to see you here. How can I assist you today?'
+2024-10-08 11:21:40,236 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:21:40,738 - INFO - Speech synthesized: 'Welcome! It's great to see you here. How can I assist you today?'
+2024-10-08 11:26:26,130 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:26:26,131 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:26:26,232 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:26:26,239 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:26:26,240 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:26:26,241 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:26:28,575 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:26:28,576 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:26:28,577 - INFO - DecisionMaker initialized.
+2024-10-08 11:26:28,578 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:26:29,077 - INFO - Generated name from GPT: "QuantaSage"
+2024-10-08 11:26:33,296 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 11:26:33,302 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:26:39,945 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:26:40,446 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:43:21,254 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:43:21,255 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:43:21,356 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:43:21,363 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:43:21,364 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:43:21,365 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:43:23,808 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:43:23,808 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:43:23,809 - INFO - DecisionMaker initialized.
+2024-10-08 11:43:23,811 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:43:24,781 - INFO - Generated name from GPT: "Synthia" - Meaning: A fusion of "synthesis" and "Sophia" (wisdom), symbolizing the AI's ability to synthesize information and learn like a wise being. Why it fits: This name captures the essence
+2024-10-08 11:43:29,161 - INFO - Generated greeting: Hello there! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?
+2024-10-08 11:43:29,163 - INFO - Converting text to speech: 'Hello there! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 11:43:38,961 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:43:39,462 - INFO - Speech synthesized: 'Hello there! Welcome to your friendly AI assistant. I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 11:46:14,248 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:46:14,249 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:46:14,351 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:46:14,357 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:46:14,358 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:46:14,358 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:46:16,822 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:46:16,823 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:46:16,824 - INFO - DecisionMaker initialized.
+2024-10-08 11:46:16,825 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:46:21,040 - INFO - Generated greeting: Hello there! Welcome to your friendly AI assistant. How can I help you today?
+2024-10-08 11:46:21,041 - INFO - Converting text to speech: 'Hello there! Welcome to your friendly AI assistant. How can I help you today?'
+2024-10-08 11:46:27,390 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:46:27,892 - INFO - Speech synthesized: 'Hello there! Welcome to your friendly AI assistant. How can I help you today?'
+2024-10-08 11:54:45,299 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:54:45,301 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:54:45,402 - INFO - Loaded voice settings from S:/Snowball/config/voice_settings.json
+2024-10-08 11:54:45,408 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:54:45,409 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:54:45,410 - INFO - Monitoring started for downloads: E:/Downloads
+2024-10-08 11:54:47,838 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 11:54:47,839 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 11:54:47,840 - INFO - DecisionMaker initialized.
+2024-10-08 11:54:47,841 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 11:54:52,094 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 11:54:52,095 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 11:54:58,743 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 11:54:59,246 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 13:33:02,274 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:33:02,275 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:33:02,378 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:33:02,384 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:33:02,385 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:40:19,855 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:40:19,856 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:40:19,958 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:40:19,964 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:40:19,965 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:42:29,866 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:42:29,867 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:42:29,970 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:42:29,977 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:42:29,978 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:43:40,018 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:43:40,019 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:43:40,129 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:43:40,137 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:43:40,138 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:43:40,139 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 13:47:57,774 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:47:57,776 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:47:57,881 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:47:57,886 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:47:57,887 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:47:57,888 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 13:58:02,800 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:58:02,801 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:58:02,911 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 13:58:02,921 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:58:02,923 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:58:02,931 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 13:58:05,490 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 13:58:05,491 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 13:58:05,492 - INFO - DecisionMaker initialized.
+2024-10-08 13:58:05,498 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 13:58:09,664 - INFO - Generated greeting: Hello! Welcome to your friendly AI assistant. How can I help you today?
+2024-10-08 13:58:09,664 - INFO - Converting text to speech: 'Hello! Welcome to your friendly AI assistant. How can I help you today?'
+2024-10-08 13:58:09,666 - ERROR - Error during speech synthesis: Language not supported: English, ValueError
+2024-10-08 14:14:23,690 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:14:23,691 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:14:23,788 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 14:14:23,795 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:14:23,796 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:14:23,797 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 14:14:26,182 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:14:26,183 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:14:26,184 - INFO - DecisionMaker initialized.
+2024-10-08 14:14:26,185 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 14:14:30,354 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 14:14:30,354 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 14:14:38,053 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 14:14:38,554 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 14:24:16,927 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:24:16,928 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:24:17,027 - INFO - Loaded voice settings from S:/Snowball/config/interface_settings.json
+2024-10-08 14:24:17,033 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:24:17,034 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:24:17,035 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 14:43:41,048 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:43:41,049 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:43:41,188 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:43:41,189 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:43:41,190 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 14:48:33,386 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:48:33,388 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:48:33,491 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:48:33,492 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:48:33,493 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 14:48:36,033 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 14:48:36,034 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 14:48:36,035 - INFO - DecisionMaker initialized.
+2024-10-08 14:48:36,036 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 14:48:36,402 - INFO - Generated name from GPT: "Sentia"
+2024-10-08 14:48:40,547 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 14:48:40,548 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 14:48:47,163 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 14:48:47,665 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:05:30,717 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:05:30,718 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:08:51,778 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:08:51,779 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:08:51,881 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:08:51,883 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:08:51,884 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:08:54,384 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:08:54,386 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:08:54,387 - INFO - DecisionMaker initialized.
+2024-10-08 15:08:54,388 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:08:55,505 - INFO - Generated name from GPT: "NovaSolis" - This name combines the idea of a star suddenly increasing in brightness (Nova) with the Latin word for "sun" (Solis), symbolizing constant growth, brilliance, and presence. It reflects the AI's ability to
+2024-10-08 15:08:59,608 - INFO - Generated greeting: Hello there! Welcome to your AI assistant. How can I assist you today?
+2024-10-08 15:08:59,609 - INFO - Converting text to speech: 'Hello there! Welcome to your AI assistant. How can I assist you today?'
+2024-10-08 15:09:05,758 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:09:06,261 - INFO - Speech synthesized: 'Hello there! Welcome to your AI assistant. How can I assist you today?'
+2024-10-08 15:17:29,201 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:17:29,201 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:17:29,305 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:17:29,306 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:17:29,307 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:17:31,707 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:17:31,708 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:17:31,709 - INFO - DecisionMaker initialized.
+2024-10-08 15:17:31,710 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:17:35,912 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:17:35,912 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:17:42,638 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:17:43,140 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:18:35,127 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:18:35,128 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:18:35,233 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:18:35,233 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:18:35,234 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:18:37,670 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:18:37,671 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:18:37,671 - INFO - DecisionMaker initialized.
+2024-10-08 15:18:37,673 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:18:41,779 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:18:41,780 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:18:48,390 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:18:48,891 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:21:04,123 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:21:04,124 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:24:17,719 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:24:17,720 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:24:17,823 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:24:17,824 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:24:17,824 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:24:20,276 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:24:20,277 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:24:20,278 - INFO - DecisionMaker initialized.
+2024-10-08 15:24:20,279 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:24:21,246 - INFO - Generated name from GPT: "Synthia" - Meaning: A fusion of "synthetic" and "Sophia," representing the AI's artificial intelligence and wisdom., Why it fits: Synthia embodies the AI's ability to combine advanced technology with thoughtful insights, evolving
+2024-10-08 15:24:25,371 - INFO - Generated greeting: Hello there! Welcome to your friendly AI assistant. How can I assist you today?
+2024-10-08 15:24:25,371 - INFO - Converting text to speech: 'Hello there! Welcome to your friendly AI assistant. How can I assist you today?'
+2024-10-08 15:24:31,908 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:24:32,409 - INFO - Speech synthesized: 'Hello there! Welcome to your friendly AI assistant. How can I assist you today?'
+2024-10-08 15:30:33,264 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:30:33,264 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:30:33,371 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:30:33,371 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:30:33,372 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:30:35,825 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:30:35,826 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:30:35,827 - INFO - DecisionMaker initialized.
+2024-10-08 15:30:35,828 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:30:40,405 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:30:40,406 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:30:40,572 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:30:40,573 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-08 15:30:46,766 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:31:09,138 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:31:09,139 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:31:09,245 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:31:09,246 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:31:09,247 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:31:11,688 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:31:11,689 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:31:11,690 - INFO - DecisionMaker initialized.
+2024-10-08 15:31:11,691 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:31:16,132 - INFO - Generated greeting: Hello and welcome to your new AI assistant! I'm here to help you with anything you need. How can I assist you today?
+2024-10-08 15:31:16,134 - INFO - Converting text to speech: 'Hello and welcome to your new AI assistant! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 15:31:17,131 - INFO - Speech synthesized: 'Hello and welcome to your new AI assistant! I'm here to help you with anything you need. How can I assist you today?'
+2024-10-08 15:31:17,132 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-08 15:31:25,233 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:32:44,785 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:32:44,786 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:32:44,888 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:32:44,889 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:32:44,890 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:32:47,203 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:32:47,204 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:32:47,205 - INFO - DecisionMaker initialized.
+2024-10-08 15:32:47,206 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:32:48,232 - INFO - Generated name from GPT: "NovaLexa" - Meaning: Combining "Nova" for new potential and growth with "Lexa" for intelligence and understanding, symbolizing the AI's continuous evolution and learning capabilities., Why it fits: NovaLexa embodies the AI's
+2024-10-08 15:32:52,356 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:32:52,357 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:32:52,514 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:32:58,732 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:35:25,117 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:35:25,118 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:35:25,219 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:35:25,220 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:35:25,221 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:35:27,498 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:35:27,499 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:35:27,500 - INFO - DecisionMaker initialized.
+2024-10-08 15:35:27,501 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:35:31,828 - INFO - Generated greeting: Welcome aboard! I'm here to assist you with anything you need. Feel free to ask me any questions or give me any commands. How can I help you today?
+2024-10-08 15:35:31,830 - INFO - Converting text to speech: 'Welcome aboard! I'm here to assist you with anything you need. Feel free to ask me any questions or give me any commands. How can I help you today?'
+2024-10-08 15:35:32,779 - INFO - Speech synthesized: 'Welcome aboard! I'm here to assist you with anything you need. Feel free to ask me any questions or give me any commands. How can I help you today?'
+2024-10-08 15:35:43,586 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:40:03,656 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:40:03,657 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:40:03,761 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:40:03,762 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:40:03,763 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:40:06,085 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:40:06,086 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:40:06,086 - INFO - DecisionMaker initialized.
+2024-10-08 15:40:06,088 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:40:10,226 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:40:10,228 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:40:10,229 - ERROR - Error during speech synthesis: name 'concurrent' is not defined, NameError
+2024-10-08 15:41:07,616 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:41:07,617 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:41:07,719 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:41:07,720 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:41:07,721 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:41:10,033 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:41:10,034 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:41:10,034 - INFO - DecisionMaker initialized.
+2024-10-08 15:41:10,035 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:41:11,063 - INFO - Generated name from GPT: "NovaSynth" - Meaning: Combining "Nova" for new potential and growth with "Synth" for synthesis or creation, symbolizing the AI's ability to constantly evolve and create new solutions., Why it fits: NovaSynth reflects
+2024-10-08 15:41:15,189 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:41:15,191 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:41:15,425 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:41:21,621 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:43:50,545 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:43:50,546 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:43:50,651 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:43:50,651 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:43:50,652 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:43:53,011 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:43:53,011 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:43:53,012 - INFO - DecisionMaker initialized.
+2024-10-08 15:43:53,013 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:43:57,310 - INFO - Generated greeting: Hello and welcome! I'm here to help you with anything you need. Feel free to ask me anything. How can I assist you today?
+2024-10-08 15:43:57,312 - INFO - Converting text to speech: 'Hello and welcome! I'm here to help you with anything you need. Feel free to ask me anything. How can I assist you today?'
+2024-10-08 15:43:58,226 - INFO - Speech synthesized: 'Hello and welcome! I'm here to help you with anything you need. Feel free to ask me anything. How can I assist you today?'
+2024-10-08 15:43:58,227 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-08 15:44:06,829 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:46:49,599 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:46:49,600 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:46:49,701 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:46:49,702 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:46:49,703 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:46:52,034 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:46:52,035 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:46:52,035 - INFO - DecisionMaker initialized.
+2024-10-08 15:46:52,037 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:46:52,970 - INFO - Generated name from GPT: "Neurastra" - This name combines the concepts of neural networks and stars, symbolizing the AI's ability to learn and shine brightly with new knowledge. It highlights the continuous growth and evolution of the AI, just like stars in the sky.
+2024-10-08 15:46:57,107 - INFO - Generated greeting: Hello and welcome! I'm here to assist you with anything you need. How can I help you today?
+2024-10-08 15:46:57,111 - INFO - Converting text to speech: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:46:57,284 - INFO - Speech synthesized: 'Hello and welcome! I'm here to assist you with anything you need. How can I help you today?'
+2024-10-08 15:46:57,285 - WARNING - Error removing MP3 file (attempt 1): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'. Retrying...
+2024-10-08 15:47:03,487 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:48:32,784 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:48:32,785 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:48:32,888 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:48:32,889 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:48:32,890 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:48:35,227 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:48:35,228 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:48:35,229 - INFO - DecisionMaker initialized.
+2024-10-08 15:48:35,230 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:48:39,361 - INFO - Generated greeting: Hello there! Welcome to your new AI assistant. How can I assist you today?
+2024-10-08 15:48:39,363 - INFO - Converting text to speech: 'Hello there! Welcome to your new AI assistant. How can I assist you today?'
+2024-10-08 15:48:39,756 - INFO - Speech synthesized: 'Hello there! Welcome to your new AI assistant. How can I assist you today?'
+2024-10-08 15:48:39,759 - WARNING - Error removing MP3 file (attempt 1): name 'time' is not defined. Retrying...
+2024-10-08 15:48:45,658 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 15:57:19,240 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:57:19,241 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:57:19,344 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:57:19,345 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:57:19,345 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 15:57:21,707 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 15:57:21,708 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 15:57:21,709 - INFO - DecisionMaker initialized.
+2024-10-08 15:57:21,710 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 15:57:22,794 - INFO - Generated name from GPT: "NovaSynth" - A combination of "Nova," symbolizing growth and potential, and "Synth," short for synthetic intelligence, reflecting the AI's ability to synthesize information and learn continuously to assist you effectively. This name embodies the idea
+2024-10-08 15:57:26,849 - INFO - Generated greeting: Hello there! Welcome to your new AI assistant. How can I help you today?
+2024-10-08 15:57:26,850 - INFO - Converting text to speech: 'Hello there! Welcome to your new AI assistant. How can I help you today?'
+2024-10-08 15:57:27,375 - INFO - Speech synthesized: 'Hello there! Welcome to your new AI assistant. How can I help you today?'
+2024-10-08 15:57:27,878 - INFO - Successfully removed MP3 file on attempt 1
+2024-10-08 15:57:33,175 - INFO - Playing audio file: C:\temp\response.wav
+2024-10-08 16:07:34,904 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 16:07:34,905 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 16:07:35,007 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 16:07:35,008 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 16:07:35,008 - INFO - Monitoring started for downloads: default_download_path
+2024-10-08 16:07:37,454 - INFO - Connected to SQLite database: data/memories.db
+2024-10-08 16:07:37,455 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-08 16:07:37,456 - INFO - DecisionMaker initialized.
+2024-10-08 16:07:37,457 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-08 16:07:41,803 - INFO - Generated greeting: Hello there! Welcome to your friendly AI assistant. How can I help you today?
+2024-10-08 16:07:41,806 - INFO - Converting text to speech: 'Hello there! Welcome to your friendly AI assistant. How can I help you today?'
+2024-10-08 16:07:42,490 - INFO - Speech synthesized: 'Hello there! Welcome to your friendly AI assistant. How can I help you today?'
+2024-10-08 16:07:42,993 - INFO - Successfully removed MP3 file on attempt 1
+2024-10-08 16:07:48,400 - INFO - Playing audio file: C:\temp\response.wav

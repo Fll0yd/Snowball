@@ -15,13 +15,11 @@ SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']
 logging.basicConfig(level=logging.INFO)
 
 # Load mobile sync settings using ConfigLoader
-settings = ConfigLoader.load_config('S:/Snowball/config/settings.json')
-mobile_sync_interval = settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
-
-# Load sync and backup settings using ConfigLoader
-backup_settings = ConfigLoader.load_config('S:/Snowball/config/sync_and_backup.json')
+settings = ConfigLoader.load_config('interface_settings.json')
+backup_settings = ConfigLoader.load_config('mobile_settings.json')
 cloud_backup_enabled = backup_settings.get('backup_to_cloud', False)
 nas_backup_enabled = backup_settings.get('backup_to_nas', False)
+mobile_sync_interval = settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
 
 
 class MobileIntegration:
@@ -36,17 +34,22 @@ class MobileIntegration:
     def initialize_google_credentials(self):
         """Initialize Google OAuth credentials or prompt for authentication if needed."""
         creds = None
-        token_path = 'S:/Snowball/config/token.json'
-        credentials_path = 'S:/Snowball/config/credentials.json'
+        token_path = 'S:/Snowball/config/account_integrations.json'
 
         # Load token from file if it exists
         if os.path.exists(token_path):
-            creds = Credentials.from_authorized_user_file(token_path, SCOPES)
+            with open(token_path, 'r') as token_file:
+                data = json.load(token_file)
+                google_token_data = data.get("tokens", {}).get("google", {})
+
+                if not all(key in google_token_data for key in ["client_id", "client_secret", "refresh_token"]):
+                    raise ValueError("Google credentials are missing required fields: 'client_id', 'client_secret', 'refresh_token'.")
+
+                creds = Credentials.from_authorized_user_info(google_token_data, SCOPES)
 
         # If there are no valid credentials available, let the user log in.
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
-                # Try to refresh the token if it's expired
                 try:
                     creds.refresh(Request())
                     logging.info("Token refreshed successfully.")
@@ -55,22 +58,27 @@ class MobileIntegration:
                     return None
             else:
                 # If no valid token exists, start the OAuth flow to generate a new token
+                credentials_path = 'S:/Snowball/config/account_integrations.json'
                 flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
                 creds = flow.run_local_server(port=0)
 
-                # Save the new credentials to token.json
-                with open(token_path, 'w') as token_file:
-                    token_file.write(creds.to_json())
+                # Save the new credentials to the JSON file
+                with open(token_path, 'r+') as token_file:
+                    data = json.load(token_file)
+                    data['tokens']['google'] = json.loads(creds.to_json())
+                    token_file.seek(0)
+                    json.dump(data, token_file, indent=4)
+                    token_file.truncate()
                     logging.info(f"New token saved to {token_path}")
 
         return creds
-    
+
     def load_facebook_token(self):
         """Load Facebook API access token from a JSON file."""
         try:
-            with open("config/facebook_token.json", 'r') as file:
+            with open("S:/Snowball/config/account_integrations.json", 'r') as file:  # Use absolute path
                 data = json.load(file)
-                return data.get("facebook_access_token")
+                return data.get("tokens", {}).get("facebook", {}).get("access_token")
         except FileNotFoundError:
             logging.error("Facebook API token not found.")
             return None
@@ -78,9 +86,9 @@ class MobileIntegration:
     def load_google_maps_key(self):
         """Load Google Maps API key from a JSON file."""
         try:
-            with open("config/google_maps_key.json", 'r') as file:
+            with open("S:/Snowball/config/account_integrations.json", 'r') as file:  # Use absolute path
                 data = json.load(file)
-                return data.get("google_maps_api_key")
+                return data.get("integrations", {}).get("google_maps", {}).get("api_key")
         except FileNotFoundError:
             logging.error("Google Maps API key not found.")
             return None
@@ -98,7 +106,7 @@ class MobileIntegration:
         else:
             logging.warning("Facebook token not available.")
         return None
-    
+
     def update_gps_data_file(self, location_data):
         """Update the GPS data file with new location information."""
         if location_data:

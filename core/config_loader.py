@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class ConfigLoader:
     _cache = {}
-    DEFAULT_CONFIG_DIR = os.environ.get("CONFIG_DIR", "S:/Snowball/config")  # Default to environment variable or fallback path
+    DEFAULT_CONFIG_DIR = os.environ.get("CONFIG_DIR", "S:/Snowball/config")
 
     @classmethod
     def load_config(cls, file_name: str, force_reload: bool = False, config_dir: Optional[str] = None) -> dict:

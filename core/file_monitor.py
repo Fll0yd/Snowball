@@ -74,9 +74,9 @@ class FileMonitor:
 
         with open(config_file, 'r') as f:
             config = json.load(f)
-            self.download_dir = config['download_dir']
-            self.plex_dir_movies = config['plex_dir_movies']
-            self.plex_dir_tv_shows = config['plex_dir_tv_shows']
+            self.download_dir = config.get('download_dir', 'default_download_path')
+            self.plex_dir_movies = config.get('plex_dir_movies', 'default_movies_path')
+            self.plex_dir_tv_shows = config.get('plex_dir_tv_shows', 'default_tv_shows_path')
             self.logger.logger.info(f"Monitoring started for downloads: {self.download_dir}")
 
             # Load models

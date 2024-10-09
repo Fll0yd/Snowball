@@ -4,7 +4,6 @@ from tkinter import messagebox
 import logging
 import json
 import time
-import threading
 import statistics
 from logging.handlers import RotatingFileHandler
 from plyer import notification
@@ -17,6 +16,8 @@ from matplotlib import pyplot as plt
 from apscheduler.schedulers.background import BackgroundScheduler
 from typing import List, Dict, Any
 
+# Import the ConfigLoader class
+from core.config_loader import ConfigLoader
 
 class Config:
     EMAIL_SUBJECT = 'System Performance Report'
@@ -25,29 +26,44 @@ class Config:
 
 
 def load_settings() -> Dict[str, Any]:
-    """Load configuration from settings.json."""
+    """Load configuration from system_monitor_settings.json."""
     try:
-        with open('settings.json') as f:
-            settings = json.load(f)
-            if not all(key in settings["system_monitor_thresholds"] for key in ["cpu", "memory", "temperature"]):
-                raise ValueError("Invalid settings format")
-            return settings
+        settings = ConfigLoader.load_config("system_monitor_settings.json")
+        if "resource_thresholds" not in settings:
+            raise ValueError("Missing 'resource_thresholds' in settings.")
+        return settings
     except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
         logging.error(f"Error loading settings: {e}")
+        # Fallback to default settings if there's an issue
         return {
-            "system_monitor_thresholds": {
-                "cpu": 80,
-                "memory": 80,
-                "temperature": 80
-            },
-            "email": {
-                "from": "your_email@gmail.com",
-                "password": "your_password",
-                "to": "recipient_email@gmail.com"
+            "resource_thresholds": {
+                "cpu_usage_percent": {
+                    "warning_threshold": 75,
+                    "critical_threshold": 90
+                },
+                "memory_usage_percent": {
+                    "warning_threshold": 70,
+                    "critical_threshold": 85
+                },
+                "disk_space_percent": {
+                    "warning_threshold": 80,
+                    "critical_threshold": 95
+                },
+                "gpu_usage_percent": {
+                    "warning_threshold": 80,
+                    "critical_threshold": 95
+                },
+                "temperature_celsius": {
+                    "warning_threshold": 70,
+                    "critical_threshold": 90
+                },
+                "network_usage_mbps": {
+                    "warning_threshold": 100,
+                    "critical_threshold": 200
+                }
             }
         }
-
-
+    
 def setup_logging() -> logging.Logger:
     """Set up logging with rotation."""
     logger = logging.getLogger("SystemMonitor")
@@ -58,33 +74,28 @@ def setup_logging() -> logging.Logger:
     logger.addHandler(handler)
     return logger
 
-
 class SystemMonitor:
     def __init__(self):
         self.settings = load_settings()
+
+        # Update to use the new structure from system_monitor_settings.json
+        if "resource_thresholds" not in self.settings:
+            raise ValueError("Missing 'resource_thresholds' in settings.")
+
+        thresholds = self.settings["resource_thresholds"]
+
+        self.cpu_threshold = thresholds["cpu_usage_percent"]["critical_threshold"]
+        self.memory_threshold = thresholds["memory_usage_percent"]["critical_threshold"]
+        self.disk_threshold = thresholds["disk_space_percent"]["critical_threshold"]
+        self.temperature_threshold = thresholds["temperature_celsius"]["critical_threshold"]
+
+        # Continue initializing other necessary parts of the SystemMonitor
         self.logger = setup_logging()
-
-        # Thresholds from settings
-        self.cpu_threshold = self.settings["system_monitor_thresholds"]["cpu"]
-        self.memory_threshold = self.settings["system_monitor_thresholds"]["memory"]
-        self.temp_threshold = self.settings["system_monitor_thresholds"]["temperature"]
-
-        self.root = tk.Tk()
-        self.root.title("System Monitor")
-
-        # UI Elements
-        self.cpu_label = tk.Label(self.root, text="CPU Usage: ")
-        self.cpu_label.pack()
-
-        self.memory_label = tk.Label(self.root, text="Memory Usage: ")
-        self.memory_label.pack()
-
-        self.temp_label = tk.Label(self.root, text="Temperature: ")
-        self.temp_label.pack()
+        self.running = True
 
         # Flags for tracking unsupported features
         self.temperature_supported = True
-                
+
         # Initialize metrics lists for logging
         self.cpu_usage: List[float] = []
         self.memory_usage: List[float] = []
@@ -98,7 +109,6 @@ class SystemMonitor:
 
         # Start monitoring
         self.running = True
-        self.update_ui()
         self.schedule_reports(interval=60)  # Schedule reports every minute
 
     class FanMonitor:
@@ -195,13 +205,31 @@ class SystemMonitor:
         """Show an alert message to the user."""
         messagebox.showwarning("Alert", message)
 
-    def update_ui(self):
-        """Update the UI with current system metrics."""
-        self.monitor_system()
-        self.root.after(1000, self.update_ui)  # Update UI every second
+    def create_monitor_ui(self):
+        """Create the UI for monitoring the system."""
+        self.root = tk.Tk()
+        self.root.title("System Monitor")
+
+        # UI Elements
+        self.cpu_label = tk.Label(self.root, text="CPU Usage: ")
+        self.cpu_label.pack()
+
+        self.memory_label = tk.Label(self.root, text="Memory Usage: ")
+        self.memory_label.pack()
+
+        self.temp_label = tk.Label(self.root, text="Temperature: ")
+        self.temp_label.pack()
 
     def monitor_system(self):
         """Monitor system metrics and update UI labels."""
+        if not hasattr(self, 'root'):
+            self.create_monitor_ui()
+
+        self.update_ui()
+        self.root.mainloop()
+
+    def update_ui(self):
+        """Update the UI with current system metrics."""
         self.check_alerts()
         cpu_usage = self.get_cpu_usage()
         memory_usage = self.get_memory_usage()
@@ -210,6 +238,9 @@ class SystemMonitor:
         self.cpu_label.config(text=f"CPU Usage: {cpu_usage}%")
         self.memory_label.config(text=f"Memory Usage: {memory_usage}%")
         self.temp_label.config(text=f"Temperature: {temperature}°C")
+
+        if self.running:
+            self.root.after(1000, self.update_ui)  # Update UI every second
 
     def log_metrics(self) -> None:
         """Log current CPU, memory, and disk usage."""
@@ -321,7 +352,6 @@ class SystemMonitor:
 if __name__ == '__main__':
     try:
         monitor = SystemMonitor()
-        tk.mainloop()
     except KeyboardInterrupt:
         logging.info("System Monitor stopped by user.")
     finally:

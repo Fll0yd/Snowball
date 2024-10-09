@@ -92,3 +92,144 @@
 2024-10-07 13:44:44,883 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
 2024-10-07 14:02:42,248 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
 2024-10-07 14:53:13,942 - ERROR - Voice settings file not found: S:/config/voice_settings.json, using default settings.
+2024-10-08 07:14:25,966 - ERROR - Error reading names file: 'charmap' codec can't decode byte 0x9d in position 891: character maps to <undefined>
+2024-10-08 07:14:25,967 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 07:14:35,029 - ERROR - Error: Error during speech synthesis: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav', PermissionError
+2024-10-08 07:20:56,221 - ERROR - Error: Error playing audio: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 07:20:56,229 - ERROR - Error: Error during speech synthesis: name 'error_settings' is not defined, NameError
+2024-10-08 07:51:59,099 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:01:20,852 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:08:13,733 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:21:10,539 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:21:26,711 - ERROR - Error processing input: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 08:23:22,690 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:34:32,172 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:38:52,676 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:38:52,678 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:38:58,996 - ERROR - Error: Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:42:59,441 - ERROR - Error generating name with GPT: name 'user_input' is not defined
+2024-10-08 08:43:03,481 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:43:03,482 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:43:10,899 - ERROR - Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:47:00,115 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:47:00,116 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:47:07,259 - ERROR - Error removing WAV file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.wav'
+2024-10-08 08:49:26,478 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:49:26,478 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:51:30,040 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 08:51:30,041 - ERROR - Error generating greeting: name 'user_input' is not defined
+2024-10-08 09:07:51,237 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:07:55,282 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:10:30,700 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:15:10,749 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:15:14,793 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:18:35,023 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:24:32,695 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:26:14,072 - ERROR - Error generating name with GPT: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:26:18,093 - ERROR - Error generating greeting: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2024-10-08 09:48:38,524 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************1iAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-08 09:48:42,660 - ERROR - Error generating greeting: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************1iAA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-08 13:58:09,666 - ERROR - Error during speech synthesis: Language not supported: English, ValueError
+2024-10-08 15:30:40,573 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-08 15:31:17,132 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'
+2024-10-08 15:40:10,229 - ERROR - Error during speech synthesis: name 'concurrent' is not defined, NameError
+2024-10-08 15:43:58,227 - ERROR - Error removing MP3 file: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\temp\\response.mp3'

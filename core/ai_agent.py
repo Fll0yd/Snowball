@@ -6,7 +6,9 @@ from collections import deque
 import random
 import threading
 import time
-import matplotlib.pyplot as plt
+from openai import OpenAI
+import sys
+import os
 from core.voice_interface import VoiceInterface
 from core.system_monitor import SystemMonitor
 from core.file_monitor import FileMonitor
@@ -15,45 +17,85 @@ from core.memory import Memory
 from core.decision_maker import DecisionMaker
 from core.logger import SnowballLogger
 from core.config_loader import ConfigLoader
-import openai
-import sys
-import os
+from openai import OpenAI
+
+client = OpenAI()  # This will automatically use the `OPENAI_API_KEY` from the environment
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Load AI learning mode settings
-learning_settings = ConfigLoader.load_config('ai_learning_mode.json')
+# Load AI and customization settings
+learning_settings = ConfigLoader.load_config('ai_settings.json')
+settings = ConfigLoader.load_config('interface_settings.json')
+interaction_settings = ConfigLoader.load_config('S:/Snowball/config/mobile_settings.json')
+
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
 
-# Load user customization settings
-customizations = ConfigLoader.load_config('user_customizations.json')
-interaction_settings = ConfigLoader.load_config('interaction_settings.json')
+nickname = settings.get('nickname', 'User')
+response_tone = settings.get('response_tone', 'neutral')
+response_length = settings.get('response_length', 'normal')
 
-# GPT 3.5 turbo for NLP engine
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-nickname = customizations.get('nickname', 'User')
-response_tone = customizations.get('response_tone', 'neutral')
-response_length = customizations.get('response_length', 'normal')
+default_temperature = 0.9  # Default temperature for more creative responses
 
 class SnowballAI:
     def __init__(self):
-        self.name = self.generate_name()
         self.memory = Memory()
         self.voice = VoiceInterface()
         self.monitor = SystemMonitor()
-
-        # Pass config file to FileMonitor
-        file_monitor_config = 'S:/Snowball/config/plex_config.json'  # Corrected path
-        self.file_monitor = FileMonitor(config_file=file_monitor_config)
-
+        self.file_monitor = FileMonitor(config_file='S:/Snowball/config/plex_config.json')
         self.mobile = MobileIntegration()
-        self.game = self.GameAI()  # Fixing the GameAI initialization here
+        self.game = self.GameAI()  
         self.logger = SnowballLogger()
-        self.nlp = self.NLPEngine()  # Integrated NLP engine
+        self.nlp = self.NLPEngine()  
         self.decision_maker = DecisionMaker()
         self.running_event = threading.Event()
-        
+    
+        self.name = self.generate_name()    
+
+    def generate_name(self):
+        """Generate a name for the AI instance by considering suggestions from a .txt file."""
+        names_file_path = 'S:/Snowball/docs/names.txt'
+
+        # Read names from the file if it exists
+        suggested_names = []
+        try:
+            if os.path.exists(names_file_path):
+                with open(names_file_path, 'r', encoding='utf-8') as file:
+                    suggested_names = [line.strip() for line in file if line.strip()]
+                self.logger.logger.info(f"Loaded {len(suggested_names)} suggested names from {names_file_path}")
+            else:
+                self.logger.logger.warning(f"Names file not found at {names_file_path}")
+        except Exception as e:
+            self.logger.logger.error(f"Error reading names file: {e}")
+
+        # Decide whether to pick from the suggestions or generate a new name
+        if suggested_names and random.random() < 0.7:  # 70% chance to pick a name from the file
+            return random.choice(suggested_names)
+        else:
+            return self.generate_name_with_gpt(suggested_names)
+
+    def generate_name_with_gpt(self, suggestions):
+        """Generate a name using OpenAI GPT-3.5 Turbo, considering the suggested names."""
+        try:
+            prompt = "Generate a unique and creative name for an AI assistant. Here are some suggestions: " + ", ".join(suggestions) + ". You may use one of these suggestions, modify them, or come up with something completely new."
+
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a creative AI."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=50,
+                temperature=0.7
+            )
+            generated_name = response.choices[0].message.content.strip()
+            self.logger.logger.info(f"Generated name from GPT: {generated_name}")
+            return generated_name
+        except Exception as e:
+            self.logger.logger.error(f"Error generating name with GPT: {e}")
+            # Fallback to a default name in case of an error
+            return f"Snowball AI {random.randint(1, 1000)}"
+
     class GameAI:
         def __init__(self):
             self.state_size = 11  # Customize for your game
@@ -98,7 +140,9 @@ class SnowballAI:
             """Fine-tune the model based on user interactions."""
             for interaction in interaction_data:
                 # Extract relevant information from interactions
-                user_input = interaction['user_input']
+                user_input = interaction.get('user_input', None)
+                if user_input is None:
+                    continue
                 # Logic to convert user input to a game state and reward
                 # This is highly context-dependent, customize as needed
                 state = self.extract_state_from_input(user_input)  
@@ -193,52 +237,53 @@ class SnowballAI:
             # Initialize NLP model and configurations
             pass
 
+    def speak_greeting(self):
+        """Speak the generated greeting using the voice interface in a separate thread."""
+        greeting = self.voice.generate_greeting()
+        greeting_thread = threading.Thread(target=self.voice.speak, args=(greeting,))
+        greeting_thread.daemon = True  # Ensures the thread will not prevent the program from exiting
+        greeting_thread.start()
+        
     def process_input(self, user_input):
+        """Process user input, triggering appropriate actions or responses."""
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are a helpful AI assistant."},
+                    {"role": "system", "content": "You are a helpful and friendly AI."},
                     {"role": "user", "content": user_input}
-                ]
+                ],
+                max_tokens=150,
+                temperature=0.9  # Adjust this for more creative responses
             )
-            return response['choices'][0]['message']['content']
+
+            # Extract the response content
+            return response.choices[0].message.content.strip()
+
         except Exception as e:
-            print(f"Error processing NLP input: {e}")
+            self.logger.logger.error(f"Error processing input: {e}")
             return "Sorry, I couldn't process that."
-
-    def generate_name(self):
-        """Generate a name for the AI."""
-        return f"Snowball AI {random.randint(1, 1000)}"
-
+    
     def respond_to_user(self, user_message):
-        """Generate a response to the user based on customizations and NLP processing."""
-        processed_message = self.nlp.process_input(user_message)
-        response = f"Hello {nickname}, here's your answer: {processed_message}"
-
-        if response_tone == 'casual':
-            response = f"Hey {nickname}, here's what I found: {processed_message}"
-        
-        if response_length == 'concise':
-            response = response.split('.')[0]  # Keep response short
-        
-        return response
+        """Generate a response to the user based on the input message."""
+        processed_message = self.process_input(user_message)
+        return f"{self.name}: {processed_message}"
 
     def start(self):
         """Main loop to start interaction, system monitoring, file monitoring, and multitasking."""
-        self.logger.logger.info(f"Snowball AI ({self.name}) started.")
+        self.logger.logger.info(f"{self.name} started.")
         
         # Start threads for monitoring and interaction
         threading.Thread(target=self.monitor.start_system_monitoring, daemon=True).start()
         threading.Thread(target=self.file_monitor.start_monitoring, daemon=True).start()
         threading.Thread(target=self.handle_mobile_requests, daemon=True).start()
-        threading.Thread(target=self.push_notifications_loop, daemon=True).start()
         
+        # Begin interaction
         self.interact()
 
     def interact(self):
         """Interact with the user, handling both voice and text inputs."""
-        while not self.running_event.is_set():
+        while True:
             try:
                 user_input = self.voice.listen()
 
@@ -248,25 +293,6 @@ class SnowballAI:
 
             except Exception as e:
                 self.logger.logger.error(f"Error in interaction: {e}")
-
-    def process_input(self, user_input):
-        """Process user input, triggering appropriate actions or games."""
-        # Log interaction in memory
-        self.memory.store_interaction(user_input, None)
-        self.logger.logger.info(f"User input: {user_input}")
-
-        # Use integrated NLP to get a response
-        nlp_response = self.nlp.process_input(user_input)
-
-        # Process game commands
-        if "play game" in user_input.lower():
-            state = np.random.rand(self.game.state_size)  # Example game state
-            action = self.game.play_game(state)
-            return f"Playing game with action: {action}. {nlp_response}"
-        
-        # Call the respond_to_user function
-        return self.respond_to_user(user_input)
-        return nlp_response
 
     def handle_mobile_requests(self):
         """Handle requests from mobile devices."""

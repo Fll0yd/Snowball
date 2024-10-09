@@ -6,10 +6,13 @@ import smtplib
 from email.mime.text import MIMEText
 from logging.handlers import RotatingFileHandler
 from plyer import notification  # For notifications
+from core.config_loader import ConfigLoader
 
-# Define log paths using absolute paths (Adjust these as necessary)
-LOG_DIR = os.path.abspath(r'storage/logs')
+# Load the log directory from config or use a default value
+CONFIG = ConfigLoader.load_config("interface_settings.json")
+LOG_DIR = CONFIG.get("log_directory", os.path.abspath('storage/logs'))
 
+# Define log paths using the loaded configuration
 INTERACTION_LOG_PATH = os.path.join(LOG_DIR, "interaction_logs", "interaction_log.txt")
 ERROR_LOG_PATH = os.path.join(LOG_DIR, "error_logs", "error_log.txt")
 SYSTEM_HEALTH_LOG_PATH = os.path.join(LOG_DIR, "system_health_logs", "cpu_log.txt")
@@ -20,9 +23,6 @@ DECISION_LOG_PATH = os.path.join(LOG_DIR, "decision_logs", "decision_log.txt")
 # Create the log directories if they don't exist
 for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH]:
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
-
-# Path to settings.json
-SETTINGS_PATH = os.path.abspath(r'S:/Snowball/config/settings.json')
 
 class SnowballLogger:
     _instance = None  # Class variable for the singleton logger instance
@@ -41,26 +41,24 @@ class SnowballLogger:
         self.logger = logging.getLogger('SnowballLogger')
         self.logger.setLevel(logging.DEBUG)
 
-        # Load settings.json for thresholds and email settings
-        self._load_settings()
+        # Load settings from the configuration file using ConfigLoader
+        try:
+            settings = ConfigLoader.load_config("interface_settings.json")
+            thresholds = settings.get('system_monitor_thresholds', {})
+            self.cpu_threshold = thresholds.get('cpu', 85)
+            self.memory_threshold = thresholds.get('memory', 85)
+            self.temp_threshold = thresholds.get('temperature', 80)
+            self.email_settings = settings.get('email_settings', {})
+            self.error_settings = settings.get('error_settings', {})
+            self.logger.info("Successfully loaded logger settings from interface_settings.json")
+        except Exception as e:
+            self.logger.error(f"Settings file could not be loaded: {e}")
+            self.cpu_threshold, self.memory_threshold, self.temp_threshold = 85, 85, 80
+            self.email_settings = {}
+            self.error_settings = {}
 
         # Setup the log handlers
         self._setup_handlers()
-
-    def _load_settings(self):
-        """Load system thresholds and email settings from the settings file."""
-        try:
-            with open(SETTINGS_PATH, 'r') as file:
-                settings = json.load(file)
-                thresholds = settings.get('system_monitor_thresholds', {})
-                self.cpu_threshold = thresholds.get('cpu', 85)
-                self.memory_threshold = thresholds.get('memory', 85)
-                self.temp_threshold = thresholds.get('temperature', 80)
-                self.email_settings = settings.get('email_settings', {})
-        except FileNotFoundError:
-            print(f"Settings file {SETTINGS_PATH} not found.")
-            self.cpu_threshold, self.memory_threshold, self.temp_threshold = 85, 85, 80
-            self.email_settings = {}
 
     def _setup_handlers(self):
         """Set up different file handlers for each type of log."""
@@ -91,7 +89,7 @@ class SnowballLogger:
                 handler.setFormatter(formatter)
                 self.logger.addHandler(handler)
         except Exception as e:
-            print(f"Failed to add handler for {log_path}: {e}")
+            self.logger.error(f"Failed to add handler for {log_path}: {e}")
 
     def log_event(self, event_message):
         """Log system events (e.g., start/stop)."""
@@ -104,7 +102,7 @@ class SnowballLogger:
             self.logger.error(f"Error: {message}")
             self.notify_user("Error", message)
             self.send_error_email(message)
-            if error_settings.get('auto_restart_on_crash', False):
+            if self.error_settings.get('auto_restart_on_crash', False):
                 self.restart_system_on_crash()
 
     def notify_user(self, title, message):
@@ -125,13 +123,13 @@ class SnowballLogger:
                     server.starttls()
                     server.login(self.email_settings['from_email'], self.email_settings['email_password'])
                     server.sendmail(msg['From'], [msg['To']], msg.as_string())
-                    print("Error email sent successfully.")
+                    self.logger.info("Error email sent successfully.")
             except Exception as e:
-                print(f"Failed to send error email: {e}")
+                self.logger.error(f"Failed to send error email: {e}")
 
     def restart_system_on_crash(self):
         """Restart the system in case of a crash."""
-        print("Restarting system...")
+        self.logger.info("Restarting system...")
         os.system('shutdown /r /t 1')  # Adjust command for your OS
 
     def log_interaction(self, user_message, ai_response):
