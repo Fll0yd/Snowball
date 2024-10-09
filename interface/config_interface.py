@@ -2,6 +2,16 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import json
 import os
+import sys
+
+# Assuming 'core' is in the parent directory of the current script
+core_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../core'))
+sys.path.insert(0, core_path)
+
+try:
+    from config_loader import ConfigLoader
+except ModuleNotFoundError:
+    messagebox.showerror("Error", "ConfigLoader module not found. Please ensure the core directory is in the correct location.")
 
 class ConfigInterface:
     def __init__(self, master):
@@ -26,16 +36,6 @@ class ConfigInterface:
         self.header_label = tk.Label(self.main_frame, text="Configuration Settings", font=("Arial", 16), fg="white", bg="#2c2c2c")
         self.header_label.pack(anchor="nw", pady=10)
 
-        # Create dropdown to select configuration file (shown in main panel for selected configs)
-        self.config_selector_label = tk.Label(self.main_frame, text="Select Configuration File:", font=("Arial", 12), fg="white", bg="#2c2c2c")
-        self.config_selector_label.pack(anchor="nw", pady=5)
-
-        self.selected_config = tk.StringVar()
-        self.config_selector = ttk.Combobox(self.main_frame, textvariable=self.selected_config, state="readonly")
-        self.config_selector['values'] = list(self.config_files.keys())
-        self.config_selector.pack(anchor="nw", pady=5, padx=10)
-        self.config_selector.bind("<<ComboboxSelected>>", self.load_config_contents)
-
         # Display selected config content
         self.config_text = tk.Text(self.main_frame, wrap=tk.WORD, width=80, height=20, font=("Consolas", 10), bg="#3e3e3e", fg="white", relief="flat")
         self.config_text.pack(fill=tk.BOTH, expand=True, pady=10, padx=10)
@@ -47,62 +47,85 @@ class ConfigInterface:
         # Create sidebar options for different configuration sections
         sidebar_options = [
             "AI Settings",
-            "Game Preferences",
             "Interface Settings",
-            "Chat Settings",
-            "Plex Configuration",
+            "Game Preferences",
             "Mobile App Settings",
-            "Security and Privacy",
+            "System Monitor Settings",
+            "Plex Configuration",
             "Account Integrations",
+            "Security and Privacy",
             "Logs",
             "Contact the Developer"
         ]
 
         for option in sidebar_options:
-            button = tk.Button(self.sidebar_frame, text=option, command=lambda opt=option: self.change_header(opt),
+            button = tk.Button(self.sidebar_frame, text=option, command=lambda opt=option: self.change_section(opt),
                                bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=18, pady=10)
             button.pack(pady=5)
 
     def load_consolidated_files(self):
         """
-        Load all consolidated configuration files into the dictionary.
+        Load all consolidated configuration files into the dictionary using ConfigLoader.
         """
-        config_path = 'S:/Snowball/config/'
         consolidated_files = [
             "account_integrations.json",
             "ai_settings.json",
             "game_preferences.json",
             "interface_settings.json",
-            "chat_settings.json",
             "plex_config.json",
-            "mobile_app_settings.json",
+            "mobile_settings.json",
             "security_privacy.json",
-            "error_reporting.json"
+            "system_monitor_settings.json",
+            "contact_developer.json"
         ]
 
         for file_name in consolidated_files:
-            full_path = os.path.join(config_path, file_name)
-            if os.path.exists(full_path):
-                with open(full_path, 'r') as f:
-                    self.config_files[file_name] = json.load(f)
+            try:
+                config_data = ConfigLoader.load_config(file_name)
+                self.config_files[file_name] = config_data
+            except FileNotFoundError:
+                self.config_files[file_name] = None  # File not found
+            except json.JSONDecodeError:
+                messagebox.showerror("Error", f"Error reading JSON from {file_name}. Please check the file.")
 
-    def load_config_contents(self, event):
+    def load_config_contents(self, config_name):
         """
         Load the contents of the selected configuration file into the text box.
         """
-        selected_file = self.selected_config.get()
-        if selected_file:
-            config_data = self.config_files[selected_file]
+        # Define the mapping between section name and actual filenames
+        section_to_file_map = {
+            "AI Settings": "ai_settings.json",
+            "Interface Settings": "interface_settings.json",
+            "Game Preferences": "game_preferences.json",
+            "Mobile App Settings": "mobile_settings.json",
+            "System Monitor Settings": "system_monitor_settings.json",
+            "Plex Configuration": "plex_config.json",
+            "Account Integrations": "account_integrations.json",
+            "Security and Privacy": "security_privacy.json",
+            "Contact the Developer": "contact_developer.json"
+        }
+
+        # Get the correct filename based on the selected section
+        selected_file = section_to_file_map.get(config_name)
+
+        # Retrieve the loaded configuration data
+        config_data = self.config_files.get(selected_file)
+
+        if config_data is not None:
             config_json = json.dumps(config_data, indent=4)
             self.config_text.delete(1.0, tk.END)
             self.config_text.insert(tk.END, config_json)
+        else:
+            self.config_text.delete(1.0, tk.END)
+            self.config_text.insert(tk.END, "No configuration file available.")
 
     def save_config(self):
         """
         Save changes made to the selected configuration file.
         """
-        selected_file = self.selected_config.get()
-        if selected_file:
+        selected_header = self.header_label.cget("text").replace(" Settings", "")
+        selected_file = selected_header.lower().replace(" ", "_") + ".json"
+        if selected_file in self.config_files:
             try:
                 updated_config = json.loads(self.config_text.get(1.0, tk.END))
                 config_path = f'S:/Snowball/config/{selected_file}'
@@ -112,12 +135,65 @@ class ConfigInterface:
                 messagebox.showinfo("Success", f"Configuration file '{selected_file}' saved successfully.")
             except json.JSONDecodeError:
                 messagebox.showerror("Error", "Invalid JSON format. Please correct the format and try again.")
+            except IOError:
+                messagebox.showerror("Error", f"Unable to save changes to {selected_file}. Check permissions.")
 
-    def change_header(self, section_name):
+    def change_section(self, section_name):
         """
-        Placeholder method to handle sidebar button interactions.
+        Update the header label and load the corresponding configuration file.
         """
-        self.header_label.config(text=f"{section_name} Settings")
+        if section_name == "Logs":
+            self.header_label.config(text="Logs")
+            self.config_text.pack_forget()  # Hide the config text box
+            self.save_button.pack_forget()  # Hide the save button
+            self.display_log_buttons()
+        else:
+            self.header_label.config(text=f"{section_name} Settings")
+            self.config_text.pack(fill=tk.BOTH, expand=True, pady=10, padx=10)
+            self.save_button.pack(anchor="e", pady=10)
+            self.load_config_contents(section_name)
+            if hasattr(self, 'log_buttons_frame'):
+                self.log_buttons_frame.pack_forget()  # Hide log buttons if they are displayed
+
+    def display_log_buttons(self):
+        """
+        Display buttons for each log file available.
+        """
+        logs_path = 'S:/Snowball/storage/logs'
+        if hasattr(self, 'log_buttons_frame'):
+            self.log_buttons_frame.pack_forget()  # Remove any existing log buttons frame
+
+        self.log_buttons_frame = tk.Frame(self.main_frame, bg="#2c2c2c")
+        self.log_buttons_frame.pack(pady=10)
+
+        if os.path.exists(logs_path):
+            log_files = os.listdir(logs_path)
+            for log_file in log_files:
+                button = tk.Button(self.log_buttons_frame, text=log_file, command=lambda lf=log_file: self.load_log_file(lf),
+                                   bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=20, pady=5)
+                button.pack(pady=5)
+        else:
+            messagebox.showerror("Error", "Logs directory not found.")
+
+    def load_log_file(self, log_file):
+        """
+        Load the contents of the selected log file into the text box.
+        """
+        logs_path = 'S:/Snowball/storage/logs'
+        full_path = os.path.join(logs_path, log_file)
+        try:
+            with open(full_path, 'r') as f:
+                log_content = f.read()
+                self.config_text.pack(fill=tk.BOTH, expand=True, pady=10, padx=10)
+                self.save_button.pack_forget()  # Hide the save button when viewing logs
+                self.config_text.delete(1.0, tk.END)
+                self.config_text.insert(tk.END, log_content)
+        except PermissionError:
+            messagebox.showerror("Error", f"Permission denied: '{full_path}'")
+        except FileNotFoundError:
+            messagebox.showerror("Error", f"File not found: '{full_path}'")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
 
 if __name__ == "__main__":
     root = tk.Tk()

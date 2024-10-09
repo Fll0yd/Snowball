@@ -24,17 +24,16 @@ class ConfigLoader:
         :raises FileNotFoundError: If the configuration file does not exist.
         :raises json.JSONDecodeError: If the configuration file contains invalid JSON.
         """
-        if file_name in cls._cache and not force_reload:
-            logger.info(f"Loading configuration from cache: {file_name}")
-            return cls._cache[file_name]
-
-        # Use custom directory if provided, otherwise use default
         config_dir = config_dir or cls.DEFAULT_CONFIG_DIR
         file_path = os.path.join(config_dir, file_name)
 
         if not os.path.exists(file_path):
             logger.error(f"Configuration file {file_name} not found in {config_dir}")
             raise FileNotFoundError(f"Configuration file {file_name} not found in {config_dir}")
+
+        if file_name in cls._cache and not force_reload:
+            logger.info(f"Loading configuration from cache: {file_name}")
+            return cls._cache[file_name]
 
         try:
             with open(file_path, 'r') as f:
@@ -96,6 +95,7 @@ class ConfigLoader:
         try:
             with open(file_path, 'w') as f:
                 json.dump(config_data, f, indent=4)
+                cls._cache[file_name] = config_data  # Update the cache
                 logger.info(f"Configuration saved to {file_path}")
         except IOError as e:
             logger.error(f"Failed to write configuration to {file_path}: {e}")
