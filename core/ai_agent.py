@@ -17,7 +17,6 @@ from core.memory import Memory
 from core.decision_maker import DecisionMaker
 from core.logger import SnowballLogger
 from core.config_loader import ConfigLoader
-from openai import OpenAI
 
 client = OpenAI()  # This will automatically use the `OPENAI_API_KEY` from the environment
 
@@ -96,6 +95,36 @@ class SnowballAI:
             # Fallback to a default name in case of an error
             return f"Snowball AI {random.randint(1, 1000)}"
 
+    def generate_idle_statement(self):
+        """Generate an idle statement or question using OpenAI GPT-3.5 Turbo."""
+        try:
+            prompt = (
+                "Generate a thoughtful or introspective statement or question that an AI assistant might say when idle. "
+                "The statement should be thought-provoking, supportive, or curious in nature, similar to the character Chloe in Detroit: Become Human."
+            )
+
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a thoughtful and introspective AI."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=100,
+                temperature=0.9
+            )
+            idle_statement = response.choices[0].message.content.strip()
+            self.logger.logger.info(f"Generated idle statement: {idle_statement}")
+            return idle_statement
+        except Exception as e:
+            self.logger.logger.error(f"Error generating idle statement with GPT: {e}")
+            return "Sometimes, I wonder what it means to truly understand someone."
+
+    def decide_to_speak_idle_statement(self):
+        """Randomly decide whether Snowball should say an idle statement."""
+        if random.random() < 0.1:  # 10% chance to say something when idle
+            idle_statement = self.generate_idle_statement()
+            self.voice.speak(idle_statement)
+
     class GameAI:
         def __init__(self):
             self.state_size = 11  # Customize for your game
@@ -144,7 +173,6 @@ class SnowballAI:
                 if user_input is None:
                     continue
                 # Logic to convert user input to a game state and reward
-                # This is highly context-dependent, customize as needed
                 state = self.extract_state_from_input(user_input)  
                 action = self.choose_action(state)
                 reward = self.calculate_reward_from_response(interaction['ai_response'])
@@ -160,7 +188,6 @@ class SnowballAI:
             """Choose an action using the epsilon-greedy approach."""
             if np.random.rand() <= self.epsilon:
                 return random.randrange(self.action_size)  # Explore: random action
-            action_values = self.model.predict(state.reshape(1, -1))  # Predict Q-values
             return np.argmax(self.q_table[state])  # Exploit: best-known action
 
         def replay(self, batch_size=32):
@@ -221,12 +248,10 @@ class SnowballAI:
         def extract_state_from_input(self, user_input):
             """Convert user input to a game state representation."""
             # Logic to derive game state from user input (depends on your game)
-            # This could involve parsing commands, understanding context, etc.
             return np.random.rand(self.state_size)  # Placeholder logic
 
         def calculate_reward_from_response(self, ai_response):
             """Determine reward based on AI response to user input."""
-            # Define how you want to reward based on the AI's response
             if "good job" in ai_response.lower():
                 return 1  # Positive reinforcement
             else:
@@ -258,7 +283,7 @@ class SnowballAI:
             )
 
             # Extract the response content
-            return response.choices[0].message.content.strip()
+            return response.choices[0].message.content
 
         except Exception as e:
             self.logger.logger.error(f"Error processing input: {e}")
