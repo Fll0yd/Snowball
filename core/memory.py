@@ -218,7 +218,7 @@ class Memory:
                 with sqlite3.connect(backup_file) as backup_conn:
                     self.conn.backup(backup_conn)
             self.logger.logger.info(f"Database backup created: {backup_file}")
-        except MemoryError as e:
+        except sqlite3.Error as e:
             self.logger.log_error(f"Error creating backup: {e}")
 
     def close(self):

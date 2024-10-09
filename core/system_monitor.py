@@ -16,24 +16,25 @@ from matplotlib import pyplot as plt
 from apscheduler.schedulers.background import BackgroundScheduler
 from typing import List, Dict, Any
 
-# Import the ConfigLoader class
+# Import the ConfigLoader and SnowballLogger classes
 from core.config_loader import ConfigLoader
+from core.logger import SnowballLogger
 
 class Config:
     EMAIL_SUBJECT = 'System Performance Report'
     SMTP_SERVER = 'smtp.gmail.com'
     SMTP_PORT = 587
 
-
 def load_settings() -> Dict[str, Any]:
     """Load configuration from system_monitor_settings.json."""
+    logger = SnowballLogger()
     try:
         settings = ConfigLoader.load_config("system_monitor_settings.json")
         if "resource_thresholds" not in settings:
             raise ValueError("Missing 'resource_thresholds' in settings.")
         return settings
     except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
-        logging.error(f"Error loading settings: {e}")
+        logger.log_error(f"Error loading settings: {e}")
         # Fallback to default settings if there's an issue
         return {
             "resource_thresholds": {
@@ -76,6 +77,7 @@ def setup_logging() -> logging.Logger:
 
 class SystemMonitor:
     def __init__(self):
+        self.logger = SnowballLogger()
         self.settings = load_settings()
 
         # Update to use the new structure from system_monitor_settings.json
@@ -83,7 +85,6 @@ class SystemMonitor:
             raise ValueError("Missing 'resource_thresholds' in settings.")
 
         thresholds = self.settings["resource_thresholds"]
-
         self.cpu_threshold = thresholds["cpu_usage_percent"]["critical_threshold"]
         self.memory_threshold = thresholds["memory_usage_percent"]["critical_threshold"]
         self.disk_threshold = thresholds["disk_space_percent"]["critical_threshold"]
@@ -109,10 +110,12 @@ class SystemMonitor:
 
         # Start monitoring
         self.running = True
+        self.logger.log_event("SystemMonitor initialized.")
         self.schedule_reports(interval=60)  # Schedule reports every minute
 
     class FanMonitor:
         def __init__(self) -> None:
+            self.logger = SnowballLogger()
             self.fan_speeds: List[float] = []
 
         def get_fan_speed(self) -> float:
@@ -124,22 +127,22 @@ class SystemMonitor:
                         if entries:
                             return entries[0].current
             except Exception as e:
-                logging.error(f"Error getting fan speed: {e}")
+                self.logger.log_error(f"Error getting fan speed: {e}")
             return 0.0
 
         def log_fan_speed(self) -> None:
             """Logs the current fan speed."""
             current_fan_speed = self.get_fan_speed()
             self.fan_speeds.append(current_fan_speed)
-            logging.info(f"Current fan speed: {current_fan_speed} RPM")
+            self.logger.log_system_health(cpu_usage=0, temp=0, disk_usage=0, network_bandwidth=0, memory_usage=0)
 
         def average_fan_speed(self) -> float:
             """Calculates the average fan speed."""
             if self.fan_speeds:
                 avg_speed = statistics.mean(self.fan_speeds)
-                logging.info(f"Average fan speed: {avg_speed} RPM")
+                self.logger.log_event(f"Average fan speed: {avg_speed} RPM")
                 return avg_speed
-            logging.warning("No fan speed data available for average calculation.")
+            self.logger.log_warning("No fan speed data available for average calculation.")
             return 0.0
 
     def get_cpu_usage(self) -> float:
@@ -147,7 +150,7 @@ class SystemMonitor:
         try:
             return psutil.cpu_percent(interval=1)
         except Exception as e:
-            self.logger.error(f"Error getting CPU usage: {e}")
+            self.logger.log_error(f"Error getting CPU usage: {e}")
             return 0
 
     def get_memory_usage(self) -> float:
@@ -156,29 +159,29 @@ class SystemMonitor:
             memory_info = psutil.virtual_memory()
             return memory_info.percent
         except Exception as e:
-            self.logger.error(f"Error getting memory usage: {e}")
+            self.logger.log_error(f"Error getting memory usage: {e}")
             return 0
 
     def get_temperature(self) -> float:
         """Get CPU temperature, return a default if not supported or available."""
         if not self.temperature_supported:
-            return 65.0  # Return default value if sensors are not supported
+            return 65.0
 
         try:
             temps = psutil.sensors_temperatures()
             if temps:
                 for entries in temps.values():
                     for entry in entries:
-                        if entry.current:  # Return the first available temperature
+                        if entry.current:
                             return entry.current
-            self.logger.warning("Temperature sensors not available on this system.")
+            self.logger.log_warning("Temperature sensors not available on this system.")
         except AttributeError:
-            self.logger.error("sensors_temperatures not supported by psutil on this system.")
-            self.temperature_supported = False  # Disable future attempts to get temperatures
+            self.logger.log_warning("sensors_temperatures not supported by psutil on this system.")
+            self.temperature_supported = False
         except Exception as e:
-            self.logger.error(f"Error getting temperature: {e}")
-        
-        return 65.0  # Return a default temperature if there are errors or no sensors
+            self.logger.log_error(f"Error getting temperature: {e}")
+
+        return 65.0
 
     def check_alerts(self):
         """Check if system metrics exceed thresholds and send alerts."""
@@ -187,17 +190,17 @@ class SystemMonitor:
         temperature = self.get_temperature()
 
         if cpu_usage > self.cpu_threshold:
-            self.logger.warning(f"CPU usage exceeded threshold: {cpu_usage}%")
+            self.logger.log_warning(f"CPU usage exceeded threshold: {cpu_usage}%")
             self.alert_user(f"CPU usage exceeded threshold: {cpu_usage}%")
             self.send_alert(f"CPU usage exceeded threshold: {cpu_usage}%")
 
         if memory_usage > self.memory_threshold:
-            self.logger.warning(f"Memory usage exceeded threshold: {memory_usage}%")
+            self.logger.log_warning(f"Memory usage exceeded threshold: {memory_usage}%")
             self.alert_user(f"Memory usage exceeded threshold: {memory_usage}%")
             self.send_alert(f"Memory usage exceeded threshold: {memory_usage}%")
 
-        if temperature > self.temp_threshold:
-            self.logger.warning(f"Temperature exceeded threshold: {temperature}°C")
+        if temperature > self.temperature_threshold:
+            self.logger.log_warning(f"Temperature exceeded threshold: {temperature}°C")
             self.alert_user(f"Temperature exceeded threshold: {temperature}°C")
             self.send_alert(f"Temperature exceeded threshold: {temperature}°C")
 
@@ -240,16 +243,15 @@ class SystemMonitor:
         self.temp_label.config(text=f"Temperature: {temperature}°C")
 
         if self.running:
-            self.root.after(1000, self.update_ui)  # Update UI every second
+            self.root.after(1000, self.update_ui)
 
     def log_metrics(self) -> None:
         """Log current CPU, memory, and disk usage."""
-        self.log_cpu_usage()
-        self.log_memory_usage()
-        self.log_disk_usage()
-        self.log_network_usage()
-        self.log_running_processes()
-        self.log_gpu_usage()
+        self.logger.log_system_health(cpu_usage=self.get_cpu_usage(),
+                                      memory_usage=self.get_memory_usage(),
+                                      disk_usage=self.get_disk_usage(),
+                                      temp=self.get_temperature(),
+                                      network_bandwidth=self.get_network_usage())
         self.fan_monitor.log_fan_speed()
 
     def log_cpu_usage(self) -> None:
@@ -294,29 +296,32 @@ class SystemMonitor:
             for gpu in gpus:
                 logging.info(f"GPU ID: {gpu.id}, GPU Usage: {gpu.load * 100}%, GPU Temp: {gpu.temperature}°C")
         except Exception as e:
-            logging.error(f"Error getting GPU usage: {e}")
+            self.logger.log_error(f"Error getting network usage: {e}")
+            return 0
+
+    def send_alert(self, message: str) -> None:
+        """Send an alert via email and desktop notification."""
+        self.logger.log_task("Send Alert", "Started")
+        self.send_email(message)
+        notification.notify(title='System Alert', message=message)
+        self.logger.log_task("Send Alert", "Completed")
 
     def send_email(self, message: str) -> None:
         """Send an email with the specified message."""
         try:
-            email_settings = self.settings['email']
+            email_settings = self.settings.get('email', {})
             msg = MIMEText(message)
             msg['Subject'] = Config.EMAIL_SUBJECT
-            msg['From'] = email_settings['from']
-            msg['To'] = email_settings['to']
+            msg['From'] = email_settings.get('from', '')
+            msg['To'] = email_settings.get('to', '')
 
             with smtplib.SMTP(Config.SMTP_SERVER, Config.SMTP_PORT) as server:
                 server.starttls()
-                server.login(email_settings['from'], email_settings['password'])
+                server.login(email_settings.get('from', ''), email_settings.get('password', ''))
                 server.send_message(msg)
-            logging.info("Email sent successfully.")
+            self.logger.log_event("Email sent successfully.")
         except Exception as e:
-            logging.error(f"Error sending email: {e}")
-
-    def send_alert(self, message: str) -> None:
-        """Send an alert via email and desktop notification."""
-        self.send_email(message)
-        notification.notify(title='System Alert', message=message)
+            self.logger.log_error(f"Error sending email: {e}")
 
     def visualize_data(self):
         """Visualize logged CPU and memory usage data."""
@@ -347,13 +352,14 @@ class SystemMonitor:
         scheduler = BackgroundScheduler()
         scheduler.add_job(self.log_metrics, 'interval', seconds=interval)
         scheduler.start()
-
+        self.logger.log_task("Schedule Reports", "Scheduled with interval {} seconds".format(interval))
 
 if __name__ == '__main__':
     try:
         monitor = SystemMonitor()
+        monitor.monitor_system()
     except KeyboardInterrupt:
-        logging.info("System Monitor stopped by user.")
+        monitor.logger.log_event("System Monitor stopped by user.")
     finally:
         if monitor:
             monitor.visualize_data()

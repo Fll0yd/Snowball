@@ -43,13 +43,14 @@ class SnowballAI:
         self.monitor = SystemMonitor()
         self.file_monitor = FileMonitor(config_file='S:/Snowball/config/plex_config.json')
         self.mobile = MobileIntegration()
-        self.game = self.GameAI()  
+        self.game = self.GameAI()
         self.logger = SnowballLogger()
-        self.nlp = self.NLPEngine()  
+        self.nlp = self.NLPEngine()
         self.decision_maker = DecisionMaker()
         self.running_event = threading.Event()
-    
-        self.name = self.generate_name()    
+        
+        self.name = self.generate_name()
+        self.logger.logger.info(f"Initialized SnowballAI with name: {self.name}")
 
     def generate_name(self):
         """Generate a name for the AI instance by considering suggestions from a .txt file."""
@@ -264,14 +265,17 @@ class SnowballAI:
 
     def speak_greeting(self):
         """Speak the generated greeting using the voice interface in a separate thread."""
+        self.logger.logger.info("Generating greeting for the user.")
         greeting = self.voice.generate_greeting()
         greeting_thread = threading.Thread(target=self.voice.speak, args=(greeting,))
         greeting_thread.daemon = True  # Ensures the thread will not prevent the program from exiting
         greeting_thread.start()
-        
+        self.logger.logger.info("Greeting spoken to the user.")
+
     def process_input(self, user_input):
         """Process user input, triggering appropriate actions or responses."""
         try:
+            self.logger.logger.info(f"Processing user input: '{user_input}'")
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -283,12 +287,14 @@ class SnowballAI:
             )
 
             # Extract the response content
-            return response.choices[0].message.content
+            processed_response = response.choices[0].message.content
+            self.logger.logger.info(f"Processed response: '{processed_response}'")
+            return processed_response
 
         except Exception as e:
             self.logger.logger.error(f"Error processing input: {e}")
             return "Sorry, I couldn't process that."
-    
+
     def respond_to_user(self, user_message):
         """Generate a response to the user based on the input message."""
         processed_message = self.process_input(user_message)
@@ -299,11 +305,17 @@ class SnowballAI:
         self.logger.logger.info(f"{self.name} started.")
         
         # Start threads for monitoring and interaction
+        self.logger.logger.info("Starting system monitoring thread.")
         threading.Thread(target=self.monitor.start_system_monitoring, daemon=True).start()
+
+        self.logger.logger.info("Starting file monitoring thread.")
         threading.Thread(target=self.file_monitor.start_monitoring, daemon=True).start()
+
+        self.logger.logger.info("Starting mobile request handling thread.")
         threading.Thread(target=self.handle_mobile_requests, daemon=True).start()
         
         # Begin interaction
+        self.logger.logger.info("Starting user interaction loop.")
         self.interact()
 
     def interact(self):
@@ -311,9 +323,11 @@ class SnowballAI:
         while True:
             try:
                 user_input = self.voice.listen()
+                self.logger.logger.info(f"User input received: '{user_input}'")
 
                 if user_input:
                     response = self.process_input(user_input)
+                    self.logger.logger.info(f"Generated response: '{response}'")
                     self.voice.speak(response)
 
             except Exception as e:
@@ -329,22 +343,32 @@ class SnowballAI:
             
             if mobile_request:
                 user_input = mobile_request.get('message', '')
+                self.logger.logger.info(f"Received mobile request: '{user_input}'")
+
                 response = self.process_input(user_input)
+                self.logger.logger.info(f"Generated response for mobile request: '{response}'")
+
                 self.mobile.send_response(mobile_request.get('user_id'), response)  # Responding to the user
+                self.logger.logger.info(f"Response sent to mobile user {mobile_request.get('user_id')}")
 
     def push_notifications_loop(self):
         """Push notifications to the user on mobile."""
         while not self.running_event.is_set():
+            self.logger.logger.info("Initiating push notification cycle.")
             time.sleep(60)  # Push notifications every minute
             # Push notifications to user
-            self.logger.logger.info("Pushing notifications...")
+            self.logger.logger.info("Pushing notifications to the user...")
 
     def update_learning_from_interactions(self):
         """Update the AI's learning based on user interactions."""
-        # This is a placeholder for actual interaction data collection logic
+        self.logger.logger.info("Attempting to update learning from interactions.")
         interaction_data = self.memory.get_interaction_data()
         if interaction_data:
+            self.logger.logger.info(f"Retrieved interaction data for fine-tuning: {interaction_data}")
             self.game.fine_tune_model(interaction_data)
+            self.logger.logger.info("Successfully updated learning from interactions.")
+        else:
+            self.logger.logger.info("No interaction data found for learning update.")
 
 # To run the Snowball AI
 if __name__ == "__main__":

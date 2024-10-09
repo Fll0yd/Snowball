@@ -7,6 +7,8 @@ from email.mime.text import MIMEText
 from logging.handlers import RotatingFileHandler
 from plyer import notification  # For notifications
 from core.config_loader import ConfigLoader
+import psutil  # For system health tracking
+import datetime
 
 # Load the log directory from config or use a default value
 CONFIG = ConfigLoader.load_config("interface_settings.json")
@@ -19,9 +21,13 @@ SYSTEM_HEALTH_LOG_PATH = os.path.join(LOG_DIR, "system_health_logs", "cpu_log.tx
 EVENT_LOG_PATH = os.path.join(LOG_DIR, "event_logs", "event_log.txt")
 FILE_IO_LOG_PATH = os.path.join(LOG_DIR, "file_io_logs", "file_io_log.txt")
 DECISION_LOG_PATH = os.path.join(LOG_DIR, "decision_logs", "decision_log.txt")
+CONFIG_CHANGE_LOG_PATH = os.path.join(LOG_DIR, "config_logs", "config_log.txt")  # New log path for configuration changes
+WARNING_LOG_PATH = os.path.join(LOG_DIR, "warning_logs", "warning_log.txt")  # New warning log path
+SECURITY_LOG_PATH = os.path.join(LOG_DIR, "security_logs", "security_log.txt")  # New security log path
+TASK_LOG_PATH = os.path.join(LOG_DIR, "task_logs", "task_log.txt")  # New task log path
 
 # Create the log directories if they don't exist
-for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH]:
+for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH, CONFIG_CHANGE_LOG_PATH, WARNING_LOG_PATH, SECURITY_LOG_PATH, TASK_LOG_PATH]:
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
 class SnowballLogger:
@@ -72,6 +78,10 @@ class SnowballLogger:
             self._add_handler(EVENT_LOG_PATH, logging.INFO, formatter)
             self._add_handler(FILE_IO_LOG_PATH, logging.INFO, formatter)
             self._add_handler(DECISION_LOG_PATH, logging.DEBUG, formatter)
+            self._add_handler(CONFIG_CHANGE_LOG_PATH, logging.INFO, formatter)  # Handler for config changes
+            self._add_handler(WARNING_LOG_PATH, logging.WARNING, formatter)  # Handler for warnings
+            self._add_handler(SECURITY_LOG_PATH, logging.WARNING, formatter)  # Handler for security-related logs
+            self._add_handler(TASK_LOG_PATH, logging.INFO, formatter)  # Handler for task-related logs
 
             # Console handler for real-time debugging
             console_handler = logging.StreamHandler()
@@ -84,17 +94,28 @@ class SnowballLogger:
         try:
             # Avoid adding multiple handlers for the same log file
             if not any(isinstance(handler, RotatingFileHandler) and handler.baseFilename == log_path for handler in self.logger.handlers):
-                handler = RotatingFileHandler(log_path, maxBytes=5 * 1024 * 1024, backupCount=5)
+                handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)  # Use smaller chunks for rotation
                 handler.setLevel(level)
                 handler.setFormatter(formatter)
                 self.logger.addHandler(handler)
         except Exception as e:
             self.logger.error(f"Failed to add handler for {log_path}: {e}")
 
+    def log_config_change(self, setting_name, old_value, new_value, user):
+        """Log configuration changes with old and new values and user info."""
+        with self._lock:
+            change_message = f"Config Change - User: '{user}', Setting: '{setting_name}', Old Value: '{old_value}', New Value: '{new_value}', Timestamp: '{datetime.datetime.now()}"
+            self.logger.info(change_message)
+
     def log_event(self, event_message):
         """Log system events (e.g., start/stop)."""
         with self._lock:
             self.logger.info(f"Event: {event_message}")
+
+    def log_warning(self, warning_message):
+        """Log warnings that are notable but not critical."""
+        with self._lock:
+            self.logger.warning(f"Warning: {warning_message}")
 
     def log_error(self, message):
         """Log errors, notify the user, and send email if configured."""
@@ -104,6 +125,17 @@ class SnowballLogger:
             self.send_error_email(message)
             if self.error_settings.get('auto_restart_on_crash', False):
                 self.restart_system_on_crash()
+
+    def log_security_event(self, security_message):
+        """Log security-related events such as unauthorized access attempts."""
+        with self._lock:
+            self.logger.warning(f"Security: {security_message}")
+
+    def log_task(self, task_name, status):
+        """Log task-related events, e.g., start/stop of background tasks."""
+        with self._lock:
+            task_message = f"Task: '{task_name}' - Status: '{status}'"
+            self.logger.info(task_message)
 
     def notify_user(self, title, message):
         """Show a notification to the user for critical events."""
@@ -137,7 +169,7 @@ class SnowballLogger:
         with self._lock:
             self.logger.info(f"User: {user_message} | AI: {ai_response}")
 
-    def log_system_health(self, cpu_usage, memory_usage=None, temp=None):
+    def log_system_health(self, cpu_usage, memory_usage=None, temp=None, disk_usage=None, network_bandwidth=None):
         """Log system health data and notify if thresholds are exceeded."""
         with self._lock:
             health_status = f"CPU Usage: {cpu_usage}%"
@@ -145,6 +177,11 @@ class SnowballLogger:
                 health_status += f" | Memory Usage: {memory_usage}%"
             if temp is not None:
                 health_status += f" | Temp: {temp}°C"
+            if disk_usage is not None:
+                health_status += f" | Disk Usage: {disk_usage}%"
+            if network_bandwidth is not None:
+                health_status += f" | Network Bandwidth: {network_bandwidth} Mbps"
+            
             self.logger.info(health_status)
 
             # Check thresholds and notify if necessary

@@ -27,31 +27,32 @@ class DecisionMaker:
         self.logger = SnowballLogger()  # Initialize logger
         self.memory = Memory()  # Access to memory system
         self.task_queue = Queue(maxsize=10)  # Limit queue size for performance
-        self.logger.logger.info("DecisionMaker initialized.")
+        self.logger.log_event("DecisionMaker initialized.")
         self._stop_event = threading.Event()  # Event for stopping the thread gracefully
         threading.Thread(target=self.process_tasks, daemon=True).start()
 
     def stop(self):
         """Stop the decision maker processing thread."""
         self._stop_event.set()
-        self.logger.logger.info("Stopping DecisionMaker.")
+        self.logger.log_event("Stopping DecisionMaker.")
 
     def process_tasks(self):
         """Continuously process tasks from the queue asynchronously."""
         while not self._stop_event.is_set():
             try:
                 task, args = self.task_queue.get(timeout=1)  # Timeout to check stop event
-                self.logger.logger.info(f"Processing task: {task.__name__}")
+                self.logger.log_task(f"Processing task: {task.__name__}", status="Started")
                 task(*args)
+                self.logger.log_task(f"Processing task: {task.__name__}", status="Completed")
             except Empty:
                 continue  # No tasks to process, continue looping
             except Exception as e:
-                self.logger.logger.error(f"Error processing task: {e}")
+                self.logger.log_error(f"Error processing task: {e}")
 
     def handle_request(self, request: str) -> str:
         """Main method to handle various user requests."""
         request = ' '.join(request.lower().split())  # Normalize spaces in request
-        self.logger.logger.info(f"Received request: {request}")
+        self.logger.log_interaction(f"Received request: {request}", ai_response="Processing...")
 
         # Handle different types of requests based on content
         try:
@@ -79,12 +80,12 @@ class DecisionMaker:
                 response = self.add_custom_command(request)
             else:
                 response = "Sorry, I don't understand that request."
-                self.logger.logger.warning(f"Unrecognized request: {request}")
+                self.logger.log_warning(f"Unrecognized request: {request}")
         except Exception as e:
             response = "An error occurred while processing your request."
-            self.logger.logger.error(f"Error in handle_request: {e}")
+            self.logger.log_error(f"Error in handle_request: {e}")
 
-        self.logger.logger.info(f"Response generated: {response}")
+        self.logger.log_interaction(request, ai_response=response)
         return response
 
     def handle_game_request(self, request: str) -> str:
@@ -94,11 +95,11 @@ class DecisionMaker:
             try:
                 module = __import__(f"games.{game_name}.{game_name}", fromlist=['game_loop'])
                 game_loop = getattr(module, 'game_loop')
-                self.logger.logger.info(f"Launching game: {game_name}")
+                self.logger.log_event(f"Launching game: {game_name}")
                 game_loop()
                 return f"Launching {game_name}..."
             except (ImportError, AttributeError) as e:
-                self.logger.logger.warning(f"Game not found: {game_name}, Error: {e}")
+                self.logger.log_warning(f"Game not found: {game_name}, Error: {e}")
                 return f"Sorry, I don't know how to play {game_name} yet."
         return "Please specify a valid game name."
 
@@ -109,7 +110,7 @@ class DecisionMaker:
 
     def handle_reminder(self, request: str) -> str:
         """Handle user requests related to reminders."""
-        self.logger.logger.info("Processing reminder request.")
+        self.logger.log_event("Processing reminder request.")
         return self.set_reminder(request)
 
     def set_reminder(self, request: str) -> str:
@@ -129,7 +130,7 @@ class DecisionMaker:
                     time_in_minutes = self.convert_to_minutes(time_value, time_unit)
 
                     # Log parsed values
-                    self.logger.logger.info(f"Parsed reminder: Action - {action}, Time - {time_in_minutes} minutes")
+                    self.logger.log_event(f"Parsed reminder: Action - {action}, Time - {time_in_minutes} minutes")
 
                     # Schedule the reminder
                     with self.reminder_lock:
@@ -141,11 +142,11 @@ class DecisionMaker:
 
                     responses.append(f"Reminder set for {action.strip()} in {time_in_minutes} minutes.")
                 except Exception as e:
-                    self.logger.logger.error(f"Error setting reminder: {e}")
+                    self.logger.log_error(f"Error setting reminder: {e}")
                     responses.append(f"Error setting reminder: {e}")
             return "\n".join(responses)
         else:
-            self.logger.logger.warning(f"Failed to parse reminder request: {request}")
+            self.logger.log_warning(f"Failed to parse reminder request: {request}")
             return "Invalid reminder format. Please use 'remind me to [action] in [time] [minutes/hours/days].'"
 
     def convert_to_minutes(self, time_value: int, time_unit: str) -> int:
@@ -160,63 +161,63 @@ class DecisionMaker:
         """List all active reminders."""
         with self.reminder_lock:
             if not self.reminders:
-                self.logger.logger.info("No active reminders to list.")
+                self.logger.log_event("No active reminders to list.")
                 return "No active reminders."
             reminders_list = "\n".join([f"Reminder: {r[0]} in {r[1]} minutes." for r in self.reminders])
-            self.logger.logger.info("Listing all active reminders.")
+            self.logger.log_event("Listing all active reminders.")
             return reminders_list
 
     def cancel_reminder(self) -> str:
         """Cancel all reminders."""
         with self.reminder_lock:
             self.reminders.clear()
-            self.logger.logger.info("All reminders have been canceled.")
+            self.logger.log_event("All reminders have been canceled.")
             return "All reminders have been canceled."
 
     def _reminder_timer(self, action: str, time_in_minutes: int):
         """Wait for the specified time and then notify the user."""
         try:
             time.sleep(time_in_minutes * 60)  # Convert minutes to seconds
-            self.logger.logger.info(f"Reminder for action: {action} triggered.")
+            self.logger.log_event(f"Reminder for action: {action} triggered.")
             print(f"Reminder: {action}")  # Notify user, replace with more complex notification as needed
         except Exception as e:
-            self.logger.logger.error(f"Error in reminder timer: {e}")
+            self.logger.log_error(f"Error in reminder timer: {e}")
 
     def start_system_monitor(self) -> str:
         """Start the system monitoring functionality."""
-        self.logger.logger.info("System monitoring started.")
+        self.logger.log_event("System monitoring started.")
         # Placeholder implementation for system monitoring
         return "System monitoring has started."
 
     def ask_for_name(self) -> str:
         """Ask the user for their name."""
-        self.logger.logger.info("Asking for user's name.")
+        self.logger.log_event("Asking for user's name.")
         return "What is your name?"
 
     def provide_feedback(self, request: str) -> str:
         """Handle user feedback."""
-        self.logger.logger.info("Processing feedback request.")
+        self.logger.log_event("Processing feedback request.")
         return "Thank you for your feedback!"
 
     def daily_summary(self) -> str:
         """Provide a summary of the day's activities."""
-        self.logger.logger.info("Providing daily summary.")
+        self.logger.log_event("Providing daily summary.")
         # Placeholder for daily summary logic
         return "Here is your daily summary."
 
     def remember_context(self, request: str) -> str:
         """Remember the context for future interactions."""
-        self.logger.logger.info(f"Remembering context: {request}")
+        self.logger.log_event(f"Remembering context: {request}")
         return "Context remembered."
 
     def fetch_weather(self, request: str) -> str:
         """Fetch the current weather information."""
-        self.logger.logger.info("Fetching weather information.")
+        self.logger.log_event("Fetching weather information.")
         # Placeholder for weather API logic
         return "The current weather is sunny and 72°F."
 
     def add_custom_command(self, request: str) -> str:
         """Add a custom command."""
-        self.logger.logger.info("Adding custom command.")
+        self.logger.log_event("Adding custom command.")
         # Placeholder for custom command logic
         return "Custom command added."

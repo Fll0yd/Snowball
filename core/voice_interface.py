@@ -39,6 +39,13 @@ class VoiceInterface:
         self.engine_choice = voice_settings.get("engine", "gTTS")
         self.error_voice = voice_settings.get("error_voice", "Sorry, I didn't catch that.")
 
+        # Log loaded voice settings
+        self.logger.log_config_change("language", None, self.language, user="System Initialization")
+        self.logger.log_config_change("volume", None, self.volume, user="System Initialization")
+        self.logger.log_config_change("speech_rate", None, self.speech_rate, user="System Initialization")
+        self.logger.log_config_change("voice_gender", None, self.voice_gender, user="System Initialization")
+        self.logger.log_config_change("engine", None, self.engine_choice, user="System Initialization")
+
         # Configure pyttsx3 for offline TTS if chosen
         self.setup_pyttsx3()
 
@@ -51,13 +58,14 @@ class VoiceInterface:
             self.engine.setProperty('voice', voices[0].id)  # Typically, index 0 is male
         self.engine.setProperty('rate', self.speech_rate * 200)  # Adjust rate
         self.engine.setProperty('volume', self.volume / 100)  # Set volume
+        self.logger.log_event("pyttsx3 TTS engine configured with gender: {} and speech rate: {}".format(self.voice_gender, self.speech_rate))
 
     def play_audio(self, file_path):
         """Play an audio file using pygame after converting it to WAV."""
         def play():
             try:
                 if not os.path.exists(file_path):
-                    self.logger.logger.error(f"Audio file not found: {file_path}")
+                    self.logger.log_error(f"Audio file not found: {file_path}")
                     return
 
                 wav_path = os.path.join(self.temp_dir, "response.wav")
@@ -81,9 +89,9 @@ class VoiceInterface:
                 pygame.mixer.music.stop()
                 pygame.mixer.quit()
 
-                self.logger.logger.info(f"Playing audio file: {wav_path}")
+                self.logger.log_event(f"Playing audio file: {wav_path}")
             except Exception as e:
-                self.logger.logger.error(f"Error playing audio: {e}")
+                self.logger.log_error(f"Error playing audio: {e}")
             finally:
                 # Ensure the WAV file is removed even if an error occurs
                 if os.path.exists(wav_path):
@@ -91,7 +99,7 @@ class VoiceInterface:
                         time.sleep(0.5)  # Short delay to make sure file is released
                         os.remove(wav_path)
                     except Exception as e:
-                        self.logger.logger.error(f"Error removing WAV file: {e}")
+                        self.logger.log_warning(f"Error removing WAV file: {e}")
 
         # Run the play function in a separate thread to keep the UI responsive
         self.executor.submit(play)
@@ -103,7 +111,7 @@ class VoiceInterface:
 
         def synthesize_and_play():
             try:
-                self.logger.logger.info(f"Converting text to speech: '{message}'")
+                self.logger.log_event(f"Converting text to speech: '{message}'")
 
                 if self.engine_choice == "gTTS":
                     # Use Google TTS (gTTS)
@@ -115,11 +123,11 @@ class VoiceInterface:
                     self.engine.say(message)
                     self.engine.runAndWait()
 
-                self.logger.logger.info(f"Speech synthesized: '{message}'")
+                self.logger.log_event(f"Speech synthesized: '{message}'")
             except gTTSError as e:
-                self.logger.logger.error(f"Google TTS service failed: {e}")
+                self.logger.log_error(f"Google TTS service failed: {e}")
             except Exception as e:
-                self.logger.logger.error(f"Error during speech synthesis: {e}, {type(e).__name__}")
+                self.logger.log_error(f"Error during speech synthesis: {e}, {type(e).__name__}")
             finally:
                 # Retry mechanism for deleting the file, up to 5 times
                 retries = 5
@@ -128,15 +136,15 @@ class VoiceInterface:
                         try:
                             time.sleep(0.5)  # Delay before attempting to delete
                             os.remove(file_path)
-                            self.logger.logger.info(f"Successfully removed MP3 file on attempt {attempt + 1}")
+                            self.logger.log_event(f"Successfully removed MP3 file on attempt {attempt + 1}")
                             break
                         except Exception as e:
                             if attempt < retries - 1:
-                                self.logger.logger.warning(f"Error removing MP3 file (attempt {attempt + 1}): {e}. Retrying...")
+                                self.logger.log_warning(f"Error removing MP3 file (attempt {attempt + 1}): {e}. Retrying...")
                                 time.sleep(1.5)  # Wait for a longer duration before retrying
                             else:
                                 # Final attempt failed
-                                self.logger.logger.error(f"Error removing MP3 file after {retries} attempts: {e}")
+                                self.logger.log_error(f"Error removing MP3 file after {retries} attempts: {e}")
 
         # Run the synthesis and play in a separate thread
         self.executor.submit(synthesize_and_play)
@@ -144,22 +152,22 @@ class VoiceInterface:
     def listen(self):
         """Listen for voice commands and return recognized text."""
         with sr.Microphone() as source:
-            self.logger.logger.info("Listening for user input via microphone.")
+            self.logger.log_event("Listening for user input via microphone.")
             print("Listening...")
             try:
                 self.recognizer.adjust_for_ambient_noise(source)
                 audio = self.recognizer.listen(source)
                 text = self.recognizer.recognize_google(audio)
-                self.logger.logger.info(f"User input recognized: '{text}'")
+                self.logger.log_event(f"User input recognized: '{text}'")
                 return text
             except sr.UnknownValueError:
-                self.logger.logger.warning("Could not understand the audio")
+                self.logger.log_warning("Could not understand the audio")
                 return self.error_voice
             except sr.RequestError as e:
-                self.logger.logger.error(f"Speech recognition service error: {e}")
+                self.logger.log_error(f"Speech recognition service error: {e}")
                 return "Network error: Could not reach the speech recognition service."
             except Exception as e:
-                self.logger.logger.error(f"Unexpected error during listening: {e}")
+                self.logger.log_error(f"Unexpected error during listening: {e}")
                 return "An error occurred while processing your input."
 
     def generate_greeting(self):
@@ -175,10 +183,10 @@ class VoiceInterface:
                 temperature=0.7
             )
             greeting = response.choices[0].message.content.strip()
-            self.logger.logger.info(f"Generated greeting: {greeting}")
+            self.logger.log_event(f"Generated greeting: {greeting}")
             return greeting
         except Exception as e:
-            self.logger.logger.error(f"Error generating greeting: {e}")
+            self.logger.log_error(f"Error generating greeting: {e}")
             return "Hello! I'm Snowball, your personal AI assistant. How can I help you today?"
 
     def speak_greeting(self):

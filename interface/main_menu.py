@@ -9,8 +9,25 @@ import pygame
 import json
 import os
 
-# Import the new config interface module
-from config_interface import ConfigInterface  
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Add the Snowball and core directory to the system path
+sys.path.append('S:/Snowball')
+sys.path.append('S:/Snowball/core')
+
+# Debugging output to confirm path
+logger.info(f"Current Python Path: {sys.path}")
+
+# Import the necessary modules
+try:
+    logger.info("Attempting to import SnowballAI and ConfigLoader...")
+    from core.ai_agent import SnowballAI
+    from core.config_loader import ConfigLoader
+except ImportError as e:
+    logger.error(f"ImportError: {e}")
+    sys.exit(1)
 
 # Load API keys from JSON file
 try:
@@ -25,26 +42,13 @@ try:
     os.environ['OPENAI_API_KEY'] = api_keys['api_keys']['openai_api_key']
 
 except FileNotFoundError:
-    raise FileNotFoundError("The API keys file was not found at S:/Snowball/config/account_integrations.json")
+    logger.error("The API keys file was not found at S:/Snowball/config/account_integrations.json")
+    sys.exit(1)
 except json.JSONDecodeError:
-    raise ValueError("The API keys file is not in a valid JSON format")
+    logger.error("The API keys file is not in a valid JSON format")
+    sys.exit(1)
 except Exception as e:
-    raise RuntimeError(f"An unexpected error occurred: {e}")
-
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-
-# Add the Snowball directory to the system path
-sys.path.append('S:/Snowball')
-
-# Debugging output to confirm path
-logging.info(f"Current Python Path: {sys.path}")
-
-try:
-    logging.info("Attempting to import SnowballAI...")
-    from core.ai_agent import SnowballAI
-except ImportError as e:
-    logging.error(f"ImportError: {e}")
+    logger.error(f"An unexpected error occurred: {e}")
     sys.exit(1)
 
 class SnowballGUI:
@@ -55,19 +59,28 @@ class SnowballGUI:
         self.root.configure(bg="#e6e6e6")
 
         # Load the background image for a futuristic feel
-        self.bg_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/background.png"))
-        self.bg_label = tk.Label(root, image=self.bg_image)
-        self.bg_label.place(relwidth=1, relheight=1)
+        try:
+            self.bg_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/background.png"))
+            self.bg_label = tk.Label(root, image=self.bg_image)
+            self.bg_label.place(relwidth=1, relheight=1)
+        except FileNotFoundError:
+            logger.error("Background image not found at S:/Snowball/icon/background.png")
 
         # Set the AI avatar in a prominent position (initially hidden)
-        self.snowball_avatar_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/avatar_placeholder.png"))  # Placeholder for the animated avatar
-        self.monitoring_avatar_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/monitoring_placeholder.png"))
-        self.avatar_label = tk.Label(root, image=self.snowball_avatar_image, bd=0)
+        try:
+            self.snowball_avatar_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/avatar_placeholder.png"))  # Placeholder for the animated avatar
+            self.monitoring_avatar_image = ImageTk.PhotoImage(file=os.path.join("S:/Snowball/icon/monitoring_placeholder.png"))
+            self.avatar_label = tk.Label(root, image=self.snowball_avatar_image, bd=0)
+        except FileNotFoundError:
+            logger.error("Avatar image not found at S:/Snowball/icon/avatar_placeholder.png or monitoring_placeholder.png")
 
         # Set the duck icon
-        duck_icon_path = os.path.join("S:/Snowball/icon/trayicon.png")
-        self.duck_icon = ImageTk.PhotoImage(file=duck_icon_path)
-        self.root.iconphoto(True, self.duck_icon)
+        try:
+            duck_icon_path = os.path.join("S:/Snowball/icon/trayicon.png")
+            self.duck_icon = ImageTk.PhotoImage(file=duck_icon_path)
+            self.root.iconphoto(True, self.duck_icon)
+        except FileNotFoundError:
+            logger.error("Duck icon not found at S:/Snowball/icon/trayicon.png")
 
         # Initialize Snowball AI
         self.snowball = SnowballAI()
@@ -92,9 +105,13 @@ class SnowballGUI:
         self.user_input.pack(pady=5, padx=10, fill=tk.X, side=tk.LEFT, expand=True)
 
         # Load and resize the send icon
-        send_icon_path = os.path.join("S:/Snowball/icon/send.png")
-        send_icon = Image.open(send_icon_path).resize((30, 30), Image.Resampling.LANCZOS)
-        self.send_icon = ImageTk.PhotoImage(send_icon)
+        try:
+            send_icon_path = os.path.join("S:/Snowball/icon/send.png")
+            send_icon = Image.open(send_icon_path).resize((30, 30), Image.Resampling.LANCZOS)
+            self.send_icon = ImageTk.PhotoImage(send_icon)
+        except FileNotFoundError:
+            logger.error("Send icon not found at S:/Snowball/icon/send.png")
+            self.send_icon = None
 
         # Send Button with send icon
         self.send_button = tk.Button(self.input_frame, image=self.send_icon, command=self.send_input, bg="#1e1e1e", relief="flat", bd=0)
@@ -137,11 +154,14 @@ class SnowballGUI:
 
     def open_module(self, module_name):
         if module_name == "Config":
-            # Open the ConfigInterface when "Config" button is pressed
-            config_window = tk.Toplevel(self.root)
-            config_window.title("Configuration")
-            ConfigInterface(config_window)  # This creates an instance of the ConfigInterface window
-
+            try:
+                # Open the ConfigInterface when "Config" button is pressed
+                config_window = tk.Toplevel(self.root)
+                config_window.title("Configuration")
+                ConfigInterface(config_window)  # This creates an instance of the ConfigInterface window
+            except NameError:
+                logger.error("ConfigInterface class is not defined.")
+                self.chat_display.insert(tk.END, "Configuration module could not be opened.\n")
         elif module_name == "System Monitor":
             if not hasattr(self, 'system_monitor_active') or not self.system_monitor_active:
                 self.system_monitor_active = True
@@ -168,6 +188,7 @@ class SnowballGUI:
         try:
             snowball_response = self.snowball.process_input(user_message)
         except Exception as e:
+            logger.error(f"Error processing input: {e}")
             snowball_response = "Oops! Something went wrong. " + str(e)
 
         self.display_message(snowball_response, sender='snowball')
@@ -182,11 +203,17 @@ class SnowballGUI:
             self.user_input.delete(0, tk.END)
 
     def start_avatar_entry(self):
-        # Play footsteps audio
-        pygame.mixer.init()
-        footsteps_path = os.path.join("S:/Snowball/audio/footsteps.mp3")
-        pygame.mixer.music.load(footsteps_path)
-        pygame.mixer.music.play()
+        try:
+            # Play footsteps audio
+            pygame.mixer.init()
+            footsteps_path = os.path.join("S:/Snowball/audio/footsteps.mp3")
+            if os.path.exists(footsteps_path):
+                pygame.mixer.music.load(footsteps_path)
+                pygame.mixer.music.play()
+            else:
+                logger.error(f"Footsteps audio file not found at {footsteps_path}")
+        except pygame.error as e:
+            logger.error(f"Pygame Mixer Initialization Error: {e}")
 
         # Start moving the avatar from the right
         self.avatar_label.place(relx=1.0, rely=0.2)  # Start off-screen to the right
@@ -208,7 +235,7 @@ class SnowballGUI:
             greeting = self.snowball.voice.generate_greeting()
             self.snowball.voice.speak(greeting)
         except Exception as e:
-            self.snowball.logger.logger.error(f"Error greeting user: {e}")
+            logger.error(f"Error greeting user: {e}")
 
     def toggle_system_monitor(self):
         if self.system_monitor_var.get():

@@ -2,17 +2,16 @@ import json
 import os
 import logging
 from typing import Optional
-
-# Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+from core.logger import SnowballLogger  # Use the SnowballLogger for enhanced logging
 
 class ConfigLoader:
     _cache = {}
     DEFAULT_CONFIG_DIR = os.environ.get("CONFIG_DIR", "S:/Snowball/config")
 
-    @classmethod
-    def load_config(cls, file_name: str, force_reload: bool = False, config_dir: Optional[str] = None) -> dict:
+    def __init__(self):
+        self.logger = SnowballLogger()
+
+    def load_config(self, file_name: str, force_reload: bool = False, config_dir: Optional[str] = None) -> dict:
         """
         Loads the JSON configuration file and returns the data as a dictionary.
         Caches the file data to prevent reloading it multiple times, unless forced.
@@ -24,63 +23,59 @@ class ConfigLoader:
         :raises FileNotFoundError: If the configuration file does not exist.
         :raises json.JSONDecodeError: If the configuration file contains invalid JSON.
         """
-        config_dir = config_dir or cls.DEFAULT_CONFIG_DIR
+        config_dir = config_dir or self.DEFAULT_CONFIG_DIR
         file_path = os.path.join(config_dir, file_name)
 
         if not os.path.exists(file_path):
-            logger.error(f"Configuration file {file_name} not found in {config_dir}")
+            self.logger.log_error(f"Configuration file {file_name} not found in {config_dir}")
             raise FileNotFoundError(f"Configuration file {file_name} not found in {config_dir}")
 
-        if file_name in cls._cache and not force_reload:
-            logger.info(f"Loading configuration from cache: {file_name}")
-            return cls._cache[file_name]
+        if file_name in self._cache and not force_reload:
+            self.logger.logger.info(f"Loading configuration from cache: {file_name}")
+            return self._cache[file_name]
 
         try:
             with open(file_path, 'r') as f:
                 config_data = json.load(f)
-                cls._cache[file_name] = config_data  # Cache the loaded config
-                logger.info(f"Successfully loaded configuration: {file_name}")
+                self._cache[file_name] = config_data  # Cache the loaded config
+                self.logger.logger.info(f"Successfully loaded configuration: {file_name}")
                 return config_data
         except json.JSONDecodeError as e:
-            logger.error(f"Error decoding JSON from file {file_name}: {e}")
+            self.logger.log_error(f"Error decoding JSON from file {file_name}: {e}")
             raise
         except IOError as e:
-            logger.error(f"IOError while opening file {file_name}: {e}")
+            self.logger.log_error(f"IOError while opening file {file_name}: {e}")
             raise
 
-    @classmethod
-    def clear_cache(cls):
+    def clear_cache(self):
         """
         Clears the configuration cache for all files, forcing a reload on the next load.
         """
-        cls._cache.clear()
-        logger.info("Configuration cache cleared.")
+        self._cache.clear()
+        self.logger.logger.info("Configuration cache cleared.")
 
-    @classmethod
-    def remove_from_cache(cls, file_name: str):
+    def remove_from_cache(self, file_name: str):
         """
         Removes a specific configuration file from the cache.
-        
+
         :param file_name: The name of the configuration file to remove from the cache.
         """
-        if file_name in cls._cache:
-            del cls._cache[file_name]
-            logger.info(f"Configuration for {file_name} removed from cache.")
+        if file_name in self._cache:
+            del self._cache[file_name]
+            self.logger.logger.info(f"Configuration for {file_name} removed from cache.")
         else:
-            logger.info(f"No cached configuration found for {file_name}.")
+            self.logger.logger.info(f"No cached configuration found for {file_name}.")
 
-    @classmethod
-    def cache_status(cls) -> list:
+    def cache_status(self) -> list:
         """
         Returns the current status of the cache (which files are cached).
 
         :return: List of cached files.
         """
-        logger.info(f"Current cache status: {cls._cache.keys()}")
-        return list(cls._cache.keys())
+        self.logger.logger.info(f"Current cache status: {self._cache.keys()}")
+        return list(self._cache.keys())
 
-    @classmethod
-    def save_config(cls, file_name: str, config_data: dict, config_dir: Optional[str] = None):
+    def save_config(self, file_name: str, config_data: dict, config_dir: Optional[str] = None):
         """
         Saves the configuration data to the specified JSON file.
 
@@ -89,20 +84,19 @@ class ConfigLoader:
         :param config_dir: Optionally specify a custom config directory, otherwise uses default.
         :raises IOError: If the file cannot be written.
         """
-        config_dir = config_dir or cls.DEFAULT_CONFIG_DIR
+        config_dir = config_dir or self.DEFAULT_CONFIG_DIR
         file_path = os.path.join(config_dir, file_name)
 
         try:
             with open(file_path, 'w') as f:
                 json.dump(config_data, f, indent=4)
-                cls._cache[file_name] = config_data  # Update the cache
-                logger.info(f"Configuration saved to {file_path}")
+                self._cache[file_name] = config_data  # Update the cache
+                self.logger.logger.info(f"Configuration saved to {file_path}")
         except IOError as e:
-            logger.error(f"Failed to write configuration to {file_path}: {e}")
+            self.logger.log_error(f"Failed to write configuration to {file_path}: {e}")
             raise
 
-    @classmethod
-    def refresh_config(cls, file_name: str, config_dir: Optional[str] = None) -> dict:
+    def refresh_config(self, file_name: str, config_dir: Optional[str] = None) -> dict:
         """
         Forces a cache refresh by reloading the configuration file from disk.
 
@@ -112,36 +106,37 @@ class ConfigLoader:
         :raises FileNotFoundError: If the configuration file does not exist.
         :raises json.JSONDecodeError: If the configuration file contains invalid JSON.
         """
-        logger.info(f"Refreshing configuration for {file_name}")
-        return cls.load_config(file_name, force_reload=True, config_dir=config_dir)
+        self.logger.logger.info(f"Refreshing configuration for {file_name}")
+        return self.load_config(file_name, force_reload=True, config_dir=config_dir)
 
 # Example usage:
 if __name__ == "__main__":
+    config_loader = ConfigLoader()
     try:
         # Load the config file, forcing a reload from disk
-        config = ConfigLoader.load_config("user_customizations.json", force_reload=True)
+        config = config_loader.load_config("user_customizations.json", force_reload=True)
         print(config)
 
         # Check the current cache status
-        print("Cached files:", ConfigLoader.cache_status())
+        print("Cached files:", config_loader.cache_status())
 
         # Load the config file without forcing reload (should come from cache)
-        config_cached = ConfigLoader.load_config("user_customizations.json")
+        config_cached = config_loader.load_config("user_customizations.json")
         print(config_cached)
 
         # Clear the entire cache
-        ConfigLoader.clear_cache()
+        config_loader.clear_cache()
 
         # Check the cache status after clearing
-        print("Cached files after clearing:", ConfigLoader.cache_status())
+        print("Cached files after clearing:", config_loader.cache_status())
 
         # Save new configuration data to a file
         new_config_data = {"new_setting": "example_value"}
-        ConfigLoader.save_config("new_config.json", new_config_data)
+        config_loader.save_config("new_config.json", new_config_data)
 
         # Force refresh and load new configuration
-        new_config = ConfigLoader.refresh_config("new_config.json")
+        new_config = config_loader.refresh_config("new_config.json")
         print(new_config)
 
     except Exception as e:
-        logger.error(f"Error: {e}")
+        config_loader.logger.log_error(f"Error: {e}")
