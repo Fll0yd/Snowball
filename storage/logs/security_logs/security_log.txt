@@ -15,3 +15,5 @@
 2024-10-10 12:24:50,886 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
 2024-10-10 12:33:27,653 - WARNING - sensors_temperatures not supported by psutil on this system.
 2024-10-10 12:50:50,412 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-10 15:00:16,874 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 15:04:54,797 - WARNING - sensors_temperatures not supported by psutil on this system.
