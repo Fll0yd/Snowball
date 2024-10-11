@@ -17,3 +17,15 @@
 2024-10-10 12:50:50,412 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
 2024-10-10 15:00:16,874 - WARNING - sensors_temperatures not supported by psutil on this system.
 2024-10-10 15:04:54,797 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:16:36,489 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:23:22,875 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:35:22,809 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:50:50,513 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:20:45,611 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:25:41,350 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:28:54,192 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:32:51,205 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:37:05,816 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:46:55,776 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:57:32,604 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 10:21:15,716 - WARNING - sensors_temperatures not supported by psutil on this system.

@@ -1,89 +1,82 @@
 import tkinter as tk
-from tkinter import messagebox, scrolledtext
+from tkinter import messagebox, Scrollbar
 import os
 
 # Define the path to the log files directory
 logs_directory = 'S:/Snowball/storage/logs'
 
-class LogsViewer:
+class LogsConfig:
     def __init__(self, master):
         self.master = master
-        self.master.geometry("1200x800")
-        self.master.title("Snowball AI - Logs Viewer")
         self.master.configure(bg="#2c2c2c")
 
-        # Sidebar setup for log file buttons
-        self.sidebar_frame = tk.Frame(self.master, bg="#1e1e1e", width=200)
-        self.sidebar_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        # Main container for log buttons and log viewer
+        self.log_buttons_frame = tk.Frame(self.master, bg="#2c2c2c")
+        self.log_buttons_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
-        # Configure grid weights to stretch the sidebar evenly
-        self.master.grid_columnconfigure(0, weight=1)
-        self.master.grid_columnconfigure(1, weight=4)
-        self.master.grid_rowconfigure(0, weight=1)
+        self.log_view_frame = tk.Frame(self.master, bg="#2c2c2c")
+        self.log_view_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # Create a frame for displaying the log contents
-        self.main_frame = tk.Frame(self.master, bg="#2c2c2c")
-        self.main_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
+        # Create buttons for each log folder
+        self.create_log_buttons()
 
-        # Label for main content
-        self.header_label = tk.Label(self.main_frame, text="Log Viewer", font=("Arial", 16), fg="white", bg="#2c2c2c")
-        self.header_label.pack(anchor="nw", pady=10)
-
-        # Text area for displaying the log content
-        self.log_text_area = scrolledtext.ScrolledText(self.main_frame, wrap=tk.WORD, font=("Consolas", 12), bg="#3e3e3e", fg="white", relief="flat")
-        self.log_text_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-
-        # Create buttons for each log file dynamically
-        self.load_log_buttons()
-
-    def load_log_buttons(self):
+    def create_log_buttons(self):
         """
-        Load buttons for each log file in the logs directory.
+        Create buttons for each log folder in the logs directory.
+        """
+        if not os.path.exists(logs_directory):
+            messagebox.showerror("Error", f"Logs path '{logs_directory}' not found.")
+            return
+
+        log_dirs = [d for d in os.listdir(logs_directory) if os.path.isdir(os.path.join(logs_directory, d))]
+
+        for i, log_dir in enumerate(log_dirs):
+            button = tk.Button(self.log_buttons_frame, text=log_dir.replace('_', ' ').title(),
+                               command=lambda d=log_dir: self.display_log_files(d),
+                               bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=20)
+            button.grid(row=i, column=0, sticky="ew", padx=5, pady=5)
+
+    def display_log_files(self, log_dir):
+        """
+        Display the log files from the selected directory.
+        """
+        # Clear the current log view
+        for widget in self.log_view_frame.winfo_children():
+            widget.destroy()
+
+        # Get the path to the selected log directory
+        log_dir_path = os.path.join(logs_directory, log_dir)
+        log_files = [f for f in os.listdir(log_dir_path) if os.path.isfile(os.path.join(log_dir_path, f))]
+
+        if not log_files:
+            messagebox.showinfo("No Logs", f"No log files found in '{log_dir}'.")
+            return
+
+        # Create a scrollable text widget to display the content of the selected log file
+        self.log_text = tk.Text(self.log_view_frame, wrap=tk.WORD, font=("Consolas", 10), bg="#3e3e3e", fg="white", relief="flat")
+        self.scrollbar = Scrollbar(self.log_view_frame, orient="vertical", command=self.log_text.yview)
+        self.log_text.configure(yscrollcommand=self.scrollbar.set)
+
+        self.log_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Display the most recent log file by default
+        log_files.sort(reverse=True)  # Sort by file name (assuming timestamped names)
+        self.load_log_content(os.path.join(log_dir_path, log_files[0]))
+
+    def load_log_content(self, file_path):
+        """
+        Load the content of the selected log file into the text widget.
         """
         try:
-            for i, subdir in enumerate(os.listdir(logs_directory)):
-                subdir_path = os.path.join(logs_directory, subdir)
-                if os.path.isdir(subdir_path):
-                    # Create buttons for each subdirectory (log type)
-                    button = tk.Button(self.sidebar_frame, text=subdir.replace('_', ' ').title(),
-                                       command=lambda p=subdir_path: self.load_log_file(p),
-                                       bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=18)
-                    button.grid(row=i, column=0, sticky="ew", padx=5, pady=5)
-                    self.sidebar_frame.grid_rowconfigure(i, weight=1)
-        except FileNotFoundError:
-            messagebox.showerror("Error", f"Logs directory not found at {logs_directory}. Please check the path.")
+            with open(file_path, 'r') as log_file:
+                log_content = log_file.read()
+                self.log_text.delete(1.0, tk.END)
+                self.log_text.insert(tk.END, log_content)
         except Exception as e:
-            messagebox.showerror("Error", f"An error occurred while loading logs: {e}")
-
-    def load_log_file(self, log_directory):
-        """
-        Load the contents of the selected log file and display it in the text area.
-        """
-        # Find the most recent log file in the selected directory
-        try:
-            log_files = [f for f in os.listdir(log_directory) if os.path.isfile(os.path.join(log_directory, f))]
-            if not log_files:
-                self.log_text_area.delete(1.0, tk.END)
-                self.log_text_area.insert(tk.END, "No log files found in this directory.")
-                return
-
-            # Sort log files by modification date (most recent first)
-            log_files.sort(key=lambda x: os.path.getmtime(os.path.join(log_directory, x)), reverse=True)
-            latest_log_file = os.path.join(log_directory, log_files[0])
-
-            # Read and display the contents of the most recent log file
-            with open(latest_log_file, 'r') as f:
-                log_content = f.read()
-                self.log_text_area.delete(1.0, tk.END)
-                self.log_text_area.insert(tk.END, log_content)
-        except PermissionError:
-            messagebox.showerror("Error", f"Permission denied: Unable to read files in '{log_directory}'")
-        except FileNotFoundError:
-            messagebox.showerror("Error", f"Log directory '{log_directory}' not found.")
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred while loading the log file: {e}")
+            messagebox.showerror("Error", f"Could not read log file: {e}")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = LogsViewer(root)
+    app = LogsConfig(root)
     root.mainloop()

@@ -3149,3 +3149,1321 @@ Why it fits: Synthia embodies the AI's role in blending data and
 2024-10-10 15:07:54,783 - INFO - CPU Usage: 2.2%
 2024-10-10 15:07:54,792 - INFO - Memory Usage: 35.3%
 2024-10-10 15:07:54,793 - INFO - Temperature: 65.0°C
+2024-10-11 08:07:59,065 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:07:59,071 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:07:59,077 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:07:59,078 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:07:59,079 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:07:59,080 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:07:59,080 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:13:50,337 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:13:50,338 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:13:50,338 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:13:50,339 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:13:50,340 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:13:50,340 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:13:50,341 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:15:35,235 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:15:35,236 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:15:35,238 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:15:35,239 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:15:35,239 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:15:35,240 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:15:35,241 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:15:35,260 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:15:35,281 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:15:35,282 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:15:35,439 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:15:35,440 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:15:35.440057
+2024-10-11 08:15:35,441 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:15:35.441056
+2024-10-11 08:15:35,442 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:15:35.442561
+2024-10-11 08:15:35,443 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:15:35.443566
+2024-10-11 08:15:35,443 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:15:35.443566
+2024-10-11 08:15:35,445 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:15:35,452 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:15:35,453 - INFO - SystemMonitor initialized.
+2024-10-11 08:15:35,463 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:15:35,464 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:15:35,465 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:15:35,472 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:15:35.472867
+2024-10-11 08:15:35,473 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:15:38,099 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:15:38,266 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:15:38,267 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:15:38,270 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:15:38,301 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:15:38,302 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:15:38,303 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:15:38,315 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:15:38,981 - INFO - Generated name from GPT: "NeuraNova"
+2024-10-11 08:15:38,983 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:16:36,473 - INFO - CPU Usage: 5.5%
+2024-10-11 08:16:36,487 - INFO - Memory Usage: 35.7%
+2024-10-11 08:16:36,489 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:16:36,491 - INFO - Temperature: 65.0°C
+2024-10-11 08:20:14,750 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:20:14,751 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:20:14,753 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:20:14,754 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:20:14,755 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:20:14,756 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:20:14,756 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:20:14,760 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:20:14,771 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:20:14,771 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:20:14,888 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:20:14,889 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:20:14.889319
+2024-10-11 08:20:14,890 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:20:14.890320
+2024-10-11 08:20:14,891 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:20:14.891321
+2024-10-11 08:20:14,891 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:20:14.891321
+2024-10-11 08:20:14,892 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:20:14.892827
+2024-10-11 08:20:14,894 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:20:14,894 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:20:14,895 - INFO - SystemMonitor initialized.
+2024-10-11 08:20:14,900 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:20:14,901 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:20:14,903 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:20:14,903 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:20:14.903413
+2024-10-11 08:20:14,904 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:20:17,130 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:20:17,315 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:20:17,317 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:20:17,318 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:20:17,344 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:20:17,345 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:20:17,346 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:20:17,347 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:20:17,348 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:22:21,686 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:22:21,687 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:22:21,689 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:22:21,690 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:22:21,690 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:22:21,691 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:22:21,692 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:22:21,696 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:22:21,707 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:22:21,709 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:22:21,831 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:22:21,832 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:22:21.832703
+2024-10-11 08:22:21,833 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:22:21.833709
+2024-10-11 08:22:21,833 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:22:21.833709
+2024-10-11 08:22:21,834 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:22:21.834708
+2024-10-11 08:22:21,835 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:22:21.835709
+2024-10-11 08:22:21,837 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:22:21,838 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:22:21,839 - INFO - SystemMonitor initialized.
+2024-10-11 08:22:21,845 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:22:21,847 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:22:21,848 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:22:21,848 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:22:21.848105
+2024-10-11 08:22:21,849 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:22:24,198 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:22:24,363 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:22:24,364 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:22:24,365 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:22:24,389 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:22:24,390 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:22:24,392 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:22:24,394 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:22:24,394 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:23:22,861 - INFO - CPU Usage: 2.9%
+2024-10-11 08:23:22,874 - INFO - Memory Usage: 36.1%
+2024-10-11 08:23:22,875 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:23:22,876 - INFO - Temperature: 65.0°C
+2024-10-11 08:23:50,450 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:24:22,854 - INFO - CPU Usage: 4.4%
+2024-10-11 08:24:22,861 - INFO - Memory Usage: 36.1%
+2024-10-11 08:24:22,863 - INFO - Temperature: 65.0°C
+2024-10-11 08:25:22,850 - INFO - CPU Usage: 2.4%
+2024-10-11 08:25:22,865 - INFO - Memory Usage: 36.2%
+2024-10-11 08:25:22,869 - INFO - Temperature: 65.0°C
+2024-10-11 08:26:47,276 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:26:47,277 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:26:47,278 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:26:47,278 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:26:47,279 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:26:47,280 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:26:47,281 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:26:47,285 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:26:47,295 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:26:47,296 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:26:47,406 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:26:47,407 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:26:47.407997
+2024-10-11 08:26:47,408 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:26:47.408971
+2024-10-11 08:26:47,408 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:26:47.408971
+2024-10-11 08:26:47,409 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:26:47.409971
+2024-10-11 08:26:47,410 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:26:47.410970
+2024-10-11 08:26:47,411 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:26:47,412 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:26:47,414 - INFO - SystemMonitor initialized.
+2024-10-11 08:26:47,418 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:26:47,420 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:26:47,421 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:26:47,422 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:26:47.422165
+2024-10-11 08:26:47,422 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:26:49,680 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:26:49,846 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:26:49,851 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:26:49,854 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:26:49,886 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:26:49,888 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:26:49,889 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:26:49,890 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:26:51,108 - INFO - Generated name from GPT: "Synthia" - Meaning: A fusion of "synthetic" and "Sophia," symbolizing the AI's synthetic intelligence and wisdom., Why it fits: Synthia embodies the AI's ability to blend artificial intelligence with human-like qualities
+2024-10-11 08:26:51,111 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:26:52,822 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:32:18,416 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:32:18,417 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:32:18,419 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:32:18,420 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:32:18,421 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:32:18,421 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:32:18,422 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:32:18,426 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:32:18,436 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:32:18,438 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:32:18,549 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:32:18,550 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:32:18.550012
+2024-10-11 08:32:18,552 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:32:18.552008
+2024-10-11 08:32:18,553 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:32:18.553007
+2024-10-11 08:32:18,553 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:32:18.553007
+2024-10-11 08:32:18,554 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:32:18.554088
+2024-10-11 08:32:18,556 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:32:18,557 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:32:18,558 - INFO - SystemMonitor initialized.
+2024-10-11 08:32:18,563 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:32:18,563 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:32:18,565 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:32:18,566 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:32:18.566101
+2024-10-11 08:32:18,566 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:32:20,894 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:32:21,041 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:32:21,042 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:32:21,043 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:32:21,073 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:32:21,075 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:32:21,075 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:32:21,077 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:32:21,078 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:32:25,024 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:34:21,645 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:34:21,646 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:34:21,647 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:34:21,648 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:34:21,649 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:34:21,651 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:34:21,653 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:34:21,656 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:34:21,667 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:34:21,668 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:34:21,778 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:34:21,780 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:34:21.778709
+2024-10-11 08:34:21,781 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:34:21.780284
+2024-10-11 08:34:21,781 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:34:21.781259
+2024-10-11 08:34:21,782 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:34:21.782277
+2024-10-11 08:34:21,783 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:34:21.783274
+2024-10-11 08:34:21,786 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:34:21,788 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:34:21,788 - INFO - SystemMonitor initialized.
+2024-10-11 08:34:21,793 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:34:21,794 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:34:21,795 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:34:21,796 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:34:21.796216
+2024-10-11 08:34:21,797 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:34:24,195 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:34:24,322 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:34:24,323 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:34:24,324 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:34:24,357 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:34:24,358 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:34:24,358 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:34:24,361 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:34:25,640 - INFO - Generated name from GPT: "NeuraNova" - Combining elements of neural networks and new potential, this name symbolizes the AI's continuous growth and learning capabilities, always shining brighter with newfound knowledge.
+2024-10-11 08:34:25,643 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:34:27,322 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:35:22,798 - INFO - CPU Usage: 3.3%
+2024-10-11 08:35:22,807 - INFO - Memory Usage: 36.1%
+2024-10-11 08:35:22,809 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:35:22,811 - INFO - Temperature: 65.0°C
+2024-10-11 08:36:22,800 - INFO - CPU Usage: 2.0%
+2024-10-11 08:36:22,824 - INFO - Memory Usage: 36.1%
+2024-10-11 08:36:22,825 - INFO - Temperature: 65.0°C
+2024-10-11 08:37:22,807 - INFO - CPU Usage: 2.6%
+2024-10-11 08:37:22,814 - INFO - Memory Usage: 36.2%
+2024-10-11 08:37:22,816 - INFO - Temperature: 65.0°C
+2024-10-11 08:38:22,805 - INFO - CPU Usage: 3.2%
+2024-10-11 08:38:22,811 - INFO - Memory Usage: 36.3%
+2024-10-11 08:38:22,813 - INFO - Temperature: 65.0°C
+2024-10-11 08:39:22,809 - INFO - CPU Usage: 3.6%
+2024-10-11 08:39:22,815 - INFO - Memory Usage: 36.2%
+2024-10-11 08:39:22,817 - INFO - Temperature: 65.0°C
+2024-10-11 08:40:22,805 - INFO - CPU Usage: 2.1%
+2024-10-11 08:40:22,812 - INFO - Memory Usage: 36.2%
+2024-10-11 08:40:22,813 - INFO - Temperature: 65.0°C
+2024-10-11 08:41:22,798 - INFO - CPU Usage: 2.4%
+2024-10-11 08:41:22,809 - INFO - Memory Usage: 36.1%
+2024-10-11 08:41:22,810 - INFO - Temperature: 65.0°C
+2024-10-11 08:42:22,810 - INFO - CPU Usage: 2.5%
+2024-10-11 08:42:22,818 - INFO - Memory Usage: 36.1%
+2024-10-11 08:42:22,819 - INFO - Temperature: 65.0°C
+2024-10-11 08:49:49,355 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:49:49,356 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:49:49,357 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:49:49,358 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:49:49,359 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:49:49,359 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:49:49,360 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:49:49,364 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:49:49,374 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:49:49,376 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:49:49,488 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:49:49,489 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:49:49.489203
+2024-10-11 08:49:49,490 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:49:49.490203
+2024-10-11 08:49:49,490 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:49:49.490203
+2024-10-11 08:49:49,491 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:49:49.491610
+2024-10-11 08:49:49,492 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:49:49.492607
+2024-10-11 08:49:49,493 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:49:49,494 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:49:49,495 - INFO - SystemMonitor initialized.
+2024-10-11 08:49:49,500 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:49:49,501 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:49:49,502 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:49:49,503 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:49:49.503119
+2024-10-11 08:49:49,504 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:49:52,020 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:49:52,194 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:49:52,195 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:49:52,196 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:49:52,223 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:49:52,224 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:49:52,225 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:49:52,226 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:49:52,227 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:50:04,354 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:50:34,553 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:50:34,556 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:50:34,558 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:50:34,558 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:50:34,560 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:50:34,561 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:50:34,563 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:50:34,635 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 08:50:34,636 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:50:34,637 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 08:50:34,637 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:50:34,638 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 08:50:34,638 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 08:50:34,640 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 08:50:34,641 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:50:34,642 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 08:50:50,501 - INFO - CPU Usage: 2.4%
+2024-10-11 08:50:50,512 - INFO - Memory Usage: 36.6%
+2024-10-11 08:50:50,513 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 08:50:50,514 - INFO - Temperature: 65.0°C
+2024-10-11 08:51:50,503 - INFO - CPU Usage: 1.6%
+2024-10-11 08:51:50,510 - INFO - Memory Usage: 36.8%
+2024-10-11 08:51:50,511 - INFO - Temperature: 65.0°C
+2024-10-11 08:52:50,513 - INFO - CPU Usage: 5.9%
+2024-10-11 08:52:50,520 - INFO - Memory Usage: 36.9%
+2024-10-11 08:52:50,521 - INFO - Temperature: 65.0°C
+2024-10-11 08:53:50,513 - INFO - CPU Usage: 3.4%
+2024-10-11 08:53:50,520 - INFO - Memory Usage: 36.8%
+2024-10-11 08:53:50,521 - INFO - Temperature: 65.0°C
+2024-10-11 08:54:50,511 - INFO - CPU Usage: 5.0%
+2024-10-11 08:54:50,518 - INFO - Memory Usage: 36.9%
+2024-10-11 08:54:50,519 - INFO - Temperature: 65.0°C
+2024-10-11 08:55:28,227 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:55:28,228 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:55:28,231 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:55:28,232 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:55:28,233 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:55:28,234 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:55:28,235 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:55:28,238 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 08:55:28,247 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:55:28,248 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:55:28,354 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:55:28,355 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 08:55:28.355177
+2024-10-11 08:55:28,356 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 08:55:28.356177
+2024-10-11 08:55:28,357 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 08:55:28.357177
+2024-10-11 08:55:28,358 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 08:55:28.358177
+2024-10-11 08:55:28,358 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 08:55:28.358177
+2024-10-11 08:55:28,360 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 08:55:28,360 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:55:28,361 - INFO - SystemMonitor initialized.
+2024-10-11 08:55:28,366 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 08:55:28,367 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:55:28,368 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:55:28,368 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 08:55:28.368695
+2024-10-11 08:55:28,370 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 08:55:30,742 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 08:55:30,897 - INFO - Event: Google token refreshed successfully.
+2024-10-11 08:55:30,901 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 08:55:30,903 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 08:55:30,929 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 08:55:30,930 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 08:55:30,931 - INFO - Event: DecisionMaker initialized.
+2024-10-11 08:55:30,932 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 08:55:30,933 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 08:55:32,999 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:55:54,769 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 08:55:54,770 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 08:55:54,772 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 08:55:54,773 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 08:55:54,774 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:55:54,775 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:55:54,775 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 08:55:54,835 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 08:55:54,836 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 08:55:54,838 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 08:55:54,838 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 08:55:54,839 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 08:55:54,840 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 08:55:54,841 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 08:55:54,842 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 08:55:54,843 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:16:43,701 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:16:43,701 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:16:43,703 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:16:43,704 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:16:43,705 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:16:43,705 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:16:43,706 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:16:43,709 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:16:43,720 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:16:43,721 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:16:43,835 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:16:43,836 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:16:43.836321
+2024-10-11 09:16:43,838 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:16:43.838331
+2024-10-11 09:16:43,839 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:16:43.839328
+2024-10-11 09:16:43,841 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:16:43.841332
+2024-10-11 09:16:43,841 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:16:43.841332
+2024-10-11 09:16:43,843 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:16:43,844 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:16:43,845 - INFO - SystemMonitor initialized.
+2024-10-11 09:16:43,852 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:16:43,854 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:16:43,855 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:16:43,857 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:16:43.857814
+2024-10-11 09:16:43,858 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:16:46,216 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:16:46,400 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:16:46,402 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:16:46,405 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:16:46,445 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:16:46,446 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:16:46,447 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:16:46,449 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:16:46,450 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:19:44,446 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:19:44,447 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:19:44,448 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:19:44,449 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:19:44,449 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:19:44,450 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:19:44,451 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:19:44,455 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:19:44,466 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:19:44,467 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:19:44,579 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:19:44,580 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:19:44.580853
+2024-10-11 09:19:44,581 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:19:44.581854
+2024-10-11 09:19:44,582 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:19:44.581854
+2024-10-11 09:19:44,582 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:19:44.582853
+2024-10-11 09:19:44,583 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:19:44.583946
+2024-10-11 09:19:44,585 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:19:44,586 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:19:44,587 - INFO - SystemMonitor initialized.
+2024-10-11 09:19:44,590 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:19:44,592 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:19:44,593 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:19:44,594 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:19:44.594471
+2024-10-11 09:19:44,595 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:19:46,926 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:19:47,124 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:19:47,126 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:19:47,127 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:19:47,153 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:19:47,154 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:19:47,155 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:19:47,157 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:19:48,323 - INFO - Generated name from GPT: "Synthia" - Meaning: A blend of "synthetic" and "Sophia," representing the AI's synthetic intelligence and wisdom., Why it fits: Synthia conveys the AI's ability to synthesize information and insights, continuously
+2024-10-11 09:19:48,324 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:20:45,602 - INFO - CPU Usage: 2.5%
+2024-10-11 09:20:45,610 - INFO - Memory Usage: 36.7%
+2024-10-11 09:20:45,611 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:20:45,613 - INFO - Temperature: 65.0°C
+2024-10-11 09:21:45,594 - INFO - CPU Usage: 2.1%
+2024-10-11 09:21:45,600 - INFO - Memory Usage: 36.6%
+2024-10-11 09:21:45,601 - INFO - Temperature: 65.0°C
+2024-10-11 09:22:45,595 - INFO - CPU Usage: 3.5%
+2024-10-11 09:22:45,604 - INFO - Memory Usage: 36.8%
+2024-10-11 09:22:45,605 - INFO - Temperature: 65.0°C
+2024-10-11 09:24:40,189 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:24:40,190 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:24:40,191 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:24:40,191 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:24:40,192 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:24:40,193 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:24:40,194 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:24:40,197 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:24:40,209 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:24:40,210 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:24:40,318 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:24:40,319 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:24:40.319518
+2024-10-11 09:24:40,320 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:24:40.320505
+2024-10-11 09:24:40,321 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:24:40.321795
+2024-10-11 09:24:40,322 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:24:40.322802
+2024-10-11 09:24:40,323 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:24:40.323809
+2024-10-11 09:24:40,324 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:24:40,325 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:24:40,326 - INFO - SystemMonitor initialized.
+2024-10-11 09:24:40,331 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:24:40,333 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:24:40,334 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:24:40,336 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:24:40.336329
+2024-10-11 09:24:40,337 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:24:42,617 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:24:42,773 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:24:42,774 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:24:42,775 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:24:42,802 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:24:42,803 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:24:42,804 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:24:42,806 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:24:42,807 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:24:42,851 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:24:42,852 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:24:42,853 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:24:42,854 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:24:42,855 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:24:42,856 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:24:42,856 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:24:42,857 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:24:42,858 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:25:41,340 - INFO - CPU Usage: 3.0%
+2024-10-11 09:25:41,347 - INFO - Memory Usage: 36.9%
+2024-10-11 09:25:41,350 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:25:41,353 - INFO - Temperature: 65.0°C
+2024-10-11 09:26:41,336 - INFO - CPU Usage: 3.7%
+2024-10-11 09:26:41,343 - INFO - Memory Usage: 37.0%
+2024-10-11 09:26:41,344 - INFO - Temperature: 65.0°C
+2024-10-11 09:27:53,038 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:27:53,039 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:27:53,041 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:27:53,041 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:27:53,043 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:27:53,044 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:27:53,044 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:27:53,048 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:27:53,057 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:27:53,058 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:27:53,167 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:27:53,168 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:27:53.168165
+2024-10-11 09:27:53,169 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:27:53.169158
+2024-10-11 09:27:53,170 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:27:53.170158
+2024-10-11 09:27:53,171 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:27:53.171552
+2024-10-11 09:27:53,172 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:27:53.172616
+2024-10-11 09:27:53,174 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:27:53,175 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:27:53,176 - INFO - SystemMonitor initialized.
+2024-10-11 09:27:53,180 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:27:53,181 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:27:53,182 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:27:53,183 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:27:53.183827
+2024-10-11 09:27:53,184 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:27:55,580 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:27:55,791 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:27:55,792 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:27:55,794 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:27:55,820 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:27:55,821 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:27:55,822 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:27:55,824 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:27:57,087 - INFO - Generated name from GPT: "Synthia" - Meaning: A blend of "synthetic" and "Sophia," symbolizing the AI's artificial yet intelligent nature., Why it fits: Synthia captures the essence of your AI assistant as a sophisticated, artificially intelligent
+2024-10-11 09:27:57,088 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:27:57,132 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:27:57,133 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:27:57,134 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:27:57,135 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:27:57,136 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:27:57,137 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:27:57,137 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:27:57,138 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:27:57,139 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:28:17,419 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:28:17,420 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:28:17,421 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:28:17,422 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:28:17,423 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:28:17,424 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:28:17,425 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:28:17,469 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:28:17,470 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:28:17,471 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:28:17,471 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:28:17,472 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:28:17,473 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:28:17,474 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:28:17,474 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:28:17,475 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:28:54,185 - INFO - CPU Usage: 4.0%
+2024-10-11 09:28:54,191 - INFO - Memory Usage: 37.1%
+2024-10-11 09:28:54,192 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:28:54,192 - INFO - Temperature: 65.0°C
+2024-10-11 09:30:09,644 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:30:09,644 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:30:09,646 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:30:09,647 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:30:09,648 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:30:09,648 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:30:09,649 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:30:09,653 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:30:09,663 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:30:09,664 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:30:09,779 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:30:09,781 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:30:09.781280
+2024-10-11 09:30:09,783 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:30:09.783994
+2024-10-11 09:30:09,785 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:30:09.785002
+2024-10-11 09:30:09,786 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:30:09.786000
+2024-10-11 09:30:09,787 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:30:09.787002
+2024-10-11 09:30:09,788 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:30:09,788 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:30:09,790 - INFO - SystemMonitor initialized.
+2024-10-11 09:30:09,795 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:30:09,796 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:30:09,796 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:30:09,797 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:30:09.797207
+2024-10-11 09:30:09,798 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:30:12,107 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:30:12,257 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:30:12,258 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:30:12,259 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:30:12,286 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:30:12,288 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:30:12,289 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:30:12,290 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:30:12,291 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:30:12,333 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:30:12,334 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:30:12,335 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:30:12,336 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:30:12,337 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:30:12,338 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:30:12,338 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:30:12,339 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:30:12,340 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:31:50,034 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:31:50,035 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:31:50,036 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:31:50,037 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:31:50,038 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:31:50,039 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:31:50,040 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:31:50,043 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:31:50,054 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:31:50,055 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:31:50,165 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:31:50,165 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:31:50.165813
+2024-10-11 09:31:50,166 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:31:50.166809
+2024-10-11 09:31:50,167 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:31:50.167806
+2024-10-11 09:31:50,168 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:31:50.168806
+2024-10-11 09:31:50,170 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:31:50.170808
+2024-10-11 09:31:50,174 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:31:50,175 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:31:50,176 - INFO - SystemMonitor initialized.
+2024-10-11 09:31:50,181 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:31:50,182 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:31:50,183 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:31:50,184 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:31:50.184749
+2024-10-11 09:31:50,185 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:31:52,519 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:31:52,712 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:31:52,715 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:31:52,717 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:31:52,761 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:31:52,761 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:31:52,762 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:31:52,764 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:31:54,234 - INFO - Generated name from GPT: "NeuraNova" - Combining "Neura" from neural networks for learning capabilities and "Nova" for sudden growth and potential, symbolizing an AI assistant that continuously learns, adapts, and shines brightly with new knowledge and insights.
+2024-10-11 09:31:54,235 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:31:54,282 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:31:54,283 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:31:54,284 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:31:54,284 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:31:54,285 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:31:54,286 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:31:54,286 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:31:54,287 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:31:54,288 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:32:51,191 - INFO - CPU Usage: 2.9%
+2024-10-11 09:32:51,204 - INFO - Memory Usage: 37.1%
+2024-10-11 09:32:51,205 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:32:51,208 - INFO - Temperature: 65.0°C
+2024-10-11 09:33:18,375 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:33:18,376 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:33:18,377 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:33:18,378 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:33:18,379 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:33:18,379 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:33:18,380 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:33:18,393 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:33:18,403 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:33:18,404 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:33:18,517 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:33:18,518 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:33:18.518611
+2024-10-11 09:33:18,519 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:33:18.519611
+2024-10-11 09:33:18,520 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:33:18.520611
+2024-10-11 09:33:18,521 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:33:18.521611
+2024-10-11 09:33:18,521 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:33:18.521611
+2024-10-11 09:33:18,523 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:33:18,524 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:33:18,525 - INFO - SystemMonitor initialized.
+2024-10-11 09:33:18,529 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:33:18,531 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:33:18,533 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:33:18,534 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:33:18.534171
+2024-10-11 09:33:18,535 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:33:20,870 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:33:21,055 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:33:21,057 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:33:21,058 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:33:21,087 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:33:21,089 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:33:21,089 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:33:21,092 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:33:21,093 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:33:21,135 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:33:21,136 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:33:21,137 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:33:21,138 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:33:21,138 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:33:21,139 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:33:21,140 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:33:21,141 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:33:21,141 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:34:03,830 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:34:03,831 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:34:03,832 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:34:03,833 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:34:03,834 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:34:03,835 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:03,835 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:34:03,839 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:34:03,850 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:03,851 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:03,962 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:03,963 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:34:03.963678
+2024-10-11 09:34:03,964 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:34:03.964679
+2024-10-11 09:34:03,965 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:34:03.965681
+2024-10-11 09:34:03,966 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:34:03.966679
+2024-10-11 09:34:03,967 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:34:03.967678
+2024-10-11 09:34:03,969 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:34:03,969 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:34:03,970 - INFO - SystemMonitor initialized.
+2024-10-11 09:34:03,975 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:34:03,976 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:03,977 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:03,978 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:34:03.978215
+2024-10-11 09:34:03,980 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:34:06,236 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:34:06,362 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:34:06,365 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:34:06,368 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:34:06,399 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:06,401 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:06,401 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:34:06,404 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:34:06,404 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:34:06,445 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:34:06,446 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:34:06,448 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:34:06,449 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:06,450 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:34:06,450 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:34:06,451 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:34:06,451 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:34:06,452 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:34:36,753 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:34:36,754 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:34:36,755 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:34:36,758 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:34:36,759 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:34:36,760 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:36,760 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:34:36,763 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:34:36,773 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:36,774 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:36,888 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:36,889 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:34:36.889222
+2024-10-11 09:34:36,891 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:34:36.891221
+2024-10-11 09:34:36,893 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:34:36.893736
+2024-10-11 09:34:36,895 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:34:36.895176
+2024-10-11 09:34:36,897 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:34:36.897184
+2024-10-11 09:34:36,901 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:34:36,903 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:34:36,904 - INFO - SystemMonitor initialized.
+2024-10-11 09:34:36,914 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:34:36,915 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:36,917 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:36,919 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:34:36.919716
+2024-10-11 09:34:36,920 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:34:39,195 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:34:39,327 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:34:39,331 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:34:39,338 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:34:39,377 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:34:39,378 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:34:39,379 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:34:39,380 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:34:39,381 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:34:39,420 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:34:39,422 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:34:39,424 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:34:39,425 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:34:39,426 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:34:39,428 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:34:39,429 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:34:39,429 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:34:39,430 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:36:04,649 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:36:04,650 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:36:04,651 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:36:04,652 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:36:04,653 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:36:04,654 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:36:04,655 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:36:04,658 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:36:04,669 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:36:04,670 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:36:04,785 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:36:04,786 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:36:04.786307
+2024-10-11 09:36:04,787 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:36:04.787306
+2024-10-11 09:36:04,788 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:36:04.788307
+2024-10-11 09:36:04,788 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:36:04.788307
+2024-10-11 09:36:04,789 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:36:04.789306
+2024-10-11 09:36:04,790 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:36:04,791 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:36:04,791 - INFO - SystemMonitor initialized.
+2024-10-11 09:36:04,796 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:36:04,798 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:36:04,799 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:36:04,800 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:36:04.800990
+2024-10-11 09:36:04,801 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:36:07,143 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:36:07,301 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:36:07,302 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:36:07,302 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:36:07,331 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:36:07,332 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:36:07,332 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:36:07,334 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:36:07,335 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:36:07,376 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:36:07,377 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:36:07,378 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:36:07,379 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:36:07,380 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:36:07,381 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:36:07,383 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:36:07,383 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:36:07,386 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:37:05,803 - INFO - CPU Usage: 3.0%
+2024-10-11 09:37:05,813 - INFO - Memory Usage: 36.9%
+2024-10-11 09:37:05,816 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:37:05,819 - INFO - Temperature: 65.0°C
+2024-10-11 09:38:05,812 - INFO - CPU Usage: 4.0%
+2024-10-11 09:38:05,819 - INFO - Memory Usage: 36.9%
+2024-10-11 09:38:05,821 - INFO - Temperature: 65.0°C
+2024-10-11 09:38:57,445 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:38:57,446 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:38:57,448 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:38:57,448 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:38:57,449 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:38:57,450 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:38:57,451 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:38:57,454 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:38:57,464 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:38:57,466 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:38:57,576 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:38:57,577 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:38:57.577914
+2024-10-11 09:38:57,578 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:38:57.578908
+2024-10-11 09:38:57,578 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:38:57.578908
+2024-10-11 09:38:57,579 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:38:57.579916
+2024-10-11 09:38:57,581 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:38:57.581186
+2024-10-11 09:38:57,581 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:38:57,582 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:38:57,583 - INFO - SystemMonitor initialized.
+2024-10-11 09:38:57,590 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:38:57,591 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:38:57,592 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:38:57,594 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:38:57.594157
+2024-10-11 09:38:57,594 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:38:59,871 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:39:00,033 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:39:00,034 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:39:00,035 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:39:00,063 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:39:00,064 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:39:00,066 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:39:00,068 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:39:01,421 - INFO - Generated name from GPT: "Synthia" - Meaning: A combination of "synthetic" and "Sophia," suggesting a blend of artificial intelligence and wisdom., Why it fits: Synthia embodies the AI's synthetic intelligence evolving into a wise and knowledgeable assistant,
+2024-10-11 09:39:01,421 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:39:01,474 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:39:01,475 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:39:01,476 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:39:01,477 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:39:01,477 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:39:01,478 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:39:01,480 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:39:01,480 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:39:01,481 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:39:52,255 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:39:52,256 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:39:52,257 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:39:52,258 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:39:52,259 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:39:52,261 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:39:52,262 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:39:52,266 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:39:52,277 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:39:52,278 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:39:52,391 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:39:52,393 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:39:52.393353
+2024-10-11 09:39:52,395 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:39:52.394358
+2024-10-11 09:39:52,395 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:39:52.395363
+2024-10-11 09:39:52,396 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:39:52.396363
+2024-10-11 09:39:52,397 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:39:52.397363
+2024-10-11 09:39:52,399 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:39:52,400 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:39:52,401 - INFO - SystemMonitor initialized.
+2024-10-11 09:39:52,404 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:39:52,405 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:39:52,406 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:39:52,407 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:39:52.407876
+2024-10-11 09:39:52,409 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:39:54,685 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:39:54,814 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:39:54,815 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:39:54,816 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:39:54,845 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:39:54,846 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:39:54,848 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:39:54,850 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:39:56,080 - INFO - Generated name from GPT: "Synthia" - Meaning: A blend of "synthetic" and "Sophia" (wisdom), reflecting the AI's artificial intelligence combined with a goal of attaining knowledge and understanding. Why it fits: Synthia embodies the
+2024-10-11 09:39:56,081 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:39:56,124 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:39:56,125 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:39:56,126 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:39:56,126 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:39:56,127 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:39:56,128 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:39:56,129 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:39:56,130 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:39:56,131 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:41:50,998 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:41:50,999 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:41:51,001 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:41:51,002 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:41:51,003 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:41:51,004 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:41:51,005 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:41:51,008 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:41:51,017 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:41:51,018 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:41:51,143 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:41:51,144 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:41:51.144808
+2024-10-11 09:41:51,145 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:41:51.145807
+2024-10-11 09:41:51,145 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:41:51.145807
+2024-10-11 09:41:51,147 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:41:51.147808
+2024-10-11 09:41:51,147 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:41:51.147808
+2024-10-11 09:41:51,149 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:41:51,150 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:41:51,151 - INFO - SystemMonitor initialized.
+2024-10-11 09:41:51,156 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:41:51,157 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:41:51,158 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:41:51,158 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:41:51.158338
+2024-10-11 09:41:51,159 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:41:53,513 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:41:53,626 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:41:53,628 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:41:53,630 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:41:53,657 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:41:53,658 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:41:53,659 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:41:53,660 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:41:53,661 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:41:53,706 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:41:53,708 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:41:53,709 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:41:53,710 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:41:53,711 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:41:53,711 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:41:53,712 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:41:53,713 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:41:53,714 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:44:06,758 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:44:06,759 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:44:06,761 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:44:06,761 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:44:06,763 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:44:06,763 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:44:06,764 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:44:06,767 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:44:06,776 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:44:06,777 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:44:06,887 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:44:06,888 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:44:06.888373
+2024-10-11 09:44:06,889 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:44:06.889591
+2024-10-11 09:44:06,890 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:44:06.890627
+2024-10-11 09:44:06,891 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:44:06.891659
+2024-10-11 09:44:06,892 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:44:06.892180
+2024-10-11 09:44:06,894 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:44:06,895 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:44:06,895 - INFO - SystemMonitor initialized.
+2024-10-11 09:44:06,899 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:44:06,900 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:44:06,901 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:44:06,902 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:44:06.902744
+2024-10-11 09:44:06,903 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:44:09,181 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:44:09,392 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:44:09,395 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:44:09,399 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:44:09,427 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:44:09,429 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:44:09,429 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:44:09,431 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:44:09,432 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:44:09,474 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:44:09,475 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:44:09,476 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:44:09,477 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:44:09,478 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:44:09,479 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:44:09,479 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:44:09,480 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:44:09,481 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:45:17,561 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:45:17,562 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:45:17,563 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:45:17,564 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:45:17,565 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:45:17,565 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:17,566 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:45:17,570 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:45:17,580 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:17,581 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:17,707 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:17,708 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:45:17.708589
+2024-10-11 09:45:17,709 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:45:17.709589
+2024-10-11 09:45:17,709 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:45:17.709589
+2024-10-11 09:45:17,710 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:45:17.710589
+2024-10-11 09:45:17,711 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:45:17.711589
+2024-10-11 09:45:17,713 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:45:17,714 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:45:17,715 - INFO - SystemMonitor initialized.
+2024-10-11 09:45:17,720 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:45:17,721 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:17,722 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:17,723 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:45:17.723101
+2024-10-11 09:45:17,724 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:45:20,064 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:45:20,191 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:45:20,193 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:45:20,194 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:45:20,223 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:20,224 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:20,225 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:45:20,226 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:45:20,227 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:45:20,269 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:45:20,270 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:45:20,271 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:45:20,271 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:20,273 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:45:20,274 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:45:20,276 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:45:20,276 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:45:20,277 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:45:54,609 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:45:54,610 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:45:54,611 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:45:54,611 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:45:54,612 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:45:54,613 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:54,614 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:45:54,617 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:45:54,627 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:54,628 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:54,740 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:54,741 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:45:54.741475
+2024-10-11 09:45:54,741 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:45:54.741475
+2024-10-11 09:45:54,742 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:45:54.742982
+2024-10-11 09:45:54,743 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:45:54.743986
+2024-10-11 09:45:54,744 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:45:54.744987
+2024-10-11 09:45:54,747 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:45:54,749 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:45:54,749 - INFO - SystemMonitor initialized.
+2024-10-11 09:45:54,753 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:45:54,754 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:54,755 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:54,756 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:45:54.756574
+2024-10-11 09:45:54,757 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:45:57,065 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:45:57,203 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:45:57,209 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:45:57,211 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:45:57,245 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:45:57,246 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:45:57,247 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:45:57,249 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:45:57,249 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:45:57,291 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:45:57,292 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:45:57,294 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:45:57,294 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:45:57,295 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:45:57,296 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:45:57,297 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:45:57,298 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:45:57,298 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:46:55,766 - INFO - CPU Usage: 2.6%
+2024-10-11 09:46:55,775 - INFO - Memory Usage: 36.6%
+2024-10-11 09:46:55,776 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:46:55,777 - INFO - Temperature: 65.0°C
+2024-10-11 09:47:55,758 - INFO - CPU Usage: 2.4%
+2024-10-11 09:47:55,765 - INFO - Memory Usage: 36.5%
+2024-10-11 09:47:55,766 - INFO - Temperature: 65.0°C
+2024-10-11 09:48:55,758 - INFO - CPU Usage: 2.4%
+2024-10-11 09:48:55,766 - INFO - Memory Usage: 36.4%
+2024-10-11 09:48:55,768 - INFO - Temperature: 65.0°C
+2024-10-11 09:49:55,772 - INFO - CPU Usage: 3.1%
+2024-10-11 09:49:55,781 - INFO - Memory Usage: 36.3%
+2024-10-11 09:49:55,782 - INFO - Temperature: 65.0°C
+2024-10-11 09:50:55,769 - INFO - CPU Usage: 1.3%
+2024-10-11 09:50:55,776 - INFO - Memory Usage: 36.3%
+2024-10-11 09:50:55,777 - INFO - Temperature: 65.0°C
+2024-10-11 09:51:55,757 - INFO - CPU Usage: 2.6%
+2024-10-11 09:51:55,764 - INFO - Memory Usage: 36.4%
+2024-10-11 09:51:55,766 - INFO - Temperature: 65.0°C
+2024-10-11 09:56:31,421 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 09:56:31,422 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 09:56:31,424 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 09:56:31,425 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 09:56:31,426 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:56:31,427 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:56:31,428 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 09:56:31,431 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 09:56:31,441 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:56:31,442 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:56:31,571 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:56:31,572 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 09:56:31.572013
+2024-10-11 09:56:31,573 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 09:56:31.573014
+2024-10-11 09:56:31,574 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 09:56:31.574014
+2024-10-11 09:56:31,575 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 09:56:31.575012
+2024-10-11 09:56:31,575 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 09:56:31.575012
+2024-10-11 09:56:31,577 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 09:56:31,578 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 09:56:31,578 - INFO - SystemMonitor initialized.
+2024-10-11 09:56:31,583 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 09:56:31,584 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:56:31,585 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:56:31,586 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 09:56:31.586056
+2024-10-11 09:56:31,587 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 09:56:33,849 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 09:56:34,035 - INFO - Event: Google token refreshed successfully.
+2024-10-11 09:56:34,041 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 09:56:34,048 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 09:56:34,080 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 09:56:34,081 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 09:56:34,082 - INFO - Event: DecisionMaker initialized.
+2024-10-11 09:56:34,084 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 09:56:34,084 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 09:56:34,126 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 09:56:34,128 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 09:56:34,129 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 09:56:34,130 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 09:56:34,131 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 09:56:34,131 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 09:56:34,132 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 09:56:34,133 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 09:56:34,134 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 09:57:32,597 - INFO - CPU Usage: 1.8%
+2024-10-11 09:57:32,602 - INFO - Memory Usage: 36.6%
+2024-10-11 09:57:32,604 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 09:57:32,606 - INFO - Temperature: 65.0°C
+2024-10-11 09:58:32,587 - INFO - CPU Usage: 4.7%
+2024-10-11 09:58:32,599 - INFO - Memory Usage: 36.8%
+2024-10-11 09:58:32,599 - INFO - Temperature: 65.0°C
+2024-10-11 09:59:32,594 - INFO - CPU Usage: 2.3%
+2024-10-11 09:59:32,600 - INFO - Memory Usage: 36.6%
+2024-10-11 09:59:32,601 - INFO - Temperature: 65.0°C
+2024-10-11 10:00:32,589 - INFO - CPU Usage: 3.1%
+2024-10-11 10:00:32,595 - INFO - Memory Usage: 36.7%
+2024-10-11 10:00:32,596 - INFO - Temperature: 65.0°C
+2024-10-11 10:01:32,596 - INFO - CPU Usage: 2.1%
+2024-10-11 10:01:32,601 - INFO - Memory Usage: 36.7%
+2024-10-11 10:01:32,602 - INFO - Temperature: 65.0°C
+2024-10-11 10:03:47,751 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:03:47,752 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:03:47,754 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:03:47,754 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:03:47,755 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:03:47,755 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:03:47,757 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:08:50,807 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:08:50,807 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:08:50,809 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:08:50,810 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:08:50,811 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:08:50,812 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:08:50,813 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:09:43,899 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:09:43,900 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:09:43,901 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:09:43,902 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:09:43,904 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:09:43,904 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:09:43,905 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:16:09,355 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:16:09,357 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:16:09,358 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:16:09,359 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:16:09,361 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:16:09,362 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:16:09,363 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:16:09,369 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 10:16:09,380 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:16:09,382 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:16:09,520 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:16:09,521 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 10:16:09.521259
+2024-10-11 10:16:09,521 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 10:16:09.521259
+2024-10-11 10:16:09,523 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 10:16:09.523257
+2024-10-11 10:16:09,523 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 10:16:09.523257
+2024-10-11 10:16:09,524 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 10:16:09.524257
+2024-10-11 10:16:09,526 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 10:16:09,526 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 10:16:09,527 - INFO - SystemMonitor initialized.
+2024-10-11 10:16:09,531 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 10:16:09,533 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:16:09,534 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:16:09,536 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 10:16:09.536426
+2024-10-11 10:16:09,536 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 10:16:11,941 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 10:16:12,100 - INFO - Event: Google token refreshed successfully.
+2024-10-11 10:16:12,103 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 10:16:12,104 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 10:16:12,141 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:16:12,142 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:16:12,143 - INFO - Event: DecisionMaker initialized.
+2024-10-11 10:16:12,144 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 10:16:12,912 - INFO - Generated name from GPT: "NeuraNova"
+2024-10-11 10:16:12,912 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 10:16:12,955 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 10:16:12,956 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 10:16:12,957 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 10:16:12,957 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:16:12,958 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 10:16:12,959 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 10:16:12,961 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 10:16:12,962 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 10:16:12,962 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 10:20:14,560 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:20:14,561 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:20:14,562 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:20:14,563 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:20:14,564 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:20:14,564 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:20:14,565 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:20:14,569 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 10:20:14,579 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:20:14,580 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:20:14,695 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:20:14,696 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 10:20:14.696793
+2024-10-11 10:20:14,697 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 10:20:14.697793
+2024-10-11 10:20:14,698 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 10:20:14.698792
+2024-10-11 10:20:14,699 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 10:20:14.699793
+2024-10-11 10:20:14,700 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 10:20:14.700793
+2024-10-11 10:20:14,702 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 10:20:14,703 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 10:20:14,703 - INFO - SystemMonitor initialized.
+2024-10-11 10:20:14,708 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 10:20:14,709 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:20:14,710 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:20:14,712 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 10:20:14.712332
+2024-10-11 10:20:14,713 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 10:20:17,027 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 10:20:17,223 - INFO - Event: Google token refreshed successfully.
+2024-10-11 10:20:17,225 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 10:20:17,228 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 10:20:17,260 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:20:17,261 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:20:17,262 - INFO - Event: DecisionMaker initialized.
+2024-10-11 10:20:17,263 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 10:20:18,943 - INFO - Generated name from GPT: "Synthia" - Synthesizing Intelligence and Assistance, Why it fits: This name represents your AI assistant's ability to synthesize information, provide intelligent assistance, and continuously evolve to meet your needs in a harmonious way.
+2024-10-11 10:20:18,944 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 10:20:18,988 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 10:20:18,989 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 10:20:18,990 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 10:20:18,991 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:20:18,991 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 10:20:18,993 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 10:20:18,994 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 10:20:18,994 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 10:20:18,995 - INFO - Successfully loaded configuration: contact_developer.json
+2024-10-11 10:21:15,710 - INFO - CPU Usage: 2.7%
+2024-10-11 10:21:15,715 - INFO - Memory Usage: 36.5%
+2024-10-11 10:21:15,716 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-11 10:21:15,718 - INFO - Temperature: 65.0°C
+2024-10-11 10:23:42,321 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:23:42,322 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:23:42,324 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:23:42,324 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:23:42,325 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:23:42,327 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:23:42,328 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:24:17,735 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-11 10:24:17,736 - INFO - Successfully loaded configuration: mobile_settings.json
+2024-10-11 10:24:17,737 - INFO - Successfully loaded configuration: S:/Snowball/config/ai_settings.json
+2024-10-11 10:24:17,738 - INFO - Successfully loaded configuration: S:/Snowball/config/interface_settings.json
+2024-10-11 10:24:17,739 - INFO - Successfully loaded configuration: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:24:17,740 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:24:17,740 - INFO - Loading configuration from cache: S:/Snowball/config/mobile_settings.json
+2024-10-11 10:24:17,746 - INFO - Loading configuration from cache: S:/Snowball/config/ai_settings.json
+2024-10-11 10:24:17,755 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:24:17,756 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:24:17,867 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:24:17,868 - INFO - Config Change - User: 'System Initialization', Setting: 'language', Old Value: 'None', New Value: 'en', Timestamp: '2024-10-11 10:24:17.868467
+2024-10-11 10:24:17,869 - INFO - Config Change - User: 'System Initialization', Setting: 'volume', Old Value: 'None', New Value: '70', Timestamp: '2024-10-11 10:24:17.869514
+2024-10-11 10:24:17,870 - INFO - Config Change - User: 'System Initialization', Setting: 'speech_rate', Old Value: 'None', New Value: '1.0', Timestamp: '2024-10-11 10:24:17.870522
+2024-10-11 10:24:17,871 - INFO - Config Change - User: 'System Initialization', Setting: 'voice_gender', Old Value: 'None', New Value: 'female', Timestamp: '2024-10-11 10:24:17.871579
+2024-10-11 10:24:17,872 - INFO - Config Change - User: 'System Initialization', Setting: 'engine', Old Value: 'None', New Value: 'gTTS', Timestamp: '2024-10-11 10:24:17.872579
+2024-10-11 10:24:17,874 - INFO - Event: pyttsx3 TTS engine configured with gender: female and speech rate: 1.0
+2024-10-11 10:24:17,875 - INFO - Successfully loaded configuration: system_monitor_settings.json
+2024-10-11 10:24:17,875 - INFO - SystemMonitor initialized.
+2024-10-11 10:24:17,880 - INFO - Task: 'Schedule Reports' - Status: 'Scheduled with interval 60 seconds'
+2024-10-11 10:24:17,881 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:24:17,881 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:24:17,882 - INFO - Config Change - User: 'System', Setting: 'download_dir', Old Value: 'N/A', New Value: 'default_download_path', Timestamp: '2024-10-11 10:24:17.882594
+2024-10-11 10:24:17,883 - INFO - Monitoring started for downloads: default_download_path
+2024-10-11 10:24:20,138 - INFO - Task: 'Image model loaded successfully' - Status: 'Loaded'
+2024-10-11 10:24:20,280 - INFO - Event: Google token refreshed successfully.
+2024-10-11 10:24:20,281 - INFO - Event: Facebook token loaded successfully.
+2024-10-11 10:24:20,283 - INFO - Event: Google Maps API key loaded successfully.
+2024-10-11 10:24:20,315 - INFO - Connected to SQLite database: data/memories.db
+2024-10-11 10:24:20,316 - INFO - Created/checked 'interactions', 'analysis_results', and 'feedback' tables.
+2024-10-11 10:24:20,317 - INFO - Event: DecisionMaker initialized.
+2024-10-11 10:24:20,320 - INFO - Loaded 104 suggested names from S:/Snowball/docs/names.txt
+2024-10-11 10:24:20,321 - INFO - Event: SnowballAI initialized with provided API key.
+2024-10-11 10:24:20,368 - INFO - Successfully loaded configuration: account_integrations.json
+2024-10-11 10:24:20,369 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-11 10:24:20,371 - INFO - Successfully loaded configuration: game_preferences.json
+2024-10-11 10:24:20,372 - INFO - Loading configuration from cache: interface_settings.json
+2024-10-11 10:24:20,374 - INFO - Successfully loaded configuration: plex_config.json
+2024-10-11 10:24:20,375 - INFO - Loading configuration from cache: mobile_settings.json
+2024-10-11 10:24:20,376 - INFO - Successfully loaded configuration: security_privacy.json
+2024-10-11 10:24:20,377 - INFO - Loading configuration from cache: system_monitor_settings.json
+2024-10-11 10:24:20,378 - INFO - Successfully loaded configuration: contact_developer.json
