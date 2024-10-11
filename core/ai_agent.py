@@ -2,6 +2,7 @@ import numpy as np
 from keras.models import Sequential, load_model
 from keras.layers import Dense
 from keras.losses import MeanSquaredError
+from keras.optimizers import Adam
 from collections import deque
 import random
 import threading
@@ -21,17 +22,17 @@ from core.config_loader import ConfigLoader
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Load AI and customization settings
-learning_settings = ConfigLoader.load_config('ai_settings.json')
+learning_settings = ConfigLoader().load_config('S:/Snowball/config/ai_settings.json')
+interface_settings = ConfigLoader().load_config('S:/Snowball/config/interface_settings.json')
+mobile_settings = ConfigLoader().load_config('S:/Snowball/config/mobile_settings.json')
+
 settings = ConfigLoader.load_config('interface_settings.json')
 interaction_settings = ConfigLoader.load_config('S:/Snowball/config/mobile_settings.json')
-
 learning_rate = learning_settings['learning_rate'] if learning_settings['enabled'] else 0.001
 training_sessions = learning_settings['daily_training_sessions'] if learning_settings['enabled'] else 1
-
 nickname = settings.get('nickname', 'User')
 response_tone = settings.get('response_tone', 'neutral')
 response_length = settings.get('response_length', 'normal')
-
 default_temperature = 0.9  # Default temperature for more creative responses
 
 
@@ -41,6 +42,9 @@ class SnowballAI:
         self.logger = SnowballLogger()
         self.api_key = api_key
 
+        # Load settings
+        self.load_ai_settings()
+
         # Initialize components
         self.client = OpenAI(api_key=api_key)
         self.memory = Memory()
@@ -48,7 +52,7 @@ class SnowballAI:
         self.monitor = SystemMonitor()
         self.file_monitor = FileMonitor(config_file='S:/Snowball/config/plex_config.json')
         self.mobile = MobileIntegration()
-        self.game = self.GameAI()
+        self.game = self.GameAI(self.learning_rate)
         self.logger = SnowballLogger()
         self.nlp = self.NLPEngine()
         self.decision_maker = DecisionMaker()
@@ -56,6 +60,42 @@ class SnowballAI:
 
         self.name = self.generate_name()
         self.logger.log_event("SnowballAI initialized with provided API key.")
+
+    def load_ai_settings(self):
+        """Load AI settings from configuration file."""
+        global learning_settings
+        learning_settings = ConfigLoader().load_config('S:/Snowball/config/ai_settings.json')
+
+        self.enabled = learning_settings.get('enabled', True)
+        self.learning_rate = learning_settings.get('learning_rate', 0.01)
+        self.dynamic_learning_rate = learning_settings.get('dynamic_learning_rate', True)
+        self.learning_rate_decay = learning_settings.get('learning_rate_decay', 0.001)
+        self.daily_training_sessions = learning_settings.get('daily_training_sessions', 2)
+        self.training_mode = learning_settings.get('training_mode', 'supervised')
+        self.epoch_count = learning_settings.get('epoch_count', 50)
+        self.batch_size = learning_settings.get('batch_size', 32)
+        self.training_data_path = learning_settings.get('training_data_path', 'S:/Snowball/data/training_dataset')
+        self.optimizer = learning_settings.get('optimizer', 'adam')
+        self.model_type = learning_settings.get('model_type', 'neural_network')
+        self.performance_tracking = learning_settings.get('performance_tracking', True)
+        self.save_training_logs = learning_settings.get('save_training_logs', True)
+        self.evaluation_frequency = learning_settings.get('evaluation_frequency', 'daily')
+        self.personality_mode = learning_settings.get('personality_mode', 'friendly')
+        self.allow_casual_conversation = learning_settings.get('allow_casual_conversation', True)
+        self.response_speed = learning_settings.get('response_speed', 'instant')
+        self.knowledge_expansion = learning_settings.get('knowledge_expansion', True)
+        self.memory_retention_limit = learning_settings.get('memory_retention_limit', 1000)
+        self.auto_learning_mode = learning_settings.get('auto_learning_mode', False)
+        self.safe_mode = learning_settings.get('safe_mode', True)
+        self.max_consecutive_failures = learning_settings.get('max_consecutive_failures', 3)
+        self.privacy_protection_enabled = learning_settings.get('privacy_protection_enabled', True)
+
+    def reload_ai_settings(self):
+        """Reload AI settings and apply the new configurations."""
+        self.logger.logger.info("Reloading AI settings...")
+        self.load_ai_settings()
+        self.game.learning_rate = self.learning_rate
+        self.logger.logger.info("AI settings reloaded and applied.")
 
     def generate_name(self):
         """Generate a name for the AI instance by considering suggestions from a .txt file."""
@@ -84,7 +124,7 @@ class SnowballAI:
         try:
             prompt = "Generate a unique and creative name for an AI assistant. Here are some suggestions: " + ", ".join(suggestions) + ". You may use one of these suggestions, modify them, or come up with something completely new."
 
-            response = client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a creative AI."},
@@ -132,7 +172,7 @@ class SnowballAI:
             self.voice.speak(idle_statement)
 
     class GameAI:
-        def __init__(self):
+        def __init__(self, learning_rate):
             self.state_size = 11  # Customize for your game
             self.action_size = 3  # Left, Straight, Right (example actions)
             self.memory = deque(maxlen=2000)
@@ -152,7 +192,8 @@ class SnowballAI:
             model.add(Dense(32, input_dim=self.state_size, activation='relu'))
             model.add(Dense(32, activation='relu'))
             model.add(Dense(self.action_size, activation='linear'))
-            model.compile(loss='mse', optimizer='adam')
+            optimizer = Adam(learning_rate=self.learning_rate)
+            model.compile(loss='mse', optimizer=optimizer)
             return model
 
         def remember(self, state, action, reward, next_state, done):
@@ -307,8 +348,11 @@ class SnowballAI:
 
     def start(self):
         """Main loop to start interaction, system monitoring, file monitoring, and multitasking."""
+        if not self.enabled:
+            self.logger.logger.info("AI is disabled in settings. Exiting.")
+            return
+
         self.logger.logger.info(f"{self.name} started.")
-        
         # Start threads for monitoring and interaction
         self.logger.logger.info("Starting system monitoring thread.")
         threading.Thread(target=self.monitor.start_system_monitoring, daemon=True).start()

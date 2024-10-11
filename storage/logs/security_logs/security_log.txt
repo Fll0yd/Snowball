@@ -1,3 +1,17 @@
 2024-10-09 16:00:17,211 - ERROR - Error processing input: name 'client' is not defined
 2024-10-09 16:00:41,169 - WARNING - sensors_temperatures not supported by psutil on this system.
 2024-10-09 16:32:46,967 - ERROR - Error generating name with GPT: name 'client' is not defined
+2024-10-09 20:16:33,210 - ERROR - Error generating name with GPT: name 'client' is not defined
+2024-10-09 20:17:31,635 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 06:10:19,633 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 10:12:33,097 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 11:20:00,754 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 11:29:28,665 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 11:32:41,750 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-10 11:33:40,254 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 11:41:28,762 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 11:46:58,214 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 12:18:28,437 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 12:24:50,886 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2024-10-10 12:33:27,653 - WARNING - sensors_temperatures not supported by psutil on this system.
+2024-10-10 12:50:50,412 - ERROR - Error generating name with GPT: Error code: 401 - {'error': {'message': 'Incorrect API key provided: your_api*****here. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
