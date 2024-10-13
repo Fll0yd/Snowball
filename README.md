@@ -36,7 +36,7 @@ Make sure you have the following installed:
    1. To run Snowball, execute the main script:
 
       ```bash
-      python main.py
+      python main_menu.py
 
    2. Follow the on-screen instructions to interact with Snowball.
 
