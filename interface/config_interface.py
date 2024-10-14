@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Scale, BooleanVar, StringVar, IntVar, ttk, messagebox, Scrollbar, filedialog, colorchooser
+from tkinter import ttk, messagebox, Scrollbar, PhotoImage, BooleanVar, Scale
 import json
 import os
 import sys
@@ -63,15 +63,16 @@ config_loader = ConfigLoader()
 class ConfigInterface:
     def __init__(self, master, ai_instance, config_loader):
         self.master = master
-        self.master.geometry("1200x800")
+
+        # Initialize the window
+        self.master.geometry("1300x900")
         self.master.title("Snowball Configuration")
         self.master.configure(bg="#2c2c2c")
+
+        # Add the tray icon
+        self.master.iconphoto(False, PhotoImage(file="S:/Snowball/icon/trayicon.png"))
         self.ai_instance = ai_instance
         self.config_loader = config_loader
-
-        # Initialize config_files attribute
-        self.config_files = {}
-        self.load_consolidated_files()
 
         # Sidebar setup
         self.sidebar_frame = tk.Frame(self.master, bg="#1e1e1e", width=220)
@@ -81,85 +82,110 @@ class ConfigInterface:
         self.master.grid_columnconfigure(0, weight=0)
         self.master.grid_columnconfigure(1, weight=1)
         self.master.grid_rowconfigure(0, weight=1)
-        self.sidebar_frame.grid_rowconfigure(0, weight=1)
 
         # Create a frame for the main content
         self.main_frame = tk.Frame(self.master, bg="#2c2c2c")
-        self.main_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
+        self.main_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=10)
 
-        # Label for main content
-        self.header_label = tk.Label(self.main_frame, text="Configuration Settings", font=("Arial", 16), fg="white", bg="#2c2c2c")
-        self.header_label.pack(anchor="nw", pady=10)
+        # Add header label to indicate the current section
+        self.header_label = tk.Label(self.main_frame, text="", font=("Arial", 24, "bold"), fg="white", bg="#2c2c2c")
+        self.header_label.grid(row=0, column=0, sticky="nw", pady=(0, 10))
 
-        # Display frame for config widgets
-        self.config_widgets_frame = tk.Frame(self.main_frame, bg="#2c2c2c")
-        self.config_widgets_frame.pack(fill=tk.BOTH, expand=True, pady=10, padx=10)
+        # Scrollable canvas for configuration content
+        self.canvas = tk.Canvas(self.main_frame, bg="#2c2c2c", highlightthickness=0)
+        self.scrollbar = Scrollbar(self.main_frame, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas, bg="#2c2c2c")
 
-        # Add Save and Apply Button
-        self.save_button = tk.Button(self.main_frame, text="Save and Apply Changes", command=self.save_and_apply_config, bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat")
-        self.save_button.pack(side=tk.RIGHT, anchor="e", pady=10)
+        # Link the scrollable frame to the canvas
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(
+                scrollregion=self.canvas.bbox("all")
+            )
+        )
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw", width=1020)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
-        # Add Reset to Defaults Button
-        self.reset_button = tk.Button(self.main_frame, text="Reset to Default Values", command=self.reset_to_defaults, bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat")
-        self.reset_button.pack(side=tk.RIGHT, anchor="e", pady=10, padx=(0, 10))
+        self.canvas.grid(row=1, column=0, sticky="nsew")
+        self.scrollbar.grid(row=1, column=1, sticky="ns")
+
+        # Configure grid to allow expansion
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=1)
+
+        # Add scrolling with the mouse wheel (cross-platform solution)
+        self.canvas.bind_all("<MouseWheel>", self._on_mouse_wheel)
+
+        # This will help make sure all new widgets are added to the scrollable frame
+        self.config_widgets_frame = self.scrollable_frame
+
+        # Add Save and Apply Button at the bottom of the main_frame
+        self.button_frame = tk.Frame(self.main_frame, bg="#2c2c2c")
+        self.button_frame.grid(row=2, column=0, sticky="ew", pady=(10, 10))
+
+        self.reset_button = tk.Button(self.button_frame, text="Reset to Default Values",
+                                      command=self.reset_to_defaults, bg="#4d4d4d",
+                                      fg="white", font=("Arial", 12), relief="flat")
+        self.reset_button.pack(side=tk.RIGHT, anchor="e", padx=(0, 10))
+
+        self.save_button = tk.Button(self.button_frame, text="Save and Apply Changes",
+                                     command=self.save_and_apply_config, bg="#4d4d4d",
+                                     fg="white", font=("Arial", 12), relief="flat")
+        self.save_button.pack(side=tk.RIGHT, anchor="e", padx=(0, 10))
 
         # Sidebar options
         sidebar_options = [
-            ("AI Settings", self.load_ai_config),
-            ("Interface Settings", self.load_interface_config),
-            ("Game Preferences", self.load_game_preferences_config),
-            ("Mobile App Settings", self.load_mobile_app_settings_config),
-            ("System Monitor Settings", self.load_system_monitor_config),
-            ("Plex Configuration", self.load_plex_config),
-            ("Account Integrations", self.load_account_integrations_config),
-            ("Security and Privacy", self.load_security_privacy_config),
-            ("Logs", self.load_logs_config),
-            ("Contact the Developer", self.load_contact_developer_config)
+            ("AI Settings", AIConfig),
+            ("Interface Settings", InterfaceConfig),
+            ("Game Preferences", GamePreferencesConfig),
+            ("Mobile App Settings", MobileAppSettingsConfig),
+            ("System Monitor Settings", SystemMonitorConfig),
+            ("Plex Configuration", PlexConfig),
+            ("Account Integrations", AccountIntegrationsConfig),
+            ("Security and Privacy", SecurityPrivacyConfig),
+            ("Logs", LogsConfig),
+            ("Contact the Developer", ContactDeveloperConfig)
         ]
 
         # Create buttons dynamically and place them using grid layout
-        for i, (label, command) in enumerate(sidebar_options):
-            button = tk.Button(self.sidebar_frame, text=label, command=command,
+        for i, (label, config_class) in enumerate(sidebar_options):
+            button = tk.Button(self.sidebar_frame, text=label,
+                               command=lambda c=config_class, l=label: self.change_section(l, c),
                                bg="#4d4d4d", fg="white", font=("Arial", 12), relief="flat", width=20, height=2)
-            button.grid(row=i, column=0, sticky="ew", padx=5, pady=12)
+            button.grid(row=i, column=0, sticky="ew", padx=5, pady=5)
             self.sidebar_frame.grid_rowconfigure(i, weight=1)
 
-    def load_consolidated_files(self):
-        """
-        Load all consolidated configuration files into the dictionary using ConfigLoader.
-        """
-        consolidated_files = [
-            "account_integrations.json",
-            "ai_settings.json",
-            "game_preferences.json",
-            "interface_settings.json",
-            "plex_config.json",
-            "mobile_settings.json",
-            "security_privacy.json",
-            "system_monitor_settings.json",
-            "contact_developer.json"
-        ]
+        # Load the default section (first one in sidebar)
+        self.change_section("AI Settings", AIConfig)
 
-        for file_name in consolidated_files:
-            try:
-                config_data = self.config_loader.load_config(file_name)
-                self.config_files[file_name] = config_data
-                print(f"Successfully loaded: {file_name}")  # Debugging statement
-            except FileNotFoundError:
-                self.config_files[file_name] = None  # File not found
-                print(f"File not found: {file_name}")  # Debugging statement
-            except json.JSONDecodeError:
-                messagebox.showerror("Error", f"Error reading JSON from {file_name}. Please check the file.")
-                print(f"Error reading JSON from {file_name}")  # Debugging statement
+    def _on_mouse_wheel(self, event):
+        """
+        Handle mouse wheel scrolling for the canvas. Adjusting for cross-platform consistency.
+        """
+        if event.num == 5 or event.delta == -120 or event.delta == -1:  # Scroll down
+            self.canvas.yview_scroll(1, "units")
+        elif event.num == 4 or event.delta == 120 or event.delta == 1:  # Scroll up
+            self.canvas.yview_scroll(-1, "units")
+    
+    def change_section(self, section_name, interface_class):
+        """
+        Update the header label and load the corresponding configuration interface.
+        """
+        # Update header label
+        self.header_label.config(text=section_name)
+
+        # Clear all existing widgets in the config_widgets_frame to avoid duplicates
+        for widget in self.config_widgets_frame.winfo_children():
+            widget.destroy()
+
+        # Create the interface for the selected section
+        interface = interface_class(self.config_widgets_frame, self.config_loader)
 
     def save_and_apply_config(self):
         """
         Save changes made to the selected configuration file and apply the changes in real time.
         """
         selected_header = self.header_label.cget("text").replace(" Settings", "").strip()
-
-        # Debugging print to ensure correct label
-        print(f"Selected header: '{selected_header}'")
 
         # Use section_to_file_map to get the correct filename
         section_to_file_map = {
@@ -177,11 +203,7 @@ class ConfigInterface:
         # Correctly get the file name from the mapping
         selected_file = section_to_file_map.get(selected_header)
 
-        # Debugging print to ensure correct configuration file selection
-        print(f"Attempting to save and apply configuration for: {selected_file}")
-
-        # Check if the selected file exists in self.config_files and is valid
-        if not selected_file or self.config_files.get(selected_file) is None:
+        if not selected_file:
             messagebox.showerror("Error", f"Configuration file '{selected_file}' does not exist or was not loaded properly.")
             return
 
@@ -189,7 +211,7 @@ class ConfigInterface:
         # Collect data from UI widgets
         for widget in self.config_widgets_frame.winfo_children():
             if isinstance(widget, tk.LabelFrame):
-                key = widget.cget("text")
+                key = widget.cget("text").replace(' ', '_').lower()
                 input_widget = widget.children.get('input')
                 if isinstance(input_widget, tk.Entry):
                     updated_config[key] = input_widget.get()
@@ -200,15 +222,11 @@ class ConfigInterface:
                 elif isinstance(input_widget, ttk.Combobox):
                     updated_config[key] = input_widget.get()
 
-        # Debugging print to show the collected updated configuration
-        print(f"Collected updated configuration: {updated_config}")
-
         try:
             # Save the configuration to file
             config_path = f'S:/Snowball/config/{selected_file}'
             with open(config_path, 'w') as f:
                 json.dump(updated_config, f, indent=4)
-            self.config_files[selected_file] = updated_config
             print(f"Configuration saved successfully to {config_path}")
 
             # Apply changes if applicable
@@ -228,101 +246,131 @@ class ConfigInterface:
             print(f"Unexpected error occurred: {e}")
             messagebox.showerror("Error", f"An unexpected error occurred: {e}")
 
-    def reset_to_defaults(self):
+    def default_settings(self, section_name):
         """
-        Reset all settings to their default values.
+        Get the default settings for the given configuration section.
         """
-        # Placeholder for reset functionality, similar to AI Settings reset logic
-        messagebox.showinfo("Defaults Restored", "All settings have been restored to their default values.")
+        # Normalize section_name to ensure it matches the dictionary keys
+        section_name = section_name.strip().lower()
 
-    def change_section(self, section_name):
-        """
-        Update the header label and load the corresponding configuration file.
-        """
-        self.header_label.config(text=f"{section_name} Settings")
-        self.load_config_contents(section_name)
-
-    def load_config_contents(self, config_name):
-        """
-        Load the contents of the selected configuration file into widgets.
-        """
-        section_to_file_map = {
-            "AI Settings": "ai_settings.json",
-            "Interface Settings": "interface_settings.json",
-            "Game Preferences": "game_preferences.json",
-            "Mobile App Settings": "mobile_settings.json",
-            "System Monitor Settings": "system_monitor_settings.json",
-            "Plex Configuration": "plex_config.json",
-            "Account Integrations": "account_integrations.json",
-            "Security and Privacy": "security_privacy.json",
-            "Contact the Developer": "contact_developer.json"
+        section_to_class_map = {
+            "ai settings": AIConfig,
+            "interface settings": InterfaceConfig,
+            "game preferences": GamePreferencesConfig,
+            "mobile app settings": MobileAppSettingsConfig,
+            "system monitor settings": SystemMonitorConfig,
+            "plex configuration": PlexConfig,
+            "account integrations": AccountIntegrationsConfig,
+            "security and privacy": SecurityPrivacyConfig,
+            "logs": LogsConfig,
+            "contact the developer": ContactDeveloperConfig
         }
 
-        selected_file = section_to_file_map.get(config_name)
-        config_data = self.config_files.get(selected_file)
+        # Get the class corresponding to the normalized section name
+        config_class = section_to_class_map.get(section_name)
 
-        # Clear previous widgets
-        for widget in self.config_widgets_frame.winfo_children():
-            widget.destroy()
+        if not config_class:
+            raise ValueError(f"No configuration class found for section '{section_name}'")
 
-        # Add scrollable frame for configuration settings
-        self.canvas = tk.Canvas(self.config_widgets_frame, bg="#2c2c2c", highlightthickness=0)
-        self.scrollbar = Scrollbar(self.config_widgets_frame, orient="vertical", command=self.canvas.yview)
-        self.scrollable_frame = tk.Frame(self.canvas, bg="#2c2c2c")
+        # Instantiate the class temporarily to get default settings
+        temp_instance = config_class(self.master, self.config_loader)
+        return temp_instance.default_settings()
 
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")
-            )
-        )
-
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-
-        # Adjusted layout for better alignment
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
-        
-        # Enable mouse wheel scrolling
-        self.canvas.bind_all("<MouseWheel>", self._on_mouse_wheel)
-
-    def _on_mouse_wheel(self, event):
+    def reset_to_defaults(self):
         """
-        Handle mouse wheel scrolling for the canvas.
+        Reset the selected section to its default values.
         """
-        self.canvas.yview_scroll(-1 * int((event.delta / 120)), "units")
+        selected_header = self.header_label.cget("text").replace(" Settings", "").strip()
 
-    # Load configuration UIs
+        try:
+            default_values = self.default_settings(selected_header)
+
+            # Clear previous widgets to avoid duplication
+            for widget in self.config_widgets_frame.winfo_children():
+                widget.destroy()
+
+            # Load default values into the UI
+            self.create_widgets_from_config(default_values)
+
+            messagebox.showinfo("Defaults Restored", f"Settings for '{selected_header}' have been restored to their default values.")
+
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+        except Exception as e:
+            messagebox.showerror("Error", f"An unexpected error occurred while resetting to defaults: {e}")
+
+    def create_widgets_from_config(self, config):
+        """
+        Create widgets from a given configuration dictionary.
+        """
+        self.widgets = {}
+
+        for key, value in config.items():
+            formatted_key = key.replace('_', ' ').title()
+
+            # Set the border color to white
+            setting_frame = tk.LabelFrame(self.config_widgets_frame, text=formatted_key, font=("Arial", 12), fg="white", bg="#2c2c2c",
+                                          labelanchor='nw', bd=2, relief="solid")
+            setting_frame.pack(fill=tk.X, padx=5, pady=5)
+
+            if isinstance(value, bool):
+                var = BooleanVar(value=value)
+                checkbox = tk.Checkbutton(setting_frame, variable=var, bg="#2c2c2c", fg="white", font=("Arial", 10),
+                                          selectcolor="#4d4d4d", command=self.toggle_dynamic_learning_rate if key == "dynamic_learning_rate" else None)
+                checkbox.var = var
+                checkbox.pack(side=tk.LEFT, padx=5, anchor='w')
+                setting_frame.children['input'] = checkbox
+                self.widgets[key] = checkbox
+
+            elif isinstance(value, int) or isinstance(value, float):
+                slider = Scale(setting_frame, from_=0, to=1, resolution=0.001, orient="horizontal",
+                               bg="#2c2c2c", fg="white", troughcolor="white")
+                slider.set(value)
+                slider.pack(fill=tk.X, padx=5, expand=True)
+                setting_frame.children['input'] = slider
+                self.widgets[key] = slider
+
+            elif isinstance(value, str):
+                entry = tk.Entry(setting_frame, font=("Arial", 10), bg="#4d4d4d", fg="white", relief="flat")
+                entry.insert(0, value)
+                entry.pack(fill=tk.X, padx=5, expand=True)
+                setting_frame.children['input'] = entry
+                self.widgets[key] = entry
+
+            # Add description for each setting
+            description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10),
+                                         fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+            description_label.pack(anchor='w', padx=5)
+
     def load_ai_config(self):
-        self.change_section("AI Settings")
+        self.change_section("AI Settings", AIConfig)
 
     def load_interface_config(self):
-        self.change_section("Interface Settings")
+        self.change_section("Interface Settings", InterfaceConfig)
 
     def load_game_preferences_config(self):
-        self.change_section("Game Preferences")
+        self.change_section("Game Preferences", GamePreferencesConfig)
 
     def load_mobile_app_settings_config(self):
-        self.change_section("Mobile App Settings")
+        self.change_section("Mobile App Settings", MobileAppSettingsConfig)
 
     def load_system_monitor_config(self):
-        self.change_section("System Monitor Settings")
+        self.change_section("System Monitor Settings", SystemMonitorConfig)
 
     def load_plex_config(self):
-        self.change_section("Plex Configuration")
+        self.change_section("Plex Configuration", PlexConfig)
 
     def load_account_integrations_config(self):
-        self.change_section("Account Integrations")
+        self.change_section("Account Integrations", AccountIntegrationsConfig)
 
     def load_security_privacy_config(self):
-        self.change_section("Security and Privacy")
+        self.change_section("Security and Privacy", SecurityPrivacyConfig)
 
     def load_logs_config(self):
-        self.change_section("Logs")
+        self.change_section("Logs", LogsConfig)
 
     def load_contact_developer_config(self):
-        self.change_section("Contact the Developer")
+        self.change_section("Contact the Developer", ContactDeveloperConfig)
 
 if __name__ == "__main__":
     root = tk.Tk()
