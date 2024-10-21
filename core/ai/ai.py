@@ -1,5 +1,3 @@
-# agent.py (S:/Snowball/core/ai)
- 
 import os
 import sys
 import threading

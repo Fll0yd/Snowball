@@ -3969,3 +3969,121 @@
 2024-10-21 14:07:34,402 - INFO - Event: Initializing File Monitor with config file: S:/Snowball/config/plex_config.json...
 2024-10-21 14:07:34,402 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
 2024-10-21 14:07:34,404 - INFO - Event: Initializing Snowball AI Agent...
+2024-10-21 14:27:01,217 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:01,231 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:01,232 - INFO - Successfully loaded configuration: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:01,988 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:03,993 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:05,996 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:08,004 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:12,250 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:12,251 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:12,251 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:14,253 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:16,256 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:18,260 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:18,260 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:18,261 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:18,261 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:20,267 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:22,269 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:24,271 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:24,272 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:24,273 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:24,274 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:26,275 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:28,277 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:30,281 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:30,282 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:30,283 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:30,284 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:32,286 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:34,288 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:36,290 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:36,291 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:36,292 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:36,293 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:38,295 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:40,296 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:42,298 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:42,301 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:42,304 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:42,305 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:44,314 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:46,315 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:48,317 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:48,318 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:48,321 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:48,322 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:50,325 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:52,327 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:54,329 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:27:54,329 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:27:54,331 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:27:54,332 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:56,334 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:27:58,336 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:00,340 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:00,342 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:00,343 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:00,343 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:02,345 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:04,347 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:06,349 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:06,353 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:06,359 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:06,365 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:08,377 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:10,380 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:12,382 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:12,384 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:12,386 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:12,394 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:14,404 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:16,407 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:18,411 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:18,413 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:18,423 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:18,429 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:20,439 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:22,441 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:24,448 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:24,449 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:24,451 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:24,452 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:26,455 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:28,457 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:30,468 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:30,469 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:30,469 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:30,473 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:32,481 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:34,482 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:36,492 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:36,495 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:36,496 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:36,497 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:38,502 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:40,507 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:42,509 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:42,510 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:42,511 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:42,512 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:44,514 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:46,518 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:48,525 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:48,527 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:48,529 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:48,537 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:50,548 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:52,552 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:54,555 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:28:54,556 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:28:54,557 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:28:54,562 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:56,566 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:28:58,575 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-21 14:29:00,578 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-21 14:29:00,580 - INFO - Event: Logger initialized successfully.
+2024-10-21 14:29:00,581 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-21 14:29:00,584 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
