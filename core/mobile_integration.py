@@ -1,33 +1,47 @@
-# mobile_integration.py (S:/Snowball/core) 
- 
+import os
+import json
+import time
+import threading
 import requests
+from plyer import notification  # For push notifications
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
-import os
-import json
-import logging
-from plyer import notification  # For push notifications
+from core.initializer import SnowballInitializer
 
 # Define the scope for Google OAuth
 SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']
 
-# Load mobile sync settings using ConfigLoader
-settings = ConfigLoader.load_config('interface_settings.json')
-backup_settings = ConfigLoader.load_config('mobile_settings.json')
-cloud_backup_enabled = backup_settings.get('backup_to_cloud', False)
-nas_backup_enabled = backup_settings.get('backup_to_nas', False)
-mobile_sync_interval = settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
-
 class MobileIntegration:
     def __init__(self):
-        self.logger = SnowballLogger()
+        # Use initializer for frequently used components
+        initializer = SnowballInitializer()
+        self.logger = initializer.logger
+        self.config_loader = initializer.config_loader
+        self.google_credentials = None
+        self.notification_service = self.initialize_notification_service()
+        self.load_settings()
+        
+        # Initialize integrations
         self.credentials = self.initialize_google_credentials()
         self.facebook_access_token = self.load_facebook_token()
         self.google_maps_api_key = self.load_google_maps_key()
-        self.facebook_api_url = "https://graph.facebook.com/v15.0/me/messages"
+        
         self.gps_data_file = os.environ.get('GPS_DATA_FILE', 'S:/Snowball/cloud_sync/mobile_sync/gps_data.json')
-        self.notification_service = self.initialize_notification_service()
+
+    def load_settings(self):
+        """Load configuration settings for mobile sync and backup."""
+        try:
+            self.settings = self.config_loader.load_config('S:/Snowball/config/interface_settings.json')
+            self.backup_settings = self.config_loader.load_config('S:/Snowball/config/mobile_settings.json')
+            self.cloud_backup_enabled = self.backup_settings.get('backup_to_cloud', False)
+            self.nas_backup_enabled = self.backup_settings.get('backup_to_nas', False)
+            self.mobile_sync_interval = self.settings.get('mobile_sync_interval', 10)  # Default to 10 minutes
+            self.logger.log_event("Mobile integration settings loaded successfully.")
+        except FileNotFoundError:
+            self.logger.log_error("Configuration files for mobile integration not found.")
+            self.settings = {}
+            self.backup_settings = {}
 
     def initialize_google_credentials(self):
         """Initialize Google OAuth credentials or prompt for authentication if needed."""
@@ -82,12 +96,11 @@ class MobileIntegration:
     def load_facebook_token(self):
         """Load Facebook API access token from a JSON file."""
         try:
-            with open("S:/Snowball/config/account_integrations.json", 'r') as file:  # Use absolute path
-                data = json.load(file)
-                token = data.get("tokens", {}).get("facebook", {}).get("access_token")
-                if token:
-                    self.logger.log_event("Facebook token loaded successfully.")
-                return token
+            data = self.config_loader.load_config("S:/Snowball/config/account_integrations.json")
+            token = data.get("tokens", {}).get("facebook", {}).get("access_token")
+            if token:
+                self.logger.log_event("Facebook token loaded successfully.")
+            return token
         except FileNotFoundError:
             self.logger.log_warning("Facebook API token file not found.")
         except json.JSONDecodeError as e:
@@ -97,12 +110,11 @@ class MobileIntegration:
     def load_google_maps_key(self):
         """Load Google Maps API key from a JSON file."""
         try:
-            with open("S:/Snowball/config/account_integrations.json", 'r') as file:  # Use absolute path
-                data = json.load(file)
-                key = data.get("integrations", {}).get("google_maps", {}).get("api_key")
-                if key:
-                    self.logger.log_event("Google Maps API key loaded successfully.")
-                return key
+            data = self.config_loader.load_config("S:/Snowball/config/account_integrations.json")
+            key = data.get("integrations", {}).get("google_maps", {}).get("api_key")
+            if key:
+                self.logger.log_event("Google Maps API key loaded successfully.")
+            return key
         except FileNotFoundError:
             self.logger.log_warning("Google Maps API key file not found.")
         except json.JSONDecodeError as e:
@@ -114,7 +126,7 @@ class MobileIntegration:
         if self.facebook_access_token:
             try:
                 params = {'access_token': self.facebook_access_token, 'limit': 100}
-                response = requests.get(self.facebook_api_url, params=params)
+                response = requests.get("https://graph.facebook.com/v15.0/me/messages", params=params)
                 response.raise_for_status()
                 self.logger.log_event("Successfully fetched Facebook message history.")
                 return response.json()
@@ -150,6 +162,23 @@ class MobileIntegration:
             except IOError as e:
                 self.logger.log_error(f"Error updating GPS data file: {e}")
 
+    def initialize_notification_service(self):
+        """Initialize push notification service (like Firebase)."""
+        # Placeholder for initializing cloud-based notification services (e.g., Firebase)
+        pass
+
+    def send_push_notification(self, title, message):
+        """Send a push notification to the mobile device."""
+        try:
+            notification.notify(
+                title=title,
+                message=message,
+                timeout=5  # Notification timeout in seconds
+            )
+            self.logger.log_event(f"Push notification sent: {title} - {message}")
+        except Exception as e:
+            self.logger.log_error(f"Error sending push notification: {e}")
+
     def check_travel_patterns(self):
         """Check your location and remind you of tasks."""
         if self.google_maps_api_key:
@@ -179,33 +208,10 @@ class MobileIntegration:
             self.logger.log_error(f"Error fetching current location: {e}")
             return None
 
-    def initialize_notification_service(self):
-        """Initialize push notification service (like Firebase)."""
-        # Firebase setup code would go here if needed
-        pass
-
-    def send_push_notification(self, title, message):
-        """Send a push notification to the mobile device."""
-        try:
-            notification.notify(
-                title=title,
-                message=message,
-                timeout=5  # Notification timeout in seconds
-            )
-            self.logger.log_event(f"Push notification sent: {title} - {message}")
-        except Exception as e:
-            self.logger.log_error(f"Error sending push notification: {e}")
-
-    def listen_for_requests(self):
-        """Listen for mobile commands."""
-        command = "Check my schedule"
-        self.logger.log_event(f"Listening for mobile requests, received: {command}")
-        return command
-
-    def respond(self, response):
-        """Respond to mobile requests."""
-        self.logger.log_event(f"Responding to mobile request with: {response}")
-        logging.info(f"Responding to mobile request with: {response}")
+    def get_device_coordinates(self):
+        """Placeholder for getting the current device coordinates."""
+        # In a real application, you would get this from the device's GPS
+        return 47.6062, -122.3321
 
     def send_alert(self, message):
         """Send alerts via push notification."""

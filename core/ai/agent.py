@@ -5,41 +5,47 @@ import time
 import json
 import random
 
-from core.initializer import SnowballInitializer
-
-from core.ai.conversation import Conversation
-from core.ai.decision_maker import DecisionMaker
-from core.ai.file_manager import FileMonitor
-from core.ai.memory import Memory
-from core.ai.reinforcement import QLearningAgent
-from core.ai.sentiment_analysis import SentimentAnalysis
-from core.ai.speech import Speech
-from core.ai.system_monitor import SystemMonitor
-from core.ai.training import Training
-from core.ai.vision import Vision
-from core.ai.voice import Voice
-
+# Lazy import core components to prevent circular imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 class SnowballAI:
     def __init__(self):
-        initializer = SnowballInitializer()
-        self.logger = initializer.logger
-        self.memory = initializer.memory
-        self.config_loader = initializer.config_loader
-        self.conversation_module = initializer.snowball_ai.conversation
-        self.sentiment_analysis_module = initializer.sentiment_analysis
-        self.vision_module = initializer.vision
-        self.decision_maker = initializer.decision_maker
-        self.file_monitor = initializer.file_monitor
-        self.reinforcement_module = initializer.q_learning_agent
-        self.system_monitor = initializer.system_monitor
-        self.voice_module = initializer.voice_interface
-
+        # Lazy initialization of core components to avoid circular imports
+        self.initializer = None
+        self.logger = None
+        self.memory = None
+        self.config_loader = None
+        self.conversation_module = None
+        self.sentiment_analysis_module = None
+        self.vision_module = None
+        self.decision_maker = None
+        self.file_monitor = None
+        self.reinforcement_module = None
+        self.system_monitor = None
+        self.voice_module = None
         self.running_event = threading.Event()
+        
+        # Initialize components when needed
+        self._initialize_core_components()
+        
         self.name = self.generate_name()
         self.logger.log_event("SnowballAI initialized with provided API key.")
+
+    def _initialize_core_components(self):
+        from core.initializer import SnowballInitializer
+        
+        self.initializer = SnowballInitializer()
+        self.logger = self.initializer.logger
+        self.memory = self.initializer.memory
+        self.config_loader = self.initializer.config_loader
+        self.conversation_module = self.initializer.snowball_ai.conversation
+        self.sentiment_analysis_module = self.initializer.sentiment_analysis
+        self.vision_module = self.initializer.vision
+        self.decision_maker = self.initializer.decision_maker
+        self.file_monitor = self.initializer.file_monitor
+        self.reinforcement_module = self.initializer.q_learning_agent
+        self.system_monitor = self.initializer.system_monitor
+        self.voice_module = self.initializer.voice_interface
 
     def load_api_key(self):
         try:
@@ -107,8 +113,8 @@ class SnowballAI:
             try:
                 self.logger.log_event("Heartbeat check: All modules are being monitored...")
                 # Example checks for modules
-                if not self.speech_module.is_active():
-                    self.logger.log_event("Warning: Speech Module is not active.")
+                if not self.voice_module.is_active():
+                    self.logger.log_event("Warning: Voice Module is not active.")
                 if not self.vision_module.is_active():
                     self.logger.log_event("Warning: Vision Module is not active.")
             except Exception as e:
@@ -153,8 +159,7 @@ class SnowballAI:
     def toggle_module(self, module_name, enable=True):
         """Enable or disable individual AI modules."""
         modules = {
-            'speech': self.speech_module,
-            'training': self.training_module,
+            'voice': self.voice_module,
             'vision': self.vision_module,
             'reinforcement': self.reinforcement_module
         }
