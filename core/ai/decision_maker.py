@@ -3,8 +3,9 @@ import re
 import logging
 from queue import Queue, Empty
 import time
-from core.logger import SnowballLogger  # Added import for SnowballLogger
-from core.memory import Memory
+import requests
+from datetime import datetime
+from core.initializer import SnowballInitializer
 
 class DecisionMaker:
     """Class to handle user requests and make decisions based on input."""
@@ -22,10 +23,14 @@ class DecisionMaker:
     CUSTOM_COMMAND = "custom command"
 
     def __init__(self):
+        initializer = SnowballInitializer()
+        self.logger = initializer.logger
+        self.memory = initializer.memory
+        self.sentiment_analysis = initializer.sentiment_analysis
+        self.vision = initializer.vision
+
         self.reminders = []
         self.reminder_lock = threading.Lock()  # Lock for thread-safe access to reminders
-        self.logger = SnowballLogger()  # Initialize logger
-        self.memory = Memory()  # Access to memory system
         self.task_queue = Queue(maxsize=10)  # Limit queue size for performance
         self.logger.log_event("DecisionMaker initialized.")
         self._stop_event = threading.Event()  # Event for stopping the thread gracefully
@@ -52,35 +57,28 @@ class DecisionMaker:
     def handle_request(self, request: str) -> str:
         """Main method to handle various user requests."""
         request = ' '.join(request.lower().split())  # Normalize spaces in request
-        self.logger.log_interaction(f"Received request: {request}", ai_response="Processing...")
+        sentiment = self.sentiment_analysis.analyze(request)
+        facial_emotion = self.vision.get_current_emotion()  # Assume method returns current facial emotion
 
-        # Handle different types of requests based on content
+        # Log the interaction along with sentiment and emotion details
+        self.logger.log_interaction(f"Received request: {request}", ai_response="Processing...", sentiment=sentiment, facial_emotion=facial_emotion)
+
         try:
-            if self.REMIND_ME in request:
-                response = self.handle_reminder(request)
-            elif self.LIST_REMINDERS in request:
-                response = self.list_reminders()
-            elif self.CANCEL_REMINDERS in request:
-                response = self.cancel_reminder()
-            elif self.SYSTEM_MONITOR in request:
-                response = self.start_system_monitor()
-            elif self.GAME_REQUEST in request:
-                response = self.handle_game_request(request)
-            elif self.NAME_REQUEST in request:
-                response = self.ask_for_name()
-            elif self.FEEDBACK_REQUEST in request:
-                response = self.provide_feedback(request)
-            elif self.DAILY_SUMMARY in request:
-                response = self.daily_summary()
-            elif self.CONTEXT_REQUEST in request:
-                response = self.remember_context(request)
-            elif self.FETCH_WEATHER in request:
-                response = self.fetch_weather(request)
-            elif self.CUSTOM_COMMAND in request:
-                response = self.add_custom_command(request)
+            # Use sentiment and emotion data to adjust response style
+            response_style = self.determine_response_style(sentiment, facial_emotion)
+
+            if "remind me" in request:
+                response = self.handle_reminder(request, response_style)
+            elif "list reminders" in request:
+                response = self.list_reminders(response_style)
+            elif "cancel reminders" in request:
+                response = self.cancel_reminder(response_style)
+            elif "play game" in request:
+                response = self.handle_game_request(request, response_style)
             else:
                 response = "Sorry, I don't understand that request."
                 self.logger.log_warning(f"Unrecognized request: {request}")
+
         except Exception as e:
             response = "An error occurred while processing your request."
             self.logger.log_error(f"Error in handle_request: {e}")
@@ -96,7 +94,7 @@ class DecisionMaker:
                 module = __import__(f"games.{game_name}.{game_name}", fromlist=['game_loop'])
                 game_loop = getattr(module, 'game_loop')
                 self.logger.log_event(f"Launching game: {game_name}")
-                game_loop()
+                threading.Thread(target=game_loop, daemon=True).start()  # Run game in separate thread
                 return f"Launching {game_name}..."
             except (ImportError, AttributeError) as e:
                 self.logger.log_warning(f"Game not found: {game_name}, Error: {e}")
@@ -108,10 +106,24 @@ class DecisionMaker:
         match = re.search(r'play (\w+)', request)
         return match.group(1) if match else None
 
-    def handle_reminder(self, request: str) -> str:
-        """Handle user requests related to reminders."""
-        self.logger.log_event("Processing reminder request.")
-        return self.set_reminder(request)
+    def determine_response_style(self, sentiment: str, facial_emotion: str) -> str:
+        """Determine the response style based on sentiment and facial emotion."""
+        if sentiment == 'negative' or facial_emotion in ['sad', 'angry']:
+            return 'empathetic'
+        elif sentiment == 'positive' or facial_emotion == 'happy':
+            return 'encouraging'
+        else:
+            return 'neutral'
+
+    def handle_reminder(self, request: str, response_style: str) -> str:
+        """Handle user requests related to reminders, adjusted for response style."""
+        reminder_response = self.set_reminder(request)
+        if response_style == 'empathetic':
+            return f"I've set the reminder for you. If there's anything else I can help with, I'm here for you."
+        elif response_style == 'encouraging':
+            return f"Got it! Reminder set. You're doing great—keep it up!"
+        else:
+            return reminder_response
 
     def set_reminder(self, request: str) -> str:
         """Set a new reminder based on natural language input."""
@@ -157,15 +169,22 @@ class DecisionMaker:
                 return time_value * factor
         return time_value  # Default to minutes if no match
 
-    def list_reminders(self) -> str:
-        """List all active reminders."""
+    def list_reminders(self, response_style: str) -> str:
+        """List all active reminders, with a response style adjustment."""
         with self.reminder_lock:
             if not self.reminders:
                 self.logger.log_event("No active reminders to list.")
                 return "No active reminders."
+
             reminders_list = "\n".join([f"Reminder: {r[0]} in {r[1]} minutes." for r in self.reminders])
             self.logger.log_event("Listing all active reminders.")
-            return reminders_list
+
+            if response_style == 'empathetic':
+                return f"Here are your reminders. Let me know if there's anything else I can do for you:\n{reminders_list}"
+            elif response_style == 'encouraging':
+                return f"Here's what you've got planned. You're on top of things!\n{reminders_list}"
+            else:
+                return reminders_list
 
     def cancel_reminder(self) -> str:
         """Cancel all reminders."""
@@ -208,16 +227,48 @@ class DecisionMaker:
     def remember_context(self, request: str) -> str:
         """Remember the context for future interactions."""
         self.logger.log_event(f"Remembering context: {request}")
+        # Save context in memory for future interactions
+        self.memory.store_interaction("context", request)
         return "Context remembered."
 
-    def fetch_weather(self, request: str) -> str:
-        """Fetch the current weather information."""
-        self.logger.log_event("Fetching weather information.")
-        # Placeholder for weather API logic
-        return "The current weather is sunny and 72°F."
 
+    def fetch_weather(self, request: str) -> str:
+        """Fetch the current weather information, using memory for preferred locations."""
+        # If the user has previously asked for a specific city, remember it
+        preferred_city = self.memory.retrieve_recent("preferred_city")
+        city = "New York"  # Default city
+
+        if "in" in request:
+            # Extract city name from the request
+            match = re.search(r'weather in (\w+)', request)
+            if match:
+                city = match.group(1)
+                self.memory.store_interaction("preferred_city", city)  # Store the city as a preferred location
+
+        elif preferred_city:
+            city = preferred_city
+
+        self.logger.log_event(f"Fetching weather information for {city}.")
+        try:
+            # Example weather API request (Replace API_KEY and URL with actual service)
+            api_key = "YOUR_WEATHER_API_KEY"
+            url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}"
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                weather_data = response.json()
+                weather_info = weather_data['current']['condition']['text']
+                temperature = weather_data['current']['temp_f']
+                return f"The current weather in {city} is {weather_info} with a temperature of {temperature}°F."
+            else:
+                return f"Failed to fetch weather information for {city}."
+        except Exception as e:
+            self.logger.log_error(f"Error fetching weather information: {e}")
+            return "Sorry, I couldn't fetch the weather information."
+        
     def add_custom_command(self, request: str) -> str:
         """Add a custom command."""
         self.logger.log_event("Adding custom command.")
         # Placeholder for custom command logic
         return "Custom command added."
+

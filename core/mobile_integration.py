@@ -1,3 +1,5 @@
+# mobile_integration.py (S:/Snowball/core) 
+ 
 import requests
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.oauth2.credentials import Credentials
@@ -6,8 +8,6 @@ import os
 import json
 import logging
 from plyer import notification  # For push notifications
-from core.config_loader import ConfigLoader  # Importing the ConfigLoader class
-from core.logger import SnowballLogger  # Importing the enhanced logger
 
 # Define the scope for Google OAuth
 SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']
@@ -36,15 +36,19 @@ class MobileIntegration:
 
         # Load token from file if it exists
         if os.path.exists(token_path):
-            with open(token_path, 'r') as token_file:
-                data = json.load(token_file)
-                google_token_data = data.get("tokens", {}).get("google", {})
+            try:
+                with open(token_path, 'r') as token_file:
+                    data = json.load(token_file)
+                    google_token_data = data.get("tokens", {}).get("google", {})
 
-                if not all(key in google_token_data for key in ["client_id", "client_secret", "refresh_token"]):
-                    self.logger.log_warning("Google credentials are missing required fields.")
-                    return None
+                    if not all(key in google_token_data for key in ["client_id", "client_secret", "refresh_token"]):
+                        self.logger.log_warning("Google credentials are missing required fields.")
+                        return None
 
-                creds = Credentials.from_authorized_user_info(google_token_data, SCOPES)
+                    creds = Credentials.from_authorized_user_info(google_token_data, SCOPES)
+            except json.JSONDecodeError:
+                self.logger.log_error("Google token file is empty or improperly formatted.")
+                return None
 
         # If there are no valid credentials available, let the user log in.
         if not creds or not creds.valid:

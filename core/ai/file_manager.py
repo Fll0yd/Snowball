@@ -1,35 +1,24 @@
 import os
 import json
-import logging
 import time
 import threading
 import hashlib
-from queue import PriorityQueue
 import cv2  # For video analysis (ensure you have OpenCV installed)
 import pytesseract  # For OCR in text documents
 from PIL import Image  # For image processing
-from plyer import notification
+from queue import PriorityQueue
 import numpy as np  # For numerical operations
 import tensorflow as tf  # For integration with TensorFlow (ensure you have TensorFlow installed)
-from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 from transformers import pipeline  # For sentiment analysis
 from PyPDF2 import PdfReader  # For PDF analysis
 import docx  # For DOCX analysis
-from sklearn.metrics import accuracy_score  # For performance evaluation
 from sklearn.model_selection import train_test_split  # For dataset splitting
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from core.initializer import SnowballInitializer
 
-# Import SnowballLogger from the core.logger module
-from core.logger import SnowballLogger
-# Import Memory from core.memory module
-from core.memory import Memory  # This is the missing import
-
-# Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 class FileEventHandler(FileSystemEventHandler):
     """Custom event handler for file system changes."""
@@ -63,10 +52,14 @@ class FileEventHandler(FileSystemEventHandler):
             self.logger.log_task(f"File moved: from {event.src_path} to {event.dest_path}", "Moved")
             self.memory.store_interaction(f"File moved: from {event.src_path} to {event.dest_path}", None)
 
+
 class FileMonitor:
     def __init__(self, config_file):
-        self.logger = SnowballLogger()
-        self.memory = Memory()
+        initializer = SnowballInitializer()
+        self.logger = initializer.logger
+        self.memory = initializer.memory
+        self.vision_module = initializer.system_monitor
+        self.sentiment_analyzer = initializer.sentiment_analysis
         self.priority_queue = PriorityQueue()
         self.processed_hashes = set()
         self.observer = Observer()
@@ -75,14 +68,13 @@ class FileMonitor:
         try:
             with open(config_file, 'r') as f:
                 config = json.load(f)
-                self.download_dir = config.get('download_dir', 'default_download_path')
+                self.download_dir = config.get('download_dir', 'E:/Downloads')
                 self.plex_dir_movies = config.get('plex_dir_movies', 'default_movies_path')
                 self.plex_dir_tv_shows = config.get('plex_dir_tv_shows', 'default_tv_shows_path')
                 self.logger.log_config_change('download_dir', 'N/A', self.download_dir, 'System')
                 self.logger.logger.info(f"Monitoring started for downloads: {self.download_dir}")
 
                 # Load models
-                self.sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
                 self.image_model = self.load_image_model()
         except FileNotFoundError as e:
             self.logger.log_error(f"Configuration file not found: {e}")
@@ -264,18 +256,35 @@ class FileMonitor:
     
     def start_monitoring(self):
         """Start monitoring the specified directory."""
+        if not os.path.exists(self.download_dir):
+            self.logger.log_error(f"Directory {self.download_dir} does not exist. Cannot start monitoring.")
+            return
+
+        # Initialize the event handler and attach to the observer
         event_handler = FileEventHandler(self.memory, self.logger, self.priority_queue)
         self.observer.schedule(event_handler, self.download_dir, recursive=True)
         self.observer.start()
         self.logger.log_event(f"Started monitoring directory: {self.download_dir}")
 
         try:
-            self.monitor_files()
+            # Begin file monitoring loop in a separate thread to keep it responsive
+            monitoring_thread = threading.Thread(target=self.monitor_files, daemon=True)
+            monitoring_thread.start()
+            while not self.running_event.is_set():
+                time.sleep(1)  # Keep main thread alive to allow observer and monitoring to run
         except KeyboardInterrupt:
+            self.logger.log_event("Monitoring interrupted by user, stopping observer.")
             self.observer.stop()
-        self.observer.join()
+        except Exception as e:
+            self.logger.log_error(f"Unexpected error in start_monitoring: {e}")
+        finally:
+            self.observer.join()
+            self.logger.log_event("File monitoring has stopped.")
 
-if __name__ == "__main__":
-    config_file = 'config.json'  # Adjust to your configuration path
-    file_monitor = FileMonitor(config_file)
-    file_monitor.start_monitoring()
+    def stop_monitoring(self):
+        """Stop monitoring the directory gracefully."""
+        self.running_event.set()  # Signal the monitoring loop to stop
+        self.observer.stop()  # Stop the observer
+        self.logger.log_event("Stopping directory monitoring.")
+        self.observer.join()
+        self.logger.log_event("Directory monitoring stopped successfully.")

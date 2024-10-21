@@ -2,6 +2,7 @@
     "nickname": "Ken",
     "response_tone": "casual",
     "response_length": "concise",
+    
     "ui_theme": {
         "theme_type": "light",
         "theme_color": "blue"
@@ -14,7 +15,7 @@
         "background_color": "#e6e6e6",
         "primary_button_color": "#4d4d4d",
         "secondary_button_color": "#1e1e1e",
-        "text_color": "white"
+        "text_color": "#ffffff"
     },
     "layout_preferences": {
         "sidebar_position": "left",  
@@ -22,10 +23,6 @@
         "main_panel_width": "auto",
         "content_spacing": 20
     },
-    "language": "en",
-    "voice_gender": "female",
-    "voice_variant": "en-US-Wavenet-A",
-    "theme": "dark",
     "welcome_message_enabled": true,
     "animation_effects": {
         "avatar_entry_animation": "slide",

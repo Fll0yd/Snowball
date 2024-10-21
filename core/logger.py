@@ -6,23 +6,26 @@ from logging.handlers import RotatingFileHandler
 from plyer import notification  # For notifications
 import smtplib
 from email.mime.text import MIMEText
+from typing import Optional
 
 # Define log paths using the default value (it can be overridden later by passing config)
 DEFAULT_LOG_DIR = os.path.abspath('storage/logs')
 
-INTERACTION_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt")
-ERROR_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "error_logs", "error_log.txt")
-SYSTEM_HEALTH_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "system_health_logs", "cpu_log.txt")
-EVENT_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "event_logs", "event_log.txt")
-FILE_IO_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "file_io_logs", "file_io_log.txt")
-DECISION_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "decision_logs", "decision_log.txt")
-CONFIG_CHANGE_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "config_logs", "config_log.txt")  
-WARNING_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "warning_logs", "warning_log.txt")  
-SECURITY_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "security_logs", "security_log.txt")  
-TASK_LOG_PATH = os.path.join(DEFAULT_LOG_DIR, "task_logs", "task_log.txt")  
+LOG_PATHS = {
+    "interaction": os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt"),
+    "error": os.path.join(DEFAULT_LOG_DIR, "error_logs", "error_log.txt"),
+    "system_health": os.path.join(DEFAULT_LOG_DIR, "system_health_logs", "system_health_log.txt"),
+    "event": os.path.join(DEFAULT_LOG_DIR, "event_logs", "event_log.txt"),
+    "file_io": os.path.join(DEFAULT_LOG_DIR, "file_io_logs", "file_io_log.txt"),
+    "decision": os.path.join(DEFAULT_LOG_DIR, "decision_logs", "decision_log.txt"),
+    "config_change": os.path.join(DEFAULT_LOG_DIR, "config_logs", "config_log.txt"),
+    "warning": os.path.join(DEFAULT_LOG_DIR, "warning_logs", "warning_log.txt"),
+    "security": os.path.join(DEFAULT_LOG_DIR, "security_logs", "security_log.txt"),
+    "task": os.path.join(DEFAULT_LOG_DIR, "task_logs", "task_log.txt"),
+}
 
 # Create the log directories if they don't exist
-for log_path in [INTERACTION_LOG_PATH, ERROR_LOG_PATH, SYSTEM_HEALTH_LOG_PATH, EVENT_LOG_PATH, FILE_IO_LOG_PATH, DECISION_LOG_PATH, CONFIG_CHANGE_LOG_PATH, WARNING_LOG_PATH, SECURITY_LOG_PATH, TASK_LOG_PATH]:
+for log_path in LOG_PATHS.values():
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
 class SnowballLogger:
@@ -57,22 +60,16 @@ class SnowballLogger:
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
             # Adding file handlers
-            self._add_handler(INTERACTION_LOG_PATH, logging.INFO, formatter)
-            self._add_handler(SYSTEM_HEALTH_LOG_PATH, logging.INFO, formatter)
-            self._add_handler(ERROR_LOG_PATH, logging.ERROR, formatter)
-            self._add_handler(EVENT_LOG_PATH, logging.INFO, formatter)
-            self._add_handler(FILE_IO_LOG_PATH, logging.INFO, formatter)
-            self._add_handler(DECISION_LOG_PATH, logging.DEBUG, formatter)
-            self._add_handler(CONFIG_CHANGE_LOG_PATH, logging.INFO, formatter)  # Handler for config changes
-            self._add_handler(WARNING_LOG_PATH, logging.WARNING, formatter)  # Handler for warnings
-            self._add_handler(SECURITY_LOG_PATH, logging.WARNING, formatter)  # Handler for security-related logs
-            self._add_handler(TASK_LOG_PATH, logging.INFO, formatter)  # Handler for task-related logs
+            for log_name, log_path in LOG_PATHS.items():
+                level = logging.INFO if log_name != "error" else logging.ERROR
+                self._add_handler(log_path, level, formatter)
 
-            # Console handler for real-time debugging
-            console_handler = logging.StreamHandler()
-            console_handler.setLevel(logging.DEBUG)
-            console_handler.setFormatter(formatter)
-            self.logger.addHandler(console_handler)
+            # Console handler for real-time debugging (avoid adding multiple times)
+            if not any(isinstance(handler, logging.StreamHandler) for handler in self.logger.handlers):
+                console_handler = logging.StreamHandler()
+                console_handler.setLevel(logging.DEBUG)
+                console_handler.setFormatter(formatter)
+                self.logger.addHandler(console_handler)
 
     def _add_handler(self, log_path, level, formatter):
         """Add a file handler to the logger."""
@@ -89,7 +86,7 @@ class SnowballLogger:
     def log_config_change(self, setting_name, old_value, new_value, user):
         """Log configuration changes with old and new values and user info."""
         with self._lock:
-            change_message = f"Config Change - User: '{user}', Setting: '{setting_name}', Old Value: '{old_value}', New Value: '{new_value}', Timestamp: '{datetime.datetime.now()}"
+            change_message = f"Config Change - User: '{user}', Setting: '{setting_name}', Old Value: '{old_value}', New Value: '{new_value}', Timestamp: '{datetime.datetime.now()}'"
             self.logger.info(change_message)
 
     def log_event(self, event_message):
@@ -166,7 +163,7 @@ class SnowballLogger:
                 health_status += f" | Disk Usage: {disk_usage}%"
             if network_bandwidth is not None:
                 health_status += f" | Network Bandwidth: {network_bandwidth} Mbps"
-            
+
             self.logger.info(health_status)
 
             # Check thresholds and notify if necessary
@@ -182,6 +179,13 @@ class SnowballLogger:
                 alert_message = " | ".join(alerts)
                 self.notify_user("System Health Alert", alert_message)
                 self.logger.warning(alert_message)
+
+    def shutdown_logger(self):
+        """Clean up handlers and close the logger properly."""
+        handlers = self.logger.handlers[:]
+        for handler in handlers:
+            handler.close()
+            self.logger.removeHandler(handler)
 
 if __name__ == "__main__":
     logger = SnowballLogger()

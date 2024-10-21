@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import Scale, BooleanVar, StringVar, ttk, filedialog, messagebox
 
-
 class AIConfig:
     def __init__(self, master, config_loader):
         self.master = master
+        self.master.configure(bg="#2c2c2c")
         self.config_loader = config_loader
-        self.training_mode_buttons = {}  # Add this line to initialize the dictionary
+        self.training_mode_buttons = {}
 
         # Load current settings or use defaults
         self.config = config_loader.load_config("ai_settings.json") or self.default_settings()
@@ -23,189 +23,123 @@ class AIConfig:
         self.widgets = {}
 
         # Variables to store references to sliders and checkbox
-        self.learning_rate_slider = None
-        self.learning_rate_decay_slider = None
-        self.dynamic_learning_rate_checkbox = None
-        self.training_mode_switch = None
+        self.training_mode_var = StringVar(value=self.config.get("training_mode", "supervised").lower())
 
-        # Default values for learning rate and decay rate
-        self.default_learning_rate = 0.01
-        self.default_learning_rate_decay = 0.001
-
-        # Use `self.config` instead of `config_data`
         if self.config is not None:
             # Dynamically create widgets based on the JSON structure
             for key, value in self.config.items():
                 formatted_key = key.replace('_', ' ').title()
 
+                # Create a LabelFrame for each setting
                 setting_frame = tk.LabelFrame(self.master, text=formatted_key, font=("Arial", 12), fg="white", bg="#2c2c2c", labelanchor='nw')
-                setting_frame.pack(fill=tk.X, pady=5)
+                setting_frame.pack(fill=tk.X, pady=5, padx=10, expand=True)
 
-                if key == "response_length":
-                    options = ["Concise", "Detailed", "Balanced"]
-                    combobox = ttk.Combobox(setting_frame, values=options, font=("Arial", 10))
-                    
-                if key == "dynamic_learning_rate":
+                # Create widgets for different settings
+                if key == "enabled":
+                    var = BooleanVar(value=value)
+                    checkbox = tk.Checkbutton(setting_frame, variable=var, bg="#2c2c2c", fg="white", font=("Arial", 10), selectcolor="#4d4d4d")
+                    checkbox.var = var
+                    checkbox.grid(row=0, column=0, sticky="w", padx=5)
+                    self.widgets[key] = checkbox
+
+                    # Add description to the right of the checkbox, closer to the checkbox
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.grid(row=0, column=1, sticky="w", padx=5)
+
+                elif key == "dynamic_learning_rate":
                     var = BooleanVar(value=value)
                     checkbox = tk.Checkbutton(setting_frame, variable=var, bg="#2c2c2c", fg="white", font=("Arial", 10), selectcolor="#4d4d4d", command=self.toggle_dynamic_learning_rate)
                     checkbox.var = var
-                    checkbox.pack(side=tk.LEFT, padx=5)
-                    self.dynamic_learning_rate_checkbox = checkbox
+                    checkbox.grid(row=0, column=0, sticky="w", padx=5)
+                    self.widgets[key] = checkbox
+                    self.dynamic_learning_rate_checkbox = var
+
+                    # Add description to the right of the checkbox, closer to the checkbox
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.grid(row=0, column=1, sticky="w", padx=5)
 
                 elif key in ["learning_rate", "learning_rate_decay"]:
-                    # Create slider with a "disabled" color if dynamic learning is enabled
-                    slider = Scale(setting_frame, from_=0.001, to=1.0, resolution=0.001, orient="horizontal", bg="#2c2c2c", fg="white", highlightbackground="#2c2c2c", troughcolor="#ffffff")
+                    slider = Scale(setting_frame, from_=0.001, to=1.0, resolution=0.001, orient="horizontal", bg="#2c2c2c", fg="white", highlightbackground="#2c2c2c", troughcolor="#5e5e5e", state="normal")
                     slider.set(value)
-                    slider.pack(fill=tk.X, padx=5)
+                    slider.pack(fill=tk.X, padx=5, expand=True)
                     setting_frame.children['input'] = slider
+                    self.widgets[key] = slider
 
                     if key == "learning_rate":
                         self.learning_rate_slider = slider
                     elif key == "learning_rate_decay":
                         self.learning_rate_decay_slider = slider
 
+                    # Add description beneath the slider inside the frame
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.pack(fill=tk.X, padx=5, pady=2)
+
+                elif key in ["daily_training_sessions", "epoch_count", "batch_size", "memory_retention_limit", "max_consecutive_failures"]:
+                    slider = Scale(setting_frame, from_=0, to=100, resolution=1, orient="horizontal", bg="#2c2c2c", fg="white", highlightbackground="#2c2c2c", troughcolor="#ffffff")
+                    slider.set(value)
+                    slider.pack(fill=tk.X, padx=5, expand=True)
+                    setting_frame.children['input'] = slider
+                    self.widgets[key] = slider
+
+                    # Add description beneath the slider inside the frame
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.pack(fill=tk.X, padx=5, pady=2)
+
                 elif key == "training_mode":
-                    # Create two buttons for 'Supervised' and 'Unsupervised'
-                    self.training_mode_var = StringVar(value=value)
+                    # Create training mode buttons and add them to the frame
+                    button_frame = tk.Frame(setting_frame, bg="#2c2c2c")
+                    button_frame.pack(fill=tk.X, padx=5, pady=2)
 
-                    button_supervised = tk.Button(setting_frame, text="Supervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value == "supervised" else "raised",
+                    button_supervised = tk.Button(button_frame, text="Supervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value.lower() == "supervised" else "raised",
                                                   command=lambda: self.set_training_mode("supervised"))
-                    button_unsupervised = tk.Button(setting_frame, text="Unsupervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value == "unsupervised" else "raised",
+                    button_unsupervised = tk.Button(button_frame, text="Unsupervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value.lower() == "unsupervised" else "raised",
                                                     command=lambda: self.set_training_mode("unsupervised"))
-
                     button_supervised.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=True)
                     button_unsupervised.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=True)
-
-                    # Store references to these buttons for later updates
                     self.training_mode_buttons["supervised"] = button_supervised
                     self.training_mode_buttons["unsupervised"] = button_unsupervised
 
-                elif key == "training_data_path":
-                    entry = tk.Entry(setting_frame, font=("Arial", 10), bg="#4d4d4d", fg="white", relief="flat")
-                    entry.insert(0, value)
-                    entry.pack(side=tk.LEFT, fill=tk.X, padx=5, expand=True)
-                    setting_frame.children['input'] = entry
+                    # Add description beneath the buttons inside the frame
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.pack(fill=tk.X, padx=5, pady=2)
 
-                    # Add a button to open file explorer
-                    button_browse = tk.Button(setting_frame, text="📁", font=("Arial", 10), command=lambda e=entry: self.browse_for_path(e), relief="flat", bg="#4d4d4d", fg="white")
+                elif key == "training_data_path":
+                    entry_frame = tk.Frame(setting_frame, bg="#2c2c2c")
+                    entry_frame.pack(fill=tk.X, padx=5, pady=2)
+
+                    entry = tk.Entry(entry_frame, font=("Arial", 10), bg="#4d4d4d", fg="white", relief="flat")
+                    entry.insert(0, value)
+                    entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+                    setting_frame.children['input'] = entry
+                    button_browse = tk.Button(entry_frame, text="📁", font=("Arial", 10), command=lambda e=entry: self.browse_for_path(e), relief="flat", bg="#4d4d4d", fg="white")
                     button_browse.pack(side=tk.LEFT, padx=5)
 
-                elif key == "optimizer":
-                    optimizers = ["Adam", "SGD", "RMSProp", "Adagrad"]  # List of optimizers
-                    combobox = ttk.Combobox(setting_frame, values=optimizers, font=("Arial", 10))
-                    combobox.set(value.capitalize())
-                    combobox.pack(fill=tk.X, padx=5)
-                    setting_frame.children['input'] = combobox
+                    # Add description beneath the entry and button inside the frame
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.pack(fill=tk.X, padx=5, pady=2)
 
-                elif key == "model_type":
-                    model_types = ["Neural Network", "Decision Tree", "Random Forest"]  # List of model types
-                    combobox = ttk.Combobox(setting_frame, values=model_types, font=("Arial", 10))
-                    combobox.set(value.replace('_', ' ').title())
-                    combobox.pack(fill=tk.X, padx=5)
-                    setting_frame.children['input'] = combobox
-
-                elif key == "evaluation_frequency":
-                    frequencies = ["Hourly", "Daily", "Weekly", "Bi-Weekly"]
-                    combobox = ttk.Combobox(setting_frame, values=frequencies, font=("Arial", 10))
+                elif key in ["optimizer", "model_type", "evaluation_frequency", "personality_mode", "response_speed"]:
+                    dropdown_values = self.get_dropdown_options(key)
+                    combobox = ttk.Combobox(setting_frame, values=[v.title() for v in dropdown_values], font=("Arial", 10))
                     combobox.set(value.title())
-                    combobox.pack(fill=tk.X, padx=5)
+                    combobox.pack(fill=tk.X, padx=5, expand=True)
                     setting_frame.children['input'] = combobox
+                    self.widgets[key] = combobox
 
-                elif key == "personality_mode":
-                    modes = ["Friendly", "Formal", "Humorous", "Sarcastic", "Professional", "Casual"]
-                    combobox = ttk.Combobox(setting_frame, values=modes, font=("Arial", 10))
-                    combobox.set(value.title())
-                    combobox.pack(fill=tk.X, padx=5)
-                    setting_frame.children['input'] = combobox
+                    # Add description beneath the combobox inside the frame
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.pack(fill=tk.X, padx=5, pady=2)
 
-                elif key == "response_speed":
-                    speeds = ["Instant", "Delayed", "Normal"]
-                    combobox = ttk.Combobox(setting_frame, values=speeds, font=("Arial", 10))
-                    combobox.set(value.title())
-                    combobox.pack(fill=tk.X, padx=5)
-                    setting_frame.children['input'] = combobox
-                    
-            for key, value in self.config.items():
-                formatted_key = key.replace('_', ' ').title()
+                elif key in ["performance_tracking", "save_training_logs", "allow_casual_conversation", "knowledge_expansion", "auto_learning", "safe_mode", "privacy_protection"]:
+                    var = BooleanVar(value=value)
+                    checkbox = tk.Checkbutton(setting_frame, variable=var, bg="#2c2c2c", fg="white", font=("Arial", 10), selectcolor="#4d4d4d")
+                    checkbox.var = var
+                    checkbox.grid(row=0, column=0, sticky="w", padx=5)
+                    self.widgets[key] = checkbox
 
-                # Set the border color to white
-                setting_frame = tk.LabelFrame(self.master, text=formatted_key, font=("Arial", 12), fg="white", bg="#2c2c2c",
-                                            labelanchor='nw', bd=2, relief="solid")
-                setting_frame.pack(fill=tk.X, padx=5, pady=5)
-
-
-            if isinstance(value, bool):
-                var = BooleanVar(value=value)
-                checkbox = tk.Checkbutton(setting_frame, variable=var, bg="#2c2c2c", fg="white", font=("Arial", 10),
-                                          selectcolor="#4d4d4d", command=self.toggle_dynamic_learning_rate if key == "dynamic_learning_rate" else None)
-                checkbox.var = var
-                checkbox.pack(side=tk.LEFT, padx=5, anchor='w')
-                setting_frame.children['input'] = checkbox
-                self.widgets[key] = checkbox
-
-            elif key in ["learning_rate", "learning_rate_decay"]:
-                slider = Scale(setting_frame, from_=0, to=1, resolution=0.001, orient="horizontal",
-                               bg="#2c2c2c", fg="white", troughcolor="white")
-                slider.set(value)
-                slider.pack(fill=tk.X, padx=5, expand=True)
-                setting_frame.children['input'] = slider
-
-                # Store reference for dynamic adjustment
-                if key == "learning_rate":
-                    self.learning_rate_slider = slider
-                elif key == "learning_rate_decay":
-                    self.learning_rate_decay_slider = slider
-
-                self.widgets[key] = slider
-
-            elif key in ["daily_training_sessions", "epoch_count", "batch_size"]:
-                slider = Scale(setting_frame, from_=0, to=100, orient="horizontal", bg="#2c2c2c", fg="white",
-                               troughcolor="white")
-                slider.set(value)
-                slider.pack(fill=tk.X, padx=5, expand=True)
-                setting_frame.children['input'] = slider
-                self.widgets[key] = slider
-
-            elif key == "training_mode":
-                # Create two buttons for 'Supervised' and 'Unsupervised'
-                self.training_mode_var = StringVar(value=value)
-
-                button_supervised = tk.Button(setting_frame, text="Supervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value == "Supervised" else "raised",
-                                              command=lambda: self.set_training_mode("Supervised"))
-                button_unsupervised = tk.Button(setting_frame, text="Unsupervised", font=("Arial", 12), fg="white", bg="#4d4d4d", relief="sunken" if value == "Unsupervised" else "raised",
-                                                command=lambda: self.set_training_mode("Unsupervised"))
-
-                button_supervised.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=True)
-                button_unsupervised.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=True)
-
-                # Store references to these buttons for later updates
-                self.training_mode_buttons = {"Supervised": button_supervised, "Unsupervised": button_unsupervised}
-                self.widgets[key] = self.training_mode_var
-
-            elif key == "training_data_path":
-                entry = tk.Entry(setting_frame, font=("Arial", 10), bg="#4d4d4d", fg="white", relief="flat")
-                entry.insert(0, value)
-                entry.pack(side=tk.LEFT, fill=tk.X, padx=5, expand=True)
-                setting_frame.children['input'] = entry
-
-                # Add folder icon button to browse for path
-                folder_button = tk.Button(setting_frame, text="📁", command=lambda: self.browse_for_path(entry),
-                                          font=("Arial", 12), fg="white", bg="#2c2c2c", relief="flat")
-                folder_button.pack(side=tk.LEFT, padx=5)
-                self.widgets[key] = entry
-
-            elif key in ["optimizer", "model_type", "evaluation_frequency", "personality_mode", "response_speed"]:
-                dropdown_values = self.get_dropdown_options(key)
-                combobox = ttk.Combobox(setting_frame, values=[v.title() for v in dropdown_values], font=("Arial", 10))
-                combobox.set(value.title())
-                combobox.pack(fill=tk.X, padx=5, expand=True)
-                setting_frame.children['input'] = combobox
-                self.widgets[key] = combobox
-
-            # Add the description for each setting
-            description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10),
-                                         fg="#a9a9a9", bg="#2c2c2c", anchor='w')
-            description_label.pack(anchor='w', padx=5)
+                    # Add description to the right of the checkbox, closer to the checkbox
+                    description_label = tk.Label(setting_frame, text=self.get_setting_description(key), font=("Arial", 10), fg="#a9a9a9", bg="#2c2c2c", anchor='w')
+                    description_label.grid(row=0, column=1, sticky="w", padx=5)
 
     def browse_for_path(self, entry_widget):
         """
@@ -242,17 +176,50 @@ class AIConfig:
         }
         return options.get(key, [])
 
-    def default_values(self):
-        """
-        Reset all settings to their default values.
-        """
-        default_values = {
+    def reset_to_default_settings(self):
+        """Reset the current settings to the default values."""
+        self.config = self.default_settings()
+        self.update_widgets()
+        # Trigger dynamic learning rate toggle to ensure sliders are updated correctly
+        self.toggle_dynamic_learning_rate()
+
+    def update_widgets(self):
+        """Update the widgets with the new values in `self.config`."""
+        for key, value in self.config.items():
+            widget = self.widgets.get(key)
+            
+            if isinstance(widget, tk.Checkbutton):
+                # Update the value of the checkbox
+                widget.var.set(value)
+            elif isinstance(widget, Scale):
+                # Update the value of the slider
+                widget.set(value)
+            elif isinstance(widget, ttk.Combobox):
+                # Update the combobox value
+                widget.set(value.title())
+            elif isinstance(widget, tk.Entry):
+                # Update the entry widget
+                widget.delete(0, tk.END)
+                widget.insert(0, value)
+
+        # Update training mode buttons separately
+        if "training_mode" in self.config:
+            mode = self.config["training_mode"].lower()
+            for mode_key, button in self.training_mode_buttons.items():
+                if mode_key == mode:
+                    button.configure(relief="sunken")
+                else:
+                    button.configure(relief="raised")
+
+    def default_settings(self):
+        """Return default settings for the AI configuration."""
+        return {
             "enabled": True,
             "learning_rate": 0.01,
             "dynamic_learning_rate": True,
             "learning_rate_decay": 0.001,
             "daily_training_sessions": 5,
-            "training_mode": "Supervised",
+            "training_mode": "supervised",
             "epoch_count": 50,
             "batch_size": 32,
             "training_data_path": "S:/Snowball/data/training_dataset",
@@ -266,50 +233,23 @@ class AIConfig:
             "response_speed": "Instant",
             "knowledge_expansion": True,
             "memory_retention_limit": 1000,
-            "auto_learning_mode": True,
+            "auto_learning": True,
             "safe_mode": True,
             "max_consecutive_failures": 3,
-            "privacy_protection_enabled": True
+            "privacy_protection": True
         }
-
-    def reset_to_defaults(self):
-        """
-        Reset all settings to their default values.
-        """
-        default_values = self.default_settings()
-
-        for key, widget in self.widgets.items():
-            default_value = default_values.get(key)
-
-            if default_value is not None:
-                if isinstance(widget, tk.Entry):
-                    widget.delete(0, tk.END)
-                    widget.insert(0, str(default_value))
-                elif isinstance(widget, tk.Scale):
-                    widget.set(default_value)
-                elif isinstance(widget, tk.Checkbutton):
-                    widget.var.set(default_value)
-                elif isinstance(widget, ttk.Combobox):
-                    widget.set(default_value)
-                elif isinstance(widget, StringVar):  # For Training Mode
-                    widget.set(default_value.title())
-
-        # Update Learning Rate sliders if Dynamic Learning Rate is changed
-        self.toggle_dynamic_learning_rate()
-
-        messagebox.showinfo("Defaults Restored", "Settings have been restored to their default values.")
 
     def toggle_dynamic_learning_rate(self):
         """
         Toggle the state of learning rate sliders based on the dynamic learning rate checkbox.
         """
-        if self.dynamic_learning_rate_checkbox and self.dynamic_learning_rate_checkbox.var.get():
+        if self.dynamic_learning_rate_checkbox and self.dynamic_learning_rate_checkbox.get():
             # Disable sliders, set them to default values, and change the trough color to grey
             if self.learning_rate_slider:
-                self.learning_rate_slider.set(self.default_learning_rate)
+                self.learning_rate_slider.set(self.default_settings()["learning_rate"])
                 self.learning_rate_slider.configure(state="disabled", troughcolor="#5e5e5e")
             if self.learning_rate_decay_slider:
-                self.learning_rate_decay_slider.set(self.default_learning_rate_decay)
+                self.learning_rate_decay_slider.set(self.default_settings()["learning_rate_decay"])
                 self.learning_rate_decay_slider.configure(state="disabled", troughcolor="#5e5e5e")
         else:
             # Enable sliders and set trough color back to white
@@ -317,12 +257,6 @@ class AIConfig:
                 self.learning_rate_slider.configure(state="normal", troughcolor="#ffffff")
             if self.learning_rate_decay_slider:
                 self.learning_rate_decay_slider.configure(state="normal", troughcolor="#ffffff")
-
-    def format_key(self, key):
-        """
-        Convert snake_case keys to Title Case for display.
-        """
-        return key.replace('_', ' ').title()
 
     def get_setting_description(self, key):
         """
@@ -348,9 +282,9 @@ class AIConfig:
             "response_speed": "Specify the speed at which the AI responds (e.g., instant, delayed).",
             "knowledge_expansion": "Allow the AI to continuously expand its knowledge base.",
             "memory_retention_limit": "Set the limit for how much information the AI retains.",
-            "auto_learning_mode": "Enable or disable automatic learning from interactions.",
+            "auto_learning": "Enable or disable automatic learning from interactions.",
             "safe_mode": "Ensure that the AI operates within safe boundaries.",
             "max_consecutive_failures": "Maximum number of consecutive failures allowed before taking corrective action.",
-            "privacy_protection_enabled": "Enable protection of user privacy during AI operations."
+            "privacy_protection": "Enable protection of user privacy during AI operations."
         }
         return descriptions.get(key, "No description available for this setting.")

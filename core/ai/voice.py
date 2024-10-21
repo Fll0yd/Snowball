@@ -1,3 +1,4 @@
+# voice_interface.py (S:/Snowball/core)
 import json
 import speech_recognition as sr
 from gtts import gTTS, gTTSError
@@ -7,24 +8,25 @@ import os
 import io
 import time
 import pyttsx3
-from core.logger import SnowballLogger
 from openai import OpenAI
-from core.config_loader import ConfigLoader
 import concurrent.futures
 import uuid
+from core.initializer import SnowballInitializer
 
 # Set the FFmpeg path directly (if using FFmpeg for audio conversion)
 AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"
 AudioSegment.ffprobe = "C:/ffmpeg/bin/ffprobe.exe"
 
-class VoiceInterface:
+class Voice:
     def __init__(self, api_key):
+        # Initialize components using SnowballInitializer
+        initializer = SnowballInitializer()
+        self.logger = initializer.logger
+        self.config_loader = initializer.config_loader
+
         # Initialize the OpenAI client using the provided API key
         self.client = OpenAI(api_key=api_key)
         self.api_key = api_key
-
-        # Initialize the Snowball logger
-        self.logger = SnowballLogger()
 
         self.recognizer = sr.Recognizer()
         self.engine = pyttsx3.init()
@@ -33,7 +35,7 @@ class VoiceInterface:
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 
         # Load voice settings using ConfigLoader
-        voice_settings = ConfigLoader().load_config("interface_settings.json")
+        voice_settings = self.config_loader.load_config("interface_settings.json")
 
         # Voice settings
         self.language = voice_settings.get("language", "en-US")
@@ -197,7 +199,6 @@ class VoiceInterface:
         greeting = self.generate_greeting()
         self.speak(greeting)
 
-# Example usage
 if __name__ == "__main__":
-    voice_interface = VoiceInterface(api_key="YOUR_API_KEY")
+    voice_interface = Voice(api_key="YOUR_API_KEY")
     voice_interface.speak_greeting()

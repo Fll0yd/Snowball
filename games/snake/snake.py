@@ -1,16 +1,17 @@
+# snake.py (S:/Snowball/games/snake)
+ 
 import pygame
 import random
 import heapq
-import numpy as np
-import sys
 import os
+import sys
+from core.initializer import SnowballInitializer  # Import SnowballInitializer
 
-# Add the root project directory (Snowball_AI) to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+print("System Path:", sys.path)  # Debugging statement to confirm path setup
 
-from core.reinforcement import QLearningAgent
-from core.memory import Memory
-from core.logger import SnowballLogger  # Import the logger
+# Use the SnowballInitializer to initialize components
+initializer = SnowballInitializer()
 
 # Set up Pygame
 pygame.init()
@@ -20,6 +21,10 @@ TILE_SIZE = 20  # Size of each tile (Snake segments)
 GRID_SIZE = 30  # 30x30 grid (600x600 pixels)
 WINDOW_SIZE = GRID_SIZE * TILE_SIZE
 FPS = 15  # Frames per second
+
+# Use the memory and logger from the initializer
+logger = initializer.logger
+memory = initializer.memory
 
 # Colors
 BLACK = (0, 0, 0)
@@ -139,16 +144,31 @@ def generate_hamiltonian_cycle(grid_size):
         x, y = x + dx, y + dy
     return path
 
+def draw_title():
+    font = pygame.font.Font(None, 100)
+    snake_text = font.render("SNAKE", True, GREEN)
+    screen.blit(snake_text, (WINDOW_SIZE // 4, WINDOW_SIZE // 4))
+
 # Snake AI class
 class SnakeAI:
-    def __init__(self, high_score=0):  # Pass high_score
+    def __init__(self, high_score=0):
+        self.reset_game_state(high_score)
+        self.learner = initializer.q_learning_agent  # Use the Q-learning agent from initializer
+        self.logger = logger  # Use logger from initializer
+        self.memory = memory  # Use memory from initializer
+        state_size = GRID_SIZE * GRID_SIZE * 9  # Adjust the state size based on grid and direction
+        action_size = 3  # Possible actions (left, straight, right)
+
+    def reset_game_state(self, high_score=0):
         self.snake = [(0, 0)]
         self.grid = set(self.snake)
         self.direction = (1, 0)  # Start moving to the right
-        self.last_direction = self.direction  # Keep track of the last valid direction
         self.food = self.spawn_food()
         self.score = 0
-        self.high_score = high_score  # Use loaded high score
+        self.high_score = high_score
+        self.learner = initializer.q_learning_agent  # Use the Q-learning agent from initializer
+        self.logger = logger  # Use logger from initializer
+        self.memory = memory  # Use memory from initializer
         self.cycle = generate_hamiltonian_cycle(GRID_SIZE)
         self.cycle_index = 0
         self.is_shortcut = False
@@ -159,9 +179,6 @@ class SnakeAI:
         self.mode = "normal"  # Modes: 'normal', 'hamiltonian', 'survival'
         state_size = GRID_SIZE * GRID_SIZE * 9  # Adjust the state size based on grid and direction
         action_size = 3  # Possible actions (left, straight, right)
-        self.learner = QLearningAgent(state_size, action_size)
-        self.memory = Memory()  # Load Snowball AI's memory
-        self.logger = SnowballLogger()  # Initialize logger
 
     def spawn_food(self):
         while True:
@@ -246,9 +263,8 @@ class SnakeAI:
             new_direction = (1, 0)
 
         # Prevent the snake from moving backwards into itself
-        if new_direction and new_direction != OPPOSITE_DIRECTIONS.get(self.last_direction):
+        if new_direction and new_direction != OPPOSITE_DIRECTIONS.get(self.direction):
             self.direction = new_direction
-            self.last_direction = self.direction  # Update last valid direction
             self.manual_move_done = True
             self.logger.log_event(f"Manual move to direction: {self.direction}")
 
@@ -361,118 +377,112 @@ class SnakeAI:
         screen.blit(score_text, (10, 10))
         screen.blit(high_score_text, (WINDOW_SIZE - 200, 10))
 
-def draw_title():
-    font = pygame.font.Font(None, 100)
-    snake_text = font.render("SNAKE", True, GREEN)
-    screen.blit(snake_text, (WINDOW_SIZE // 4, WINDOW_SIZE // 4))
+    def game_loop(self):
+        clock = pygame.time.Clock()
+        high_score = load_high_score()  # Load high score from file at the start
+        snake_ai = SnakeAI(high_score)  # Pass high score to SnakeAI
+        running = True
+        game_active = False
+        game_over = False  # Track if the game is over
+        paused = False
 
-# Modify the game loop to handle game over state properly
-def game_loop():
-    clock = pygame.time.Clock()
-    high_score = load_high_score()  # Load high score from file at the start
-    snake_ai = SnakeAI(high_score)  # Pass high score to SnakeAI
-    running = True
-    game_active = False
-    game_over = False  # Track if the game is over
-    paused = False
+        # Create a start button in the middle of the screen
+        start_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 40, 300, 80, "Start")
+        game_over_button = None
+        play_again_button = None
+        quit_button = None
 
-    # Create a start button in the middle of the screen
-    start_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 40, 300, 80, "Start")
-    game_over_button = None
-    play_again_button = None
-    quit_button = None
+        while running:
+            screen.fill(BLACK)
 
-    while running:
-        screen.fill(BLACK)
+            try:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                    if event.type == pygame.KEYDOWN:
+                        if game_active and not game_over:
+                            if event.key == pygame.K_SPACE:
+                                paused = not paused
+                            elif event.key == pygame.K_h:
+                                snake_ai.show_hamiltonian = not snake_ai.show_hamiltonian
+                            elif event.key == pygame.K_m:
+                                snake_ai.toggle_manual_mode()
+                            elif snake_ai.manual_mode:
+                                snake_ai.manual_move(event)  # Process single key press in manual mode
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                if game_active and not game_over:
-                    if event.key == pygame.K_SPACE:
-                        paused = not paused
-                    elif event.key == pygame.K_h:
-                        snake_ai.show_hamiltonian = not snake_ai.show_hamiltonian
-                    elif event.key == pygame.K_m:
-                        snake_ai.toggle_manual_mode()
-                    elif snake_ai.manual_mode:
-                        snake_ai.manual_move(event)  # Process single key press in manual mode
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        mouse_pos = pygame.mouse.get_pos()
+                        if not game_active and start_button.is_clicked(mouse_pos):
+                            game_active = True
+                            game_over = False
+                            snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
+                        elif game_over and play_again_button.is_clicked(mouse_pos):
+                            game_active = True
+                            game_over = False
+                            snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
+                        elif game_over and quit_button.is_clicked(mouse_pos):
+                            running = False  # Quit the game
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if not game_active and start_button.is_clicked(mouse_pos):
-                    game_active = True
-                    game_over = False
-                    snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
-                elif game_over and play_again_button.is_clicked(mouse_pos):
-                    game_active = True
-                    game_over = False
-                    snake_ai = SnakeAI(high_score)  # Pass current high score when restarting
-                elif game_over and quit_button.is_clicked(mouse_pos):
-                    running = False  # Quit the game
+                if snake_ai.manual_mode and snake_ai.manual_move_done:
+                    snake_ai.manual_move_snake()  # Call to move the snake manually
+                    snake_ai.manual_move_done = False  # Reset move flag after one step
 
-        if snake_ai.manual_mode and snake_ai.manual_move_done:
-            snake_ai.manual_move_snake()  # Call to move the snake manually
-            snake_ai.manual_move_done = False  # Reset move flag after one step
+                if not game_active:
+                    draw_title()  # Draw the title "SNAKE" before the game starts
+                    start_button.draw(screen)
+                elif paused:
+                    snake_ai.draw()  # Keep displaying the snake, food, and score
+                    snake_ai.display_score()
+                    font = pygame.font.Font(None, 74)
+                    text = font.render("Paused", True, WHITE)
+                    screen.blit(text, (WINDOW_SIZE // 2 - 100, WINDOW_SIZE // 2))
+                elif game_over:
+                    # Draw the final game state (snake, food, and score)
+                    snake_ai.draw()
+                    snake_ai.display_score()
 
-        if not game_active:
-            draw_title()  # Draw the title "SNAKE" before the game starts
-            start_button.draw(screen)
-        elif paused:
-            snake_ai.draw()  # Keep displaying the snake, food, and score
-            snake_ai.display_score()
-            font = pygame.font.Font(None, 74)
-            text = font.render("Paused", True, WHITE)
-            screen.blit(text, (WINDOW_SIZE // 2 - 100, WINDOW_SIZE // 2))
-        elif game_over:
-            # Draw the final game state (snake, food, and score)
-            snake_ai.draw()
-            snake_ai.display_score()
+                    # Display the game over screen on top of the final state
+                    font = pygame.font.Font(None, 74)
+                    text = font.render("Game Over", True, RED)
+                    screen.blit(text, (WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 100))
+                    play_again_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 40, 300, 80, "Play Again")
+                    quit_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 140, 300, 80, "Quit")
+                    play_again_button.draw(screen)
+                    quit_button.draw(screen)
 
-            # Display the game over screen on top of the final state
-            font = pygame.font.Font(None, 74)
-            text = font.render("Game Over", True, RED)
-            screen.blit(text, (WINDOW_SIZE // 4, WINDOW_SIZE // 2 - 100))
-            play_again_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 40, 300, 80, "Play Again")
-            quit_button = Button(WINDOW_SIZE // 4, WINDOW_SIZE // 2 + 140, 300, 80, "Quit")
-            play_again_button.draw(screen)
-            quit_button.draw(screen)
+                    # Assign game_over_button to play_again_button for click detection
+                    game_over_button = play_again_button
 
-            # Assign game_over_button to play_again_button for click detection
-            game_over_button = play_again_button
+                else:
+                    # Move the snake and calculate the reward
+                    next_state = snake_ai.get_state()
+                    if not snake_ai.move():
+                        # Stop game logic and trigger game over
+                        game_over = True
+                        # Check if a new high score was reached and save it
+                        if snake_ai.score > high_score:
+                            high_score = snake_ai.score
+                            save_high_score(high_score)  # Save new high score
+                        snake_ai.memory.store_interaction(
+                            f"Game Over. Reason: Snake collided with wall or itself. Score: {snake_ai.score}",
+                            "Learning new strategy."
+                        )
+                        snake_ai.logger.log_event(f"Game Over. Reason: Snake collided with wall or itself. Score: {snake_ai.score}")
+                        print(f"Game Over. Reason: Snake collided with wall or itself")
+                    else:
+                        snake_ai.update_q_table(-1 if snake_ai.snake[0] != snake_ai.food else 10, next_state)
 
-        else:
-            # Move the snake and calculate the reward
-            next_state = snake_ai.get_state()
-            if not snake_ai.move():
-                # Stop game logic and trigger game over
-                game_over = True
-                # Check if a new high score was reached and save it
-                if snake_ai.score > high_score:
-                    high_score = snake_ai.score
-                    save_high_score(high_score)  # Save new high score
-                snake_ai.memory.store_interaction(
-                    f"Game Over. Reason: Snake collided with wall or itself. Score: {snake_ai.score}",
-                    "Learning new strategy."
-                )
-                snake_ai.logger.log_event(f"Game Over. Reason: Snake collided with wall or itself. Score: {snake_ai.score}")
-                print(f"Game Over. Reason: Snake collided with wall or itself")
-            else:
-                snake_ai.update_q_table(-1 if snake_ai.snake[0] != snake_ai.food else 10, next_state)
+                    # Draw snake and other elements during the game
+                    snake_ai.draw()
+                    snake_ai.display_score()
 
-            # Draw snake and other elements during the game
-            snake_ai.draw()
-            snake_ai.display_score()
+                pygame.display.flip()
+                clock.tick(FPS)
 
-        pygame.display.flip()
-        clock.tick(FPS)
+            except Exception as e:
+                snake_ai.logger.log_error(f"Unhandled exception in game loop: {e}")
+                running = False  # Exit the loop if there's an unhandled exception
 
-    # Save memory on game end
-    snake_ai.memory.store_interaction(f"Final Score: {snake_ai.score}", "Snake AI completed a game.")
-    snake_ai.logger.log_event(f"Final Score: {snake_ai.score}")
-
-if __name__ == "__main__":
-    game_loop()
-    pygame.quit()
-    sys.exit()
+        # Save memory on game end
+        snake_ai.memory.store_interaction(f"Final Score: {snake_ai.score}", "Snake AI completed a game.")
+        snake_ai.logger.log_event(f"Final Score: {snake_ai.score}")
