@@ -3806,3 +3806,17 @@
 2024-10-21 14:29:00,580 - INFO - Event: Logger initialized successfully.
 2024-10-21 14:29:00,581 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
 2024-10-21 14:29:00,584 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:16,170 - INFO - Event: Logger initialized successfully.
+2024-10-26 14:06:16,172 - INFO - Successfully loaded configuration: S:/Snowball/config/account_integrations.json
+2024-10-26 14:06:17,075 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:19,080 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:21,083 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:23,084 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-26 14:06:26,381 - INFO - Event: Logger initialized successfully.
+2024-10-26 14:06:26,382 - INFO - Loading configuration from cache: S:/Snowball/config/account_integrations.json
+2024-10-26 14:06:26,382 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:28,384 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:07:17,133 - INFO - Successfully loaded configuration: ai_settings.json
+2024-10-26 14:07:38,938 - INFO - Successfully loaded configuration: interface_settings.json
+2024-10-26 14:07:48,530 - INFO - Loading configuration from cache: ai_settings.json
+2024-10-26 14:08:21,400 - INFO - Loading configuration from cache: interface_settings.json

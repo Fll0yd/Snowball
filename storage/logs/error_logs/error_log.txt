@@ -74,3 +74,9 @@
 2024-10-21 14:28:58,575 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
 2024-10-21 14:29:00,578 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
 2024-10-21 14:29:00,584 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:17,075 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:19,080 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:21,083 - ERROR - Error: Failed to initialize voice_interface (attempt 3): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:23,084 - ERROR - Error: voice_interface could not be initialized after 3 attempts.
+2024-10-26 14:06:26,382 - ERROR - Error: Failed to initialize voice_interface (attempt 1): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
+2024-10-26 14:06:28,384 - ERROR - Error: Failed to initialize voice_interface (attempt 2): cannot import name 'VoiceInterface' from 'core.ai.voice' (s:\Snowball\core\ai\voice.py)
