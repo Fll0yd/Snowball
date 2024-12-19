@@ -7,7 +7,7 @@ from plyer import notification  # For push notifications
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 # Define the scope for Google OAuth
 SCOPES = ['https://www.googleapis.com/auth/userinfo.profile']

@@ -5,7 +5,7 @@ import random
 import heapq
 import os
 import sys
-from core.initializer import SnowballInitializer  # Import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer  # Import SnowballInitializer
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 print("System Path:", sys.path)  # Debugging statement to confirm path setup

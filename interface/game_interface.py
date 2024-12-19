@@ -9,7 +9,7 @@ import logging
 import os
 import sys
 
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 class GameInterface:
     def __init__(self, master, logger=None, config_loader=None, q_learning_agent=None):

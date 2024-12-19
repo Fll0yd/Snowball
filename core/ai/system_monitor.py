@@ -19,7 +19,7 @@ import os
 import json
 import threading
 
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 class Config:
     EMAIL_SUBJECT = 'System Performance Report'

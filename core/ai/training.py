@@ -10,7 +10,7 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import Adam
 from apscheduler.schedulers.background import BackgroundScheduler
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 
 class Training:

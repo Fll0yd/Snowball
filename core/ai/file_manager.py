@@ -17,7 +17,7 @@ import docx  # For DOCX analysis
 from sklearn.model_selection import train_test_split  # For dataset splitting
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 
 class FileEventHandler(FileSystemEventHandler):

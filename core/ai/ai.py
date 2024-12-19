@@ -45,7 +45,7 @@ class SnowballAI:
     def _initialize_core_components(self):
         """Initialize all core components normally."""
         try:
-            from core.initializer import SnowballInitializer
+            from Snowball.decom.OLDinitializer import SnowballInitializer
             self.initializer = SnowballInitializer()
 
             # Initialize components directly from initializer

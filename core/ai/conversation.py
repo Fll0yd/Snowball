@@ -1,7 +1,7 @@
 import openai
 import random
 import json
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 class Conversation:
     def __init__(self):

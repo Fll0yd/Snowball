@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import threading
 from keras.models import load_model
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 import time
 
 

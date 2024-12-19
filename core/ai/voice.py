@@ -11,7 +11,7 @@ import pyttsx3
 from openai import OpenAI
 import concurrent.futures
 import uuid
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 # Set the FFmpeg path directly (if using FFmpeg for audio conversion)
 AudioSegment.converter = "C:/ffmpeg/bin/ffmpeg.exe"

@@ -13,7 +13,7 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 # Import the SnowballAI class after modifying sys.path
-from core.ai.agent import SnowballAI
+from Snowball.decom.OLDagent import SnowballAI
 
 class TestSnowballAI(unittest.TestCase):
     def setUp(self):

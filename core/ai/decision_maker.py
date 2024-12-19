@@ -5,7 +5,7 @@ from queue import Queue, Empty
 import time
 import requests
 from datetime import datetime
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 class DecisionMaker:
     """Class to handle user requests and make decisions based on input."""

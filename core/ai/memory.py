@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from contextlib import contextmanager
 from cachetools import LRUCache
 
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 
 

@@ -7,7 +7,7 @@ from keras.layers import Dense
 from keras.losses import MeanSquaredError
 from keras.optimizers import Adam
 import os
-from core.initializer import SnowballInitializer
+from Snowball.decom.OLDinitializer import SnowballInitializer
 
 
 class QLearningAgent:

@@ -7,7 +7,7 @@ import os
 messages_file_path = "S:/cloud_sync/mobile_sync/messages.json"
 
 # Import Snowball AI core components
-from core.ai.agent import SnowballAI
+from Snowball.decom.OLDagent import SnowballAI
 
 # Create an instance of the Snowball AI agent
 snowball_ai = SnowballAI()
