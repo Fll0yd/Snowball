@@ -65,15 +65,34 @@ class Memory:
                                     name TEXT,
                                     path TEXT UNIQUE,
                                     last_modified DATETIME,
+                                    file_size INTEGER,
+                                    tags TEXT,
+                                    file_type TEXT,
+                                    checksum TEXT,
                                     analysis_result TEXT
                                 )''')
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_file_metadata_name ON file_metadata (name)''')
+                cursor.execute('''CREATE INDEX IF NOT EXISTS idx_file_metadata_size ON file_metadata (file_size)''')
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_interactions_timestamp ON interactions (timestamp)''')
                 if self.logger:
                     self.logger.log_event("Created/checked tables and indexes.")
-        except MemoryError as e:
+        except sqlite3.Error as e:
             if self.logger:
                 self.logger.log_error(f"Error creating tables: {e}")
+
+    def search_files_by_tags(self, tags):
+        """Search files by tags."""
+        try:
+            tag_query = " OR ".join(["tags LIKE ?"] * len(tags))
+            params = [f"%{tag}%" for tag in tags]
+            with self._get_cursor() as cursor:
+                cursor.execute(f"SELECT * FROM file_metadata WHERE {tag_query}", params)
+                results = cursor.fetchall()
+            self.logger.log_event(f"Retrieved {len(results)} files matching tags: {tags}")
+            return results
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error searching files by tags '{tags}': {e}")
+            return []
 
     def store_interaction(self, user_input, ai_response, query_type="General"):
         """Store a user interaction in the database."""
@@ -89,7 +108,7 @@ class Memory:
             if self.logger:
                 self.logger.log_error(f"Error storing interaction: {e}")
     
-    def get_interactions(self, query_type=None, start_time=None, end_time=None):
+    def get_interactions(self, query_type=None, start_time=None, end_time=None, limit=100, offset=0):
         """Retrieve interactions with optional filters."""
         try:
             query = "SELECT * FROM interactions WHERE 1=1"
@@ -103,6 +122,8 @@ class Memory:
             if end_time:
                 query += " AND timestamp <= ?"
                 params.append(end_time)
+            query += " ORDER BY timestamp DESC LIMIT ? OFFSET ?"
+            params.extend([limit, offset])
 
             with self._get_cursor() as cursor:
                 cursor.execute(query, params)
@@ -115,21 +136,26 @@ class Memory:
             self.logger.log_error(f"Error retrieving interactions: {e}")
             return []
     
-    def store_file_metadata(self, file_name, file_path, last_modified, analysis_result=None):
-        """Store or update file metadata in the database with logging."""
+    def store_file_metadata(self, file_name, file_path, last_modified, file_size=None, tags=None, analysis_result=None):
+        """Store or update file metadata in the database."""
         try:
             with self._get_cursor() as cursor:
                 cursor.execute(
                     """
-                    INSERT INTO file_metadata (name, path, last_modified, analysis_result)
-                    VALUES (?, ?, ?, ?)
+                    INSERT INTO file_metadata (name, path, last_modified, file_size, tags, analysis_result)
+                    VALUES (?, ?, ?, ?, ?, ?)
                     ON CONFLICT(path) DO UPDATE SET
                         last_modified = excluded.last_modified,
+                        file_size = excluded.file_size,
+                        tags = excluded.tags,
                         analysis_result = excluded.analysis_result
                     """,
-                    (file_name, file_path, last_modified, analysis_result)
+                    (file_name, file_path, last_modified, file_size, tags, analysis_result)
                 )
-            self.logger.log_event(f"Indexed or updated file: {file_name} at {file_path} (Last Modified: {last_modified})")
+            if self.logger:
+                self.logger.log_event(
+                    f"Stored metadata for file: {file_name}, Size: {file_size}, Tags: {tags}"
+                )
         except sqlite3.Error as e:
             self.logger.log_error(f"Error storing or updating file metadata: {e}")
 
@@ -166,16 +192,23 @@ class Memory:
             if self.logger:
                 self.logger.log_error(f"Error retrieving last interaction: {e}")
 
-    def clean_old_interactions(self, days=30):
-        """Clean old interactions from the database."""
+    def archive_old_interactions(self, days=30, archive_table="archived_interactions"):
+        """Archive old interactions instead of deleting them."""
         try:
             cutoff_date = datetime.now() - timedelta(days=days)
             with self._get_cursor() as cursor:
+                cursor.execute(f'''
+                    CREATE TABLE IF NOT EXISTS {archive_table} AS SELECT * FROM interactions WHERE 1=0
+                ''')
+                cursor.execute(f'''
+                    INSERT INTO {archive_table} SELECT * FROM interactions WHERE timestamp < ?
+                ''', (cutoff_date,))
                 cursor.execute("DELETE FROM interactions WHERE timestamp < ?", (cutoff_date,))
-                rows_deleted = cursor.rowcount
-            self.logger.log_event(f"Cleaned {rows_deleted} interactions older than {days} days.")
+                rows_archived = cursor.rowcount
+            if self.logger:
+                self.logger.log_event(f"Archived {rows_archived} interactions older than {days} days.")
         except sqlite3.Error as e:
-            self.logger.log_error(f"Error cleaning old interactions: {e}")
+            self.logger.log_error(f"Error archiving old interactions: {e}")
 
     def close(self):
         """Close the database connection properly."""

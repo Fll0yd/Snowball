@@ -1,1 +1,0 @@
-2024-12-19 13:55:48,697 - ERROR - Error: Gemini API Error: HTTPSConnectionPool(host='generativelanguage.googleapis.com', port=443): Read timed out. (read timeout=20)
