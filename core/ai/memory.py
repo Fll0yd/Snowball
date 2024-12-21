@@ -67,8 +67,10 @@ class Memory:
                                     last_modified DATETIME,
                                     analysis_result TEXT
                                 )''')
+                cursor.execute('''CREATE INDEX IF NOT EXISTS idx_file_metadata_name ON file_metadata (name)''')
+                cursor.execute('''CREATE INDEX IF NOT EXISTS idx_interactions_timestamp ON interactions (timestamp)''')
                 if self.logger:
-                    self.logger.log_event("Created/checked tables: 'interactions', 'file_metadata'.")
+                    self.logger.log_event("Created/checked tables and indexes.")
         except MemoryError as e:
             if self.logger:
                 self.logger.log_error(f"Error creating tables: {e}")
@@ -86,7 +88,33 @@ class Memory:
         except MemoryError as e:
             if self.logger:
                 self.logger.log_error(f"Error storing interaction: {e}")
+    
+    def get_interactions(self, query_type=None, start_time=None, end_time=None):
+        """Retrieve interactions with optional filters."""
+        try:
+            query = "SELECT * FROM interactions WHERE 1=1"
+            params = []
+            if query_type:
+                query += " AND query_type = ?"
+                params.append(query_type)
+            if start_time:
+                query += " AND timestamp >= ?"
+                params.append(start_time)
+            if end_time:
+                query += " AND timestamp <= ?"
+                params.append(end_time)
 
+            with self._get_cursor() as cursor:
+                cursor.execute(query, params)
+                results = cursor.fetchall()
+
+            if self.logger:
+                self.logger.log_event(f"Retrieved {len(results)} interactions matching filters.")
+            return results
+        except sqlite3.Error as e:
+            self.logger.log_error(f"Error retrieving interactions: {e}")
+            return []
+    
     def store_file_metadata(self, file_name, file_path, last_modified, analysis_result=None):
         """Store or update file metadata in the database with logging."""
         try:
@@ -106,7 +134,11 @@ class Memory:
             self.logger.log_error(f"Error storing or updating file metadata: {e}")
 
     def search_files(self, keyword):
-        """Search indexed files by keyword."""
+        """Search indexed files by keyword with caching."""
+        if keyword in self.metadata_cache:
+            self.logger.log_event(f"Cache hit for file search: '{keyword}'")
+            return self.metadata_cache[keyword]
+
         try:
             with self._get_cursor() as cursor:
                 cursor.execute(
@@ -114,12 +146,13 @@ class Memory:
                     (f"%{keyword}%", f"%{keyword}%")
                 )
                 results = cursor.fetchall()
+            self.metadata_cache[keyword] = results
             self.logger.log_event(f"Retrieved {len(results)} files matching keyword: '{keyword}'")
             return results
         except sqlite3.Error as e:
             self.logger.log_error(f"Error searching files by keyword '{keyword}': {e}")
             return []
-
+        
     def get_last_interaction(self):
         """Retrieve the last interaction."""
         try:

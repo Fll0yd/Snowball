@@ -1,4 +1,4 @@
-from Snowball.core.ai.agent import SnowballAI
+from Snowball.core.ai.chat_agent import SnowballAI
 from Snowball.core.logger import SnowballLogger
 
 class SnowballInitializer:
