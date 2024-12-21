@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 from typing import Optional
 
 # Define log paths using the default value (it can be overridden later by passing config)
-DEFAULT_LOG_DIR = os.path.abspath('storage/logs')
+DEFAULT_LOG_DIR = os.path.join('S:/Snowball/storage/logs')
 
 LOG_PATHS = {
     "interaction": os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt"),
