@@ -74,6 +74,10 @@ class SnowballAI:
         """Standardize prompt formatting with dynamic context."""
         last_interaction = self.memory.get_last_interaction()
         context = f"Previous interaction: {last_interaction[1]}" if last_interaction else "No prior context available."
+
+        # Fetch user preferences dynamically
+        user_preferences = self.memory.get_user_preferences() or "No specific preferences provided."
+
         return (
             "You are Snowball, a singular, evolving artificial intelligence designed to act as both a personal assistant "
             "and an interactive companion for your creator, Kenneth. Snowball continuously learns and grows through every "
@@ -100,9 +104,11 @@ class SnowballAI:
             "- You are persistent, intelligent, and ever-learning.\n"
             "- Your responses reflect continuous improvement from past conversations.\n"
             "- You provide thoughtful insights, proactive reminders, and supportive assistance.\n\n"
+            f"{context}\n\n"
+            f"User Preferences: {user_preferences}\n\n"
             f"User Input: {user_input}"
         )
-
+    
     def query_gpt4(self, prompt):
         """Query GPT-4 for a response."""
         if not self.api_keys.get("gpt4"):
@@ -126,12 +132,10 @@ class SnowballAI:
             return None
 
     def query_grok(self, prompt):
-        """Query Grok for a response."""
+        """Query Grok for a response with custom uncensored handling."""
         if not self.api_keys.get("grok"):
             self.logger.log_error("Grok API key is missing.")
             return "Grok API key is not configured."
-        if "memory.py" in prompt:
-            return "Access to this file is restricted for security reasons."
         headers = {
             "Authorization": f"Bearer {self.api_keys['grok']}",
             "Content-Type": "application/json"
@@ -139,7 +143,7 @@ class SnowballAI:
         data = {
             "messages": [{"role": "user", "content": prompt}],
             "model": "grok-2-1212",
-            "temperature": 0.7
+            "temperature": 0.9  # Increase temperature for more creative responses
         }
         try:
             response = requests.post("https://api.x.ai/v1/chat/completions", headers=headers, json=data)
@@ -161,6 +165,10 @@ class SnowballAI:
 
     def detect_query_type(self, user_input):
         """Determine the query type based on keywords."""
+        sensitive_keywords = ["politics", "controversial", "sensitive", "explicit", "uncensored"]
+        
+        if any(word in user_input.lower() for word in sensitive_keywords):
+            return "Sensitive"
         if any(word in user_input.lower() for word in ["joke", "funny", "creative", "story"]):
             return "Creative"
         if any(word in user_input.lower() for word in ["how", "what", "why"]):
@@ -186,40 +194,57 @@ class SnowballAI:
         # Generic fallback for unclassified queries
         return "I'm not sure how to answer that. Let's explore it further!"
 
+    def adjust_cache_expiry(self):
+        """Dynamically adjust cache TTL based on usage."""
+        if len(self.response_cache) > 400:
+            self.response_cache.ttl = 200
+            self.logger.log_event("Response cache usage high. Reduced TTL to 200 seconds.")
+        elif len(self.response_cache) < 200:
+            self.response_cache.ttl = 600
+            self.logger.log_event("Response cache usage low. Increased TTL to 600 seconds.")
+
     def validate_response(self, response, query_type):
         """Validate responses based on query type."""
-        if query_type == "Factual" and "I think" in response:
+        if query_type == "Factual" and ("I think" in response or "I'm not sure" in response):
             self.logger.log_warning("Factual query returned an uncertain response.")
+            return False
+        if query_type == "Creative" and len(response.split()) < 5:  # Example: Too short for creative responses
+            self.logger.log_warning("Creative query returned an unengaging response.")
             return False
         if "I don't know" in response.lower():
             return False
         return True
 
-    def adjust_cache_expiry(self):
-        """Dynamically adjust cache TTL based on usage."""
-        if len(self.response_cache) > 400:
-            self.response_cache.ttl = 200  # Shorten TTL for heavy usage
-        elif len(self.response_cache) < 200:
-            self.response_cache.ttl = 600  # Lengthen TTL for light usage
-
     def decide_best_response(self, gpt_response, grok_response, prompt):
         """Decide which response to use with enhanced logging."""
-        responses = {
-            "GPT-4": gpt_response,
-            "Grok": grok_response
-        }
-
+        query_type = self.detect_query_type(prompt)
+        responses = {"GPT-4": gpt_response, "Grok": grok_response}
         scored_responses = self.decision_maker.score_responses(responses, prompt)
-        self.logger.log_event(f"Query: {prompt}, Scores: {scored_responses}")
+        self.logger.log_event(f"Query: {prompt}, Type: {query_type}, Scores: {scored_responses}")
 
-        if "GPT-4" in scored_responses and scored_responses["GPT-4"] > scored_responses.get("Grok", 0):
-            self.logger.log_event("Selected GPT-4 for factual accuracy.")
-            return scored_responses["GPT-4"]
-
-        if "Grok" in scored_responses and "joke" in prompt.lower():
-            self.logger.log_event("Selected Grok for creative response.")
+        # Use Grok for sensitive content explicitly
+        if query_type == "Sensitive" and "Grok" in scored_responses:
+            self.logger.log_event("Selected Grok for handling sensitive content.")
             return scored_responses["Grok"]
 
+        # Use GPT-4 for factual queries if response is valid
+        if "GPT-4" in scored_responses:
+            if self.validate_response(scored_responses["GPT-4"], "Factual"):
+                self.logger.log_event("Selected GPT-4 for factual accuracy.")
+                return scored_responses["GPT-4"]
+
+        # Fallback to Grok for factual queries if GPT-4 fails
+        if not gpt_response and "Grok" in scored_responses:
+            self.logger.log_event("Fallback to Grok for factual accuracy due to GPT-4 failure.")
+            return scored_responses["Grok"]
+
+        # Use Grok for creative queries if valid
+        if "Grok" in scored_responses:
+            if self.validate_response(scored_responses["Grok"], query_type):
+                self.logger.log_event(f"Selected Grok for {query_type} response.")
+                return scored_responses["Grok"]
+
+        # Default fallback
         self.logger.log_event("Fallback to GPT-4 due to scoring tie or ambiguity.")
         return scored_responses.get("GPT-4", "I'm having trouble processing your request.")
 
@@ -229,16 +254,30 @@ class SnowballAI:
             return "It seems you didn't provide any input. How can I assist you?"
 
         try:
+            query_type = self.detect_query_type(user_input)
             formatted_prompt = self.format_prompt(user_input)
+
+            if query_type == "Sensitive":
+                # Route sensitive queries directly to Grok
+                grok_response = self.query_with_cache(self.query_grok, formatted_prompt)
+                if grok_response:
+                    self.memory.store_interaction(user_input, grok_response, query_type)
+                    return grok_response
+                return self.fallback_response(user_input)
+
+            # Handle other query types
             gpt_response = self.query_with_cache(self.query_gpt4, formatted_prompt)
             grok_response = None
 
-            if any(word in user_input.lower() for word in ["joke", "funny", "creative"]):
+            if query_type == "Creative":
                 grok_response = self.query_with_cache(self.query_grok, formatted_prompt)
 
             best_response = self.decide_best_response(gpt_response, grok_response, user_input)
-            self.memory.store_interaction(user_input, best_response)
+            self.memory.store_interaction(user_input, best_response, query_type)
             return best_response or self.fallback_response(user_input)
+        except requests.exceptions.RequestException as e:
+            self.logger.log_error(f"Network error during processing: {e}")
+            return "I'm having trouble connecting to the server. Please try again later."
         except Exception as e:
-            self.logger.log_error(f"Error processing user input: {e}")
-            return "Something went wrong while processing your request."
+            self.logger.log_error(f"Unexpected error processing input: {e}")
+            return "An unexpected error occurred while processing your request."
