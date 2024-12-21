@@ -4,7 +4,6 @@ import re
 import time
 import random
 from cachetools import TTLCache
-from Snowball.core.logger import SnowballLogger
 from Snowball.core.ai.decision_maker import DecisionMaker
 #from Snowball.core.ai.memory import Memory
 

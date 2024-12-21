@@ -2,6 +2,7 @@ import os
 import hashlib
 import threading
 import time
+import queue
 from queue import PriorityQueue
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -55,11 +56,15 @@ class FileManager:
         # Load pre-trained models
         self.image_model = self.load_image_model()
         self.text_model = self.load_text_model()
-        
+
     def load_image_model(self):
         """Load a pre-trained image classification model."""
         try:
-            model = load_model('S:/Snowball/models/image_classification_model.h5')
+            model_path = 'S:/Snowball/models/image_classification_model.h5'
+            if not os.path.exists(model_path):
+                self.logger.log_warning("Image classification model not found. Skipping image analysis.")
+                return None
+            model = load_model(model_path)
             self.logger.log_task("Image classification model loaded successfully.", "Loaded")
             return model
         except Exception as e:
@@ -69,13 +74,17 @@ class FileManager:
     def load_text_model(self):
         """Load a pre-trained text classification model."""
         try:
-            model = load_model('S:/Snowball/models/text_classification_model.h5')
+            model_path = 'S:/Snowball/models/text_classification_model.h5'
+            if not os.path.exists(model_path):
+                self.logger.log_warning("Text classification model not found. Skipping text analysis.")
+                return None
+            model = load_model(model_path)
             self.logger.log_task("Text classification model loaded successfully.", "Loaded")
             return model
         except Exception as e:
             self.logger.log_error(f"Error loading text classification model: {e}")
             return None
-        
+
     def validate_models(self):
         if not os.path.exists('S:/Snowball/models/text_classification_model.h5'):
             self.logger.log_error("Text classification model is missing.")

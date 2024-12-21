@@ -4,7 +4,7 @@ import json
 import logging
 import os
 from typing import Optional, Dict, Any
-from core.logger import SnowballLogger
+from Snowball.decom.OLDlogger import SnowballLogger
 
 
 class ConfigLoader:
