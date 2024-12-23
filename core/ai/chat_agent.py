@@ -5,7 +5,7 @@ import time
 import random
 from cachetools import TTLCache
 from Snowball.core.ai.decision_maker import DecisionMaker
-#from Snowball.core.ai.memory import Memory
+from Snowball.core.ai.memory import Memory
 
 
 class SnowballAI:
@@ -22,8 +22,8 @@ class SnowballAI:
         r"I've been thinking about"  # Indications of unrelated brainstorming
     ]
 
-    def __init__(self):
-        self.logger = SnowballLogger()
+    def __init__(self, logger):
+        self.logger = logger
         self.decision_maker = DecisionMaker(self.logger)
         self.api_keys = self._load_api_keys()
         if not self.api_keys:
@@ -246,7 +246,31 @@ class SnowballAI:
         # Default fallback
         self.logger.log_event("Fallback to GPT-4 due to scoring tie or ambiguity.")
         return scored_responses.get("GPT-4", "I'm having trouble processing your request.")
+    
+    def get_combined_response(self, user_input):
+            """
+            Queries all available models, collects responses, and selects the best one via the DecisionMaker.
+            """
+            models = {
+                "GPT-4": self.query_gpt4,
+                "Gemini": self.query_gemini,
+                "Grok": self.query_grok
+            }
+            responses = {}
+            for model_name, query_func in models.items():
+                try:
+                    raw_response = query_func(user_input)
+                    responses[model_name] = raw_response
+                except Exception as e:
+                    self.logger.log_error(f"{model_name} failed: {e}")
 
+            valid_responses = {
+                model: response for model, response in responses.items() if isinstance(response, str)
+            }
+            # Select the best response using the DecisionMaker
+            best_response = self.decision_maker.select_best_response(valid_responses, user_input, context_category="General")
+            return best_response
+    
     def process_user_input(self, user_input):
         """Process user input and generate a response."""
         if not user_input.strip():

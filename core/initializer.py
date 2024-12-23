@@ -14,5 +14,5 @@ class SnowballInitializer:
         if not hasattr(self, 'initialized'):
             self.logger = SnowballLogger()
             self.logger.log_event("Logger initialized successfully.")
-            self.snowball_ai = SnowballAI()
+            self.snowball_ai = SnowballAI(logger=self.logger)  # Pass logger to SnowballAI
             self.initialized = True

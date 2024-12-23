@@ -1,141 +1,137 @@
 import logging
 import os
 import threading
-from logging.handlers import RotatingFileHandler
+import datetime
+from logging.handlers import RotatingFileHandler, QueueHandler, QueueListener
+from queue import Queue
 from plyer import notification
+from email.mime.text import MIMEText
+import smtplib
+from typing import Optional
 
 # Define log paths
 DEFAULT_LOG_DIR = os.path.join('S:/Snowball/storage/logs')
 LOG_PATHS = {
-    "interaction": os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt"),
+    "config": os.path.join(DEFAULT_LOG_DIR, "config_logs", "config_log.txt"),
+    "decision": os.path.join(DEFAULT_LOG_DIR, "decision_logs", "decision_log.txt"),
     "error": os.path.join(DEFAULT_LOG_DIR, "error_logs", "error_log.txt"),
-    "system_health": os.path.join(DEFAULT_LOG_DIR, "system_health_logs", "system_health_log.txt"),
     "event": os.path.join(DEFAULT_LOG_DIR, "event_logs", "event_log.txt"),
-    "file_io": os.path.join(DEFAULT_LOG_DIR, "file_io_logs", "file_io_log.txt"),
+    "file": os.path.join(DEFAULT_LOG_DIR, "file_logs", "file_log.txt"),
+    "interaction": os.path.join(DEFAULT_LOG_DIR, "interaction_logs", "interaction_log.txt"),
+    "memory": os.path.join(DEFAULT_LOG_DIR, "memory_logs", "memory_log.txt"),
+    "security": os.path.join(DEFAULT_LOG_DIR, "security_logs", "security_log.txt"),
+    "system_health": os.path.join(DEFAULT_LOG_DIR, "system_health_logs", "system_health_log.txt"),
+    "task": os.path.join(DEFAULT_LOG_DIR, "task_logs", "task_log.txt"),
     "warning": os.path.join(DEFAULT_LOG_DIR, "warning_logs", "warning_log.txt"),
 }
 
-# Create log directories if they don't exist
+# Create log directories
 for log_path in LOG_PATHS.values():
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
+# Thread lock for safe file handling
+file_lock = threading.Lock()
+
+class SafeRotatingFileHandler(RotatingFileHandler):
+    """Thread-safe RotatingFileHandler."""
+    def doRollover(self):
+        with file_lock:
+            super().doRollover()
+
 class SnowballLogger:
-    _instance = None
-    _lock = threading.Lock()
-
-    def __new__(cls):
-        if cls._instance is None:
-            with cls._lock:
-                if cls._instance is None:
-                    cls._instance = super(SnowballLogger, cls).__new__(cls)
-                    cls._instance._initialize_loggers()
-        return cls._instance
-
-    def _initialize_loggers(self):
-        """Initialize separate loggers for each log type."""
+    def __init__(self, settings: Optional[dict] = None):
         self.loggers = {}
-        for log_type, log_path in LOG_PATHS.items():
+        self.queue = Queue()
+        self.listener = self._setup_listener()
+        self._setup_loggers()
+
+    def _setup_listener(self):
+        handlers = []
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        for log_path in LOG_PATHS.values():
+            handler = SafeRotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=5)
+            handler.setFormatter(formatter)
+            handlers.append(handler)
+
+        listener = QueueListener(self.queue, *handlers)
+        listener.start()
+        return listener
+
+    def _setup_loggers(self):
+        for log_type in LOG_PATHS.keys():
             logger = logging.getLogger(log_type)
             logger.setLevel(logging.DEBUG)
-
-            handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)
-            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-            handler.setFormatter(formatter)
-            handler.setLevel(logging.INFO if log_type != "error" else logging.ERROR)
-
-            logger.addHandler(handler)
-            logger.propagate = False  # Prevent logs from being passed to parent loggers
-
+            logger.addHandler(QueueHandler(self.queue))
+            logger.propagate = False
             self.loggers[log_type] = logger
 
-        # Add a console handler for debugging purposes
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.DEBUG)
-        console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        console_handler.setFormatter(console_formatter)
-        logging.getLogger().addHandler(console_handler)
+    def log_config(self, message):
+        """Log configuration changes."""
+        self.loggers["config"].info(message)
 
-    def _setup_handlers(self):
-        """Set up different file handlers for each type of log."""
-        if not self.logger.handlers:  # Avoid adding handlers multiple times
-            formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-            # Assign different levels for different logs
-            log_levels = {
-                "interaction": logging.INFO,
-                "error": logging.ERROR,
-                "system_health": logging.INFO,
-                "event": logging.INFO,
-                "file_io": logging.INFO,
-                "warning": logging.WARNING,
-            }
-
-            # Add handlers for each log type with specific filtering
-            for log_name, log_path in LOG_PATHS.items():
-                level = logging.INFO if log_name not in ["error", "warning"] else logging.WARNING
-                handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)
-                handler.setLevel(level)
-                handler.setFormatter(formatter)
-
-                # Add a filter to the handler
-                handler.addFilter(logging.Filter(log_name))
-                self.logger.addHandler(handler)
-
-            # Add console handler for real-time debugging
-            if not any(isinstance(handler, logging.StreamHandler) for handler in self.logger.handlers):
-                console_handler = logging.StreamHandler()
-                console_handler.setLevel(logging.DEBUG)
-                console_handler.setFormatter(formatter)
-                self.logger.addHandler(console_handler)
-
-    def _add_handler(self, log_path, level, formatter):
-        """Add a file handler to the logger."""
-        if not any(isinstance(handler, RotatingFileHandler) and handler.baseFilename == log_path for handler in self.logger.handlers):
-            handler = RotatingFileHandler(log_path, maxBytes=1 * 1024 * 1024, backupCount=15)
-            handler.setLevel(level)
-            handler.setFormatter(formatter)
-            self.logger.addHandler(handler)
-
-
-    def log_event(self, message):
-        self.loggers["event"].info(message)
-
-    def log_warning(self, message):
-        self.loggers["warning"].warning(message)
+    def log_decision(self, decision_details):
+        """Log details about decisions made by the decision_maker."""
+        self.loggers["decision"].info(decision_details)
 
     def log_error(self, message):
+        """Log errors from any module."""
         self.loggers["error"].error(message)
-        self.notify_user("Error", message)
+
+    def log_event(self, message):
+        """Log significant system or user events."""
+        self.loggers["event"].info(message)
+
+    def log_file(self, action, file_path):
+        """Log file-related operations."""
+        self.loggers["file"].info(f"Action: {action} | File: {file_path}")
 
     def log_interaction(self, user_message, ai_response):
+        """Log user input and AI response."""
         self.loggers["interaction"].info(f"User: {user_message} | AI: {ai_response}")
 
-    def log_system_health(self, cpu_usage, memory_usage=None, temp=None, disk_usage=None):
-        health_status = f"CPU Usage: {cpu_usage}%"
-        if memory_usage:
-            health_status += f" | Memory Usage: {memory_usage}%"
-        if temp:
-            health_status += f" | Temp: {temp}°C"
-        if disk_usage:
-            health_status += f" | Disk Usage: {disk_usage}%"
-        self.loggers["system_health"].info(health_status)
+    def log_memory(self, action, details):
+        """Log memory database changes."""
+        self.loggers["memory"].info(f"Action: {action} | Details: {details}")
 
-    def notify_user(self, title, message):
-        message = (message[:252] + '...') if len(message) > 255 else message
-        notification.notify(title=title, message=message, timeout=5)
+    def log_security(self, message):
+        """Log security-related events."""
+        self.loggers["security"].warning(message)
 
-    def shutdown_logger(self):
-        """Clean up handlers properly."""
+    def log_system_health(self, metrics):
+        """Log system health metrics (future use)."""
+        self.loggers["system_health"].info(metrics)
+
+    def log_task(self, task_name, status):
+        """Log tasks and their outcomes."""
+        self.loggers["task"].info(f"Task: '{task_name}' - Status: '{status}'")
+
+    def log_warning(self, message):
+        """Log warnings from any module."""
+        self.loggers["warning"].warning(message)
+
+    def shutdown(self):
+        """Shut down the logging system cleanly."""
+        self.listener.stop()
         for logger in self.loggers.values():
-            handlers = logger.handlers[:]
-            for handler in handlers:
+            for handler in logger.handlers[:]:
                 handler.close()
                 logger.removeHandler(handler)
 
 if __name__ == "__main__":
+    # Example usage of the logger
     logger = SnowballLogger()
-    logger.log_event("Logger initialized.")
-    logger.log_interaction("Hello", "Hi, how can I assist you?")
-    logger.log_warning("This is a warning.")
-    logger.log_error("This is an error.")
-    logger.log_system_health(cpu_usage=75, memory_usage=60, temp=55)
+
+    # Log various events
+    logger.log_config("Updated AI settings.")
+    logger.log_decision("Decision: Selected GPT-4 response for user query.")
+    logger.log_error("Failed to load configuration file.")
+    logger.log_event("Snowball AI initialized.")
+    logger.log_file("Created", "S:/Snowball/data/example.txt")
+    logger.log_interaction("Hello, Snowball!", "Hello, how can I assist you?")
+    logger.log_memory("Inserted", "New interaction added to database.")
+    logger.log_security("Unauthorized access attempt detected.")
+    logger.log_task("Analyze file", "Completed successfully.")
+    logger.log_warning("High memory usage detected.")
+
+    # Shut down logging
+    logger.shutdown()
