@@ -26,12 +26,16 @@ class FileEventHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         if not event.is_directory:
-            self.logger.log_task(f"File created: {event.src_path}", "Created")
+            self.logger.log_file(f"File created: {event.src_path}")
             self.priority_queue.put((1, event.src_path))  # Low priority for creation
+
+    def on_deleted(self, event):
+        if not event.is_directory:
+            self.logger.log_file(f"File deleted: {event.src_path}")
 
     def on_modified(self, event):
         if not event.is_directory:
-            self.logger.log_task(f"File modified: {event.src_path}", "Modified")
+            self.logger.log_file(f"File modified: {event.src_path}")
             self.priority_queue.put((0, event.src_path))  # High priority for modification
 
 class FileManager:
@@ -104,7 +108,7 @@ class FileManager:
     def scan_and_index_drive(self, batch_size=100):
         """Scan and index all files in batches."""
         try:
-            self.logger.log_event("Starting drive scan and index.")
+            self.logger.log_file("Starting drive scan and index.")
             files_to_process = []
             for root, _, files in os.walk(self.scan_dir):
                 for file_name in files:
@@ -117,7 +121,7 @@ class FileManager:
                         files_to_process.clear()
             if files_to_process:
                 self._process_batch(files_to_process)
-            self.logger.log_event("Drive scan and indexing completed.")
+            self.logger.log_file("Drive scan and indexing completed.")
         except Exception as e:
             self.logger.log_error(f"Error scanning and indexing drive: {e}")
     
@@ -248,7 +252,7 @@ class FileManager:
                 self.memory.store_file_metadata(os.path.basename(file_path), file_path, last_modified)
                 log_messages.append(f"Indexed file: {file_path}")
             if log_messages:
-                self.logger.log_event(f"Batch processed {len(files)} files:\n" + "\n".join(log_messages))
+                self.logger.log_file(f"Batch processed {len(files)} files:\n" + "\n".join(log_messages))
         except Exception as e:
             self.logger.log_error(f"Error processing batch: {e}")
 
@@ -266,7 +270,7 @@ class FileManager:
             file_hash = self.hash_file(file_path)
             with self.hash_lock:
                 if not file_hash or file_hash in self.processed_hashes:
-                    self.logger.log_task(f"File already processed: {file_path}", "Skipped")
+                    self.logger.log_file(f"File already processed: {file_path}", "Skipped")
                     return
 
             ext = os.path.splitext(file_path)[1].lower()
@@ -314,12 +318,11 @@ class FileManager:
 
     def stop_monitoring(self):
         self.stop_event.set()
-        self.logger.log_event("Draining remaining files before shutdown.")
+        self.logger.log_file("Draining remaining files before shutdown.")
         while not self.priority_queue.empty():
             _, file_path = self.priority_queue.get()
             if os.path.exists(file_path):
                 self.process_file(file_path)
         self.observer.stop()
         self.observer.join()
-        self.logger.log_event("Monitoring stopped.")
-
+        self.logger.log_file("Monitoring stopped.")

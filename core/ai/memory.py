@@ -23,7 +23,7 @@ class Memory:
         try:
             self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
             if self.logger:
-                self.logger.log_event(f"Connected to SQLite database: {self.db_path}")
+                self.logger.log_memory(f"Connected to SQLite database: {self.db_path}")
             self.create_tables()
         except sqlite3.Error as e:
             if self.logger:
@@ -75,7 +75,7 @@ class Memory:
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_file_metadata_size ON file_metadata (file_size)''')
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_interactions_timestamp ON interactions (timestamp)''')
                 if self.logger:
-                    self.logger.log_event("Created/checked tables and indexes.")
+                    self.logger.log_memory("Created/checked tables and indexes.")
         except sqlite3.Error as e:
             if self.logger:
                 self.logger.log_error(f"Error creating tables: {e}")
@@ -88,7 +88,7 @@ class Memory:
             with self._get_cursor() as cursor:
                 cursor.execute(f"SELECT * FROM file_metadata WHERE {tag_query}", params)
                 results = cursor.fetchall()
-            self.logger.log_event(f"Retrieved {len(results)} files matching tags: {tags}")
+            self.logger.log_memory(f"Retrieved {len(results)} files matching tags: {tags}")
             return results
         except sqlite3.Error as e:
             self.logger.log_error(f"Error searching files by tags '{tags}': {e}")
@@ -103,7 +103,7 @@ class Memory:
                     (user_input, ai_response, query_type)
                 )
             if self.logger:
-                self.logger.log_event(f"Stored interaction: User: '{user_input}', AI: '{ai_response}', Type: '{query_type}'")
+                self.logger.log_memory(f"Stored interaction: User: '{user_input}', AI: '{ai_response}', Type: '{query_type}'")
         except MemoryError as e:
             if self.logger:
                 self.logger.log_error(f"Error storing interaction: {e}")
@@ -130,7 +130,7 @@ class Memory:
                 results = cursor.fetchall()
 
             if self.logger:
-                self.logger.log_event(f"Retrieved {len(results)} interactions matching filters.")
+                self.logger.log_memory(f"Retrieved {len(results)} interactions matching filters.")
             return results
         except sqlite3.Error as e:
             self.logger.log_error(f"Error retrieving interactions: {e}")
@@ -153,7 +153,7 @@ class Memory:
                     (file_name, file_path, last_modified, file_size, tags, analysis_result)
                 )
             if self.logger:
-                self.logger.log_event(
+                self.logger.log_memory(
                     f"Stored metadata for file: {file_name}, Size: {file_size}, Tags: {tags}"
                 )
         except sqlite3.Error as e:
@@ -162,7 +162,7 @@ class Memory:
     def search_files(self, keyword):
         """Search indexed files by keyword with caching."""
         if keyword in self.metadata_cache:
-            self.logger.log_event(f"Cache hit for file search: '{keyword}'")
+            self.logger.log_memory(f"Cache hit for file search: '{keyword}'")
             return self.metadata_cache[keyword]
 
         try:
@@ -173,7 +173,7 @@ class Memory:
                 )
                 results = cursor.fetchall()
             self.metadata_cache[keyword] = results
-            self.logger.log_event(f"Retrieved {len(results)} files matching keyword: '{keyword}'")
+            self.logger.log_memory(f"Retrieved {len(results)} files matching keyword: '{keyword}'")
             return results
         except sqlite3.Error as e:
             self.logger.log_error(f"Error searching files by keyword '{keyword}': {e}")
@@ -186,7 +186,7 @@ class Memory:
                 cursor.execute("SELECT * FROM interactions ORDER BY id DESC LIMIT 1")
                 interaction = cursor.fetchone()
             if interaction and self.logger:
-                self.logger.log_event(f"Retrieved last interaction: {interaction}")
+                self.logger.log_memory(f"Retrieved last interaction: {interaction}")
             return interaction
         except MemoryError as e:
             if self.logger:
@@ -206,7 +206,7 @@ class Memory:
                 cursor.execute("DELETE FROM interactions WHERE timestamp < ?", (cutoff_date,))
                 rows_archived = cursor.rowcount
             if self.logger:
-                self.logger.log_event(f"Archived {rows_archived} interactions older than {days} days.")
+                self.logger.log_memory(f"Archived {rows_archived} interactions older than {days} days.")
         except sqlite3.Error as e:
             self.logger.log_error(f"Error archiving old interactions: {e}")
 
@@ -214,4 +214,4 @@ class Memory:
         """Close the database connection properly."""
         self.conn.close()
         if self.logger:
-            self.logger.log_event("Closed database connection.")
+            self.logger.log_memory("Closed database connection.")

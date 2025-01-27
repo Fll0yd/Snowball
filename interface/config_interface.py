@@ -22,7 +22,7 @@ from interface.accounts_config_interface import AccountIntegrationsConfig
 from interface.security_config_interface import SecurityPrivacyConfig
 from interface.view_logs import LogsConfig
 from interface.contact_developer_interface import ContactDeveloperConfig
-from core.config_loader import ConfigLoader
+from Snowball.core.system.config_loader import ConfigLoader
 
 # Load API keys from the JSON file
 config_path = 'S:/Snowball/config/account_integrations.json'

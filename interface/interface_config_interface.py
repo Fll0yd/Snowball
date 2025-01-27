@@ -6,7 +6,7 @@ import os
 # Add the root 'S:/Snowball' directory to sys.path
 sys.path.append(os.path.abspath("S:/Snowball"))
 
-from core.config_loader import ConfigLoader  # Correct import for config_loader
+from Snowball.core.system.config_loader import ConfigLoader  # Correct import for config_loader
 
 class InterfaceConfig:
     def __init__(self, master, config_loader):

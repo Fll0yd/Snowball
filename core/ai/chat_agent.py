@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 import re
@@ -6,10 +7,12 @@ import random
 from cachetools import TTLCache
 from Snowball.core.ai.decision_maker import DecisionMaker
 from Snowball.core.ai.memory import Memory
+from Snowball.core.ai.sentiment_analysis import SentimentAnalysis
+from Snowball.core.logger import SnowballLogger
 
 
 class SnowballAI:
-    """Simplified Snowball AI for querying and combining responses."""
+    """Enhanced Snowball AI with sentiment analysis and personality management."""
     irrelevant_patterns = [
         r"As an AI language model",
         r"I'm a \d+-year-old boy",
@@ -17,20 +20,22 @@ class SnowballAI:
         r"Amazon Snowball",
         r"I don't know",
         r"I'm back from a long break",
-        r"server.*group.*specific",  # Off-topic server ideas
-        r"only available to",        # Partial/incomplete responses
-        r"I've been thinking about"  # Indications of unrelated brainstorming
+        r"server.*group.*specific",
+        r"only available to",
+        r"I've been thinking about"
     ]
 
-    def __init__(self, logger):
-        self.logger = logger
+    def __init__(self):
+        self.logger = SnowballLogger()
         self.decision_maker = DecisionMaker(self.logger)
         self.api_keys = self._load_api_keys()
         if not self.api_keys:
             self.logger.log_error("Error loading API keys: API keys are missing or invalid.")
+        self.memory = Memory(logger=self.logger)
+        self.sentiment_analysis = SentimentAnalysis()  # Initialize sentiment analysis module
         self.metadata_cache = TTLCache(maxsize=500, ttl=300)
         self.response_cache = TTLCache(maxsize=500, ttl=300)  # Cache for responses
-        self.memory = Memory(logger=self.logger)  # Initialize Memory module
+        self.personality = "helpful"  # Default personality
         self.logger.log_event("Snowball AI initialized.")
 
     def _load_api_keys(self):
@@ -50,7 +55,74 @@ class SnowballAI:
         except Exception as e:
             self.logger.log_error(f"Error loading API keys: {e}")
             return {}
+        
+    def set_personality(self, personality):
+        """Set the personality mode of the AI."""
+        self.personality = personality
+        self.logger.log_event(f"Personality set to: {self.personality}")
+
+    def process_user_input(self, user_input):
+        """Process user input and generate a response."""
+        if not user_input.strip():
+            return "It seems you didn't provide any input. How can I assist you?"
     
+        # Log user input to interaction log
+        self.logger.log_interaction(user_input, None)
+
+        try:
+            # Analyze sentiment
+            sentiment = self.sentiment_analysis.analyze(user_input)
+            self.logger.log_event(f"User sentiment: {sentiment}")
+            
+            # Categorize the query type using decision_maker
+            query_type = self.decision_maker.get_query_type(user_input)
+
+            # Format prompt with system message
+            system_message = self.get_system_message(sentiment)
+            self.memory.store_interaction("system_message", system_message)
+            formatted_prompt = self.format_prompt(user_input)
+
+            # Query models and get responses
+            gpt_response = self.query_with_cache(self.query_gpt4, formatted_prompt)
+            grok_response = None
+            if query_type == "Creative":
+                grok_response = self.query_with_cache(self.query_grok, formatted_prompt)
+
+            # Decide on the best response
+            best_response = self.decision_maker.select_best_response(
+                {"GPT-4": gpt_response, "Grok": grok_response},
+                user_input,
+                query_type=query_type,
+            )
+
+            # Store interaction in memory
+            self.memory.store_interaction(user_input, best_response, query_type)
+
+            # Log output to interaction log
+            self.logger.log_interaction(user_input, best_response)
+
+            return best_response or self.fallback_response(user_input)
+
+        except requests.exceptions.RequestException as e:
+            self.logger.log_error(f"Network error during processing: {e}")
+            return "I'm having trouble connecting to the server. Please try again later."
+        except Exception as e:
+            self.logger.log_error(f"Unexpected error processing input: {e}")
+            return "An unexpected error occurred while processing your request."
+
+    def get_system_message(self, sentiment):
+        """Generate a system message based on personality and sentiment."""
+        if sentiment == "negative" and self.personality == "friendly":
+            return "You are a friendly and empathetic AI. The user seems upset, respond with care."
+        elif self.personality == "friendly":
+            return "You are a friendly and helpful AI assistant."
+        elif self.personality == "professional":
+            return "You are a professional and efficient AI assistant."
+        elif self.personality == "playful":
+            return "You are a playful and humorous AI assistant."
+        else:
+            return "You are a helpful AI."
+  
     def validate_api_keys(self):
         """Validate API keys during initialization."""
         missing_keys = [key for key, value in self.api_keys.items() if not value]
@@ -113,7 +185,6 @@ class SnowballAI:
         if not self.api_keys.get("gpt4"):
             self.logger.log_error("GPT-4 API key is missing.")
             return "GPT-4 API key is not configured."
-        system_role = ()
         headers = {
             "Authorization": f"Bearer {self.api_keys['gpt4']}",
             "Content-Type": "application/json"
@@ -152,6 +223,15 @@ class SnowballAI:
             self.logger.log_error(f"Grok query failed: {e}")
             return None
 
+    def save_conversation_history(self, file_path):
+        """Save the conversation history to a file."""
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(self.memory.get_all_interactions(), f, indent=2)
+            self.logger.log_event("Conversation history saved successfully.")
+        except Exception as e:
+            self.logger.log_error(f"Error saving conversation history: {e}")
+
     def query_api_with_retry(self, api_func, prompt, retries=3, delay=2):
         """Retry API queries with exponential backoff."""
         for attempt in range(retries):
@@ -161,18 +241,6 @@ class SnowballAI:
                 self.logger.log_error(f"API query failed: {e}")
                 time.sleep(delay * (2 ** attempt))
         return self.fallback_response(prompt)
-
-    def detect_query_type(self, user_input):
-        """Determine the query type based on keywords."""
-        sensitive_keywords = ["politics", "controversial", "sensitive", "explicit", "uncensored"]
-        
-        if any(word in user_input.lower() for word in sensitive_keywords):
-            return "Sensitive"
-        if any(word in user_input.lower() for word in ["joke", "funny", "creative", "story"]):
-            return "Creative"
-        if any(word in user_input.lower() for word in ["how", "what", "why"]):
-            return "Factual"
-        return "General"
 
     def fallback_response(self, prompt):
         """Craft a more context-aware fallback response."""
@@ -202,58 +270,12 @@ class SnowballAI:
             self.response_cache.ttl = 600
             self.logger.log_event("Response cache usage low. Increased TTL to 600 seconds.")
 
-    def validate_response(self, response, query_type):
-        """Validate responses based on query type."""
-        if query_type == "Factual" and ("I think" in response or "I'm not sure" in response):
-            self.logger.log_warning("Factual query returned an uncertain response.")
-            return False
-        if query_type == "Creative" and len(response.split()) < 5:  # Example: Too short for creative responses
-            self.logger.log_warning("Creative query returned an unengaging response.")
-            return False
-        if "I don't know" in response.lower():
-            return False
-        return True
-
-    def decide_best_response(self, gpt_response, grok_response, prompt):
-        """Decide which response to use with enhanced logging."""
-        query_type = self.detect_query_type(prompt)
-        responses = {"GPT-4": gpt_response, "Grok": grok_response}
-        scored_responses = self.decision_maker.score_responses(responses, prompt)
-        self.logger.log_event(f"Query: {prompt}, Type: {query_type}, Scores: {scored_responses}")
-
-        # Use Grok for sensitive content explicitly
-        if query_type == "Sensitive" and "Grok" in scored_responses:
-            self.logger.log_event("Selected Grok for handling sensitive content.")
-            return scored_responses["Grok"]
-
-        # Use GPT-4 for factual queries if response is valid
-        if "GPT-4" in scored_responses:
-            if self.validate_response(scored_responses["GPT-4"], "Factual"):
-                self.logger.log_event("Selected GPT-4 for factual accuracy.")
-                return scored_responses["GPT-4"]
-
-        # Fallback to Grok for factual queries if GPT-4 fails
-        if not gpt_response and "Grok" in scored_responses:
-            self.logger.log_event("Fallback to Grok for factual accuracy due to GPT-4 failure.")
-            return scored_responses["Grok"]
-
-        # Use Grok for creative queries if valid
-        if "Grok" in scored_responses:
-            if self.validate_response(scored_responses["Grok"], query_type):
-                self.logger.log_event(f"Selected Grok for {query_type} response.")
-                return scored_responses["Grok"]
-
-        # Default fallback
-        self.logger.log_event("Fallback to GPT-4 due to scoring tie or ambiguity.")
-        return scored_responses.get("GPT-4", "I'm having trouble processing your request.")
-    
     def get_combined_response(self, user_input):
             """
             Queries all available models, collects responses, and selects the best one via the DecisionMaker.
             """
             models = {
                 "GPT-4": self.query_gpt4,
-                "Gemini": self.query_gemini,
                 "Grok": self.query_grok
             }
             responses = {}
@@ -271,36 +293,19 @@ class SnowballAI:
             best_response = self.decision_maker.select_best_response(valid_responses, user_input, context_category="General")
             return best_response
     
-    def process_user_input(self, user_input):
-        """Process user input and generate a response."""
-        if not user_input.strip():
-            return "It seems you didn't provide any input. How can I assist you?"
-
+    def load_conversation_history(self, file_path):
+        """Load conversation history from a file."""
         try:
-            query_type = self.detect_query_type(user_input)
-            formatted_prompt = self.format_prompt(user_input)
-
-            if query_type == "Sensitive":
-                # Route sensitive queries directly to Grok
-                grok_response = self.query_with_cache(self.query_grok, formatted_prompt)
-                if grok_response:
-                    self.memory.store_interaction(user_input, grok_response, query_type)
-                    return grok_response
-                return self.fallback_response(user_input)
-
-            # Handle other query types
-            gpt_response = self.query_with_cache(self.query_gpt4, formatted_prompt)
-            grok_response = None
-
-            if query_type == "Creative":
-                grok_response = self.query_with_cache(self.query_grok, formatted_prompt)
-
-            best_response = self.decide_best_response(gpt_response, grok_response, user_input)
-            self.memory.store_interaction(user_input, best_response, query_type)
-            return best_response or self.fallback_response(user_input)
-        except requests.exceptions.RequestException as e:
-            self.logger.log_error(f"Network error during processing: {e}")
-            return "I'm having trouble connecting to the server. Please try again later."
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    interactions = json.load(f)
+                    for interaction in interactions:
+                        self.memory.store_interaction(interaction['role'], interaction['content'])
+                self.logger.log_event("Conversation history loaded successfully.")
         except Exception as e:
-            self.logger.log_error(f"Unexpected error processing input: {e}")
-            return "An unexpected error occurred while processing your request."
+            self.logger.log_error(f"Error loading conversation history: {e}")
+
+    def reset_conversation_context(self):
+        """Reset the conversation memory to clear the context."""
+        self.memory.reset()
+        self.logger.log_event("Conversation context reset.")

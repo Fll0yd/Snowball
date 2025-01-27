@@ -17,8 +17,9 @@ project_root = os.path.abspath(os.path.join(current_directory, '../..'))  # Adju
 if project_root not in sys.path:
     sys.path.insert(0, project_root)  # Prepend to ensure priority
 
-# Import SnowballInitializer
-from Snowball.core.initializer import SnowballInitializer
+# Import Logger and Chat Agent
+from Snowball.core.logger import SnowballLogger
+from Snowball.core.ai.chat_agent import SnowballAI
 
 class SnowballGUI:
     def __init__(self, master):
@@ -27,6 +28,9 @@ class SnowballGUI:
         self.master.geometry("800x600")
         self.master.configure(bg="#e6e6e6")
         
+        # Initialize logger
+        self.logger = SnowballLogger()
+
         # Initialize components
         self.chat_initialized = False
         self.create_chat_display()
@@ -35,16 +39,18 @@ class SnowballGUI:
         # Start initialization
         threading.Thread(target=self.initialize_ai, daemon=True).start()
         self.display_message("Welcome! Initializing Snowball AI, please wait...", sender="System")
+        self.logger.log_event("Snowball GUI launched. Initialization started.")
 
     def initialize_ai(self):
         """Initialize Snowball AI."""
         try:
-            initializer = SnowballInitializer()
-            self.snowball = initializer.snowball_ai
+            self.snowball = SnowballAI(logger=self.logger)
             self.chat_initialized = True
             self.display_message("Snowball AI is ready! How can I assist you?", sender="System")
+            self.logger.log_event("Snowball AI initialized successfully.")
         except Exception as e:
             self.display_message(f"Failed to initialize AI: {e}", sender="System")
+            self.logger.log_error(f"Failed to initialize AI: {e}")
 
     def create_chat_display(self):
         """Create chat display area."""
@@ -71,6 +77,8 @@ class SnowballGUI:
             return
 
         self.display_message(user_message, sender="You")
+        self.logger.log_interaction(user_message, "Processing...")
+
         self.user_input.delete(0, tk.END)
         self.display_message("Snowball is thinking...", sender="System")
 
@@ -81,8 +89,11 @@ class SnowballGUI:
         try:
             response = self.snowball.get_combined_response(user_message)
             self.display_message(response, sender="Snowball")
+            self.logger.log_interaction(user_message, response)
         except Exception as e:
-            self.display_message(f"Error: {e}", sender="System")
+            error_message = f"Error: {e}"
+            self.display_message(error_message, sender="System")
+            self.logger.log_error(error_message)
 
     def display_message(self, message, sender):
         """Display a message in the chat."""
