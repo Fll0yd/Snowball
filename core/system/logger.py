@@ -1,10 +1,10 @@
+from plyer import notification
 import logging
 import os
 import threading
 import datetime
 from logging.handlers import RotatingFileHandler, QueueHandler, QueueListener
 from queue import Queue
-from plyer import notification
 from email.mime.text import MIMEText
 import smtplib
 from typing import Optional

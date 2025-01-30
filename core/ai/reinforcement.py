@@ -1,10 +1,10 @@
 import numpy as np
 import random
 from collections import deque
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam
-from keras.losses import MeanSquaredError
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.losses import MeanSquaredError
 import os
 class QLearningAgent:
     def __init__(self, state_size, action_size, logger=None, memory=None,

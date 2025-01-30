@@ -1,9 +1,11 @@
+from Snowball.core.ai.sentiment_analysis import SentimentAnalysis
 from Snowball.core.ai.reinforcement import QLearningAgent
+import json
 
 class DecisionMaker:
-    def __init__(self, logger, state_size=10, action_size=3):
+    def __init__(self, logger, sentiment_analyzer=None, state_size=10, action_size=3):
         self.logger = logger
-        self.sentiment_analyzer = sentiment_analyzer  # Integrate SentimentAnalysis module
+        self.sentiment_analyzer = sentiment_analyzer or SentimentAnalysis(logger=self.logger)
         self.scoring_data = {
             "GPT-4": {"total_score": 0, "count": 0},
             "Grok": {"total_score": 0, "count": 0},

@@ -8,7 +8,7 @@ from cachetools import TTLCache
 from Snowball.core.ai.decision_maker import DecisionMaker
 from Snowball.core.ai.memory import Memory
 from Snowball.core.ai.sentiment_analysis import SentimentAnalysis
-from Snowball.core.logger import SnowballLogger
+from Snowball.core.system.logger import SnowballLogger
 
 
 class SnowballAI:
@@ -25,17 +25,17 @@ class SnowballAI:
         r"I've been thinking about"
     ]
 
-    def __init__(self):
-        self.logger = SnowballLogger()
-        self.decision_maker = DecisionMaker(self.logger)
+    def __init__(self, logger=None):
+        self.logger = logger or SnowballLogger()
+        self.sentiment_analysis = SentimentAnalysis(logger=self.logger)
+        self.decision_maker = DecisionMaker(self.logger, sentiment_analyzer=self.sentiment_analysis)
         self.api_keys = self._load_api_keys()
         if not self.api_keys:
             self.logger.log_error("Error loading API keys: API keys are missing or invalid.")
         self.memory = Memory(logger=self.logger)
-        self.sentiment_analysis = SentimentAnalysis()  # Initialize sentiment analysis module
         self.metadata_cache = TTLCache(maxsize=500, ttl=300)
-        self.response_cache = TTLCache(maxsize=500, ttl=300)  # Cache for responses
-        self.personality = "helpful"  # Default personality
+        self.response_cache = TTLCache(maxsize=500, ttl=300)
+        self.personality = "helpful"
         self.logger.log_event("Snowball AI initialized.")
 
     def _load_api_keys(self):

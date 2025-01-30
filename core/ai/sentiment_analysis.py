@@ -2,7 +2,7 @@ import json
 import openai
 from transformers import pipeline
 from cachetools import LRUCache
-from Snowball.core.logger import SnowballLogger
+from Snowball.core.system.logger import SnowballLogger
 from Snowball.core.ai.memory import Memory
 
 class SentimentAnalysis:

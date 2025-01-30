@@ -4,7 +4,7 @@ import threading
 from datetime import datetime, timedelta
 from cachetools import LRUCache
 from contextlib import contextmanager
-from Snowball.core.ai.file_manager import FileManager
+from Snowball.core.system.file_manager import FileManager
 
 class MemoryError(Exception):
     pass
@@ -23,7 +23,7 @@ class Memory:
         try:
             self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
             if self.logger:
-                self.logger.log_memory(f"Connected to SQLite database: {self.db_path}")
+                self.logger.log_memory("Initialize", f"Connected to SQLite database: {self.db_path}")
             self.create_tables()
         except sqlite3.Error as e:
             if self.logger:
@@ -50,6 +50,10 @@ class Memory:
             finally:
                 cursor.close()
 
+    def log_memory(self, action, details):
+        """Log memory database changes."""
+        self.loggers["memory"].info(f"Action: {action} | Details: {details}")
+
     def create_tables(self):
         try:
             with self._get_cursor() as cursor:
@@ -75,7 +79,7 @@ class Memory:
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_file_metadata_size ON file_metadata (file_size)''')
                 cursor.execute('''CREATE INDEX IF NOT EXISTS idx_interactions_timestamp ON interactions (timestamp)''')
                 if self.logger:
-                    self.logger.log_memory("Created/checked tables and indexes.")
+                    self.logger.log_memory("Schema Update", "Created/checked tables and indexes.")
         except sqlite3.Error as e:
             if self.logger:
                 self.logger.log_error(f"Error creating tables: {e}")
@@ -103,7 +107,7 @@ class Memory:
                     (user_input, ai_response, query_type)
                 )
             if self.logger:
-                self.logger.log_memory(f"Stored interaction: User: '{user_input}', AI: '{ai_response}', Type: '{query_type}'")
+                self.logger.log_memory("Store Interaction", f"User: '{user_input}', AI: '{ai_response}', Type: '{query_type}'")
         except MemoryError as e:
             if self.logger:
                 self.logger.log_error(f"Error storing interaction: {e}")
@@ -173,7 +177,7 @@ class Memory:
                 )
                 results = cursor.fetchall()
             self.metadata_cache[keyword] = results
-            self.logger.log_memory(f"Retrieved {len(results)} files matching keyword: '{keyword}'")
+            self.logger.log_memory("Search Files", f"Retrieved {len(results)} files matching keyword: {keyword}")
             return results
         except sqlite3.Error as e:
             self.logger.log_error(f"Error searching files by keyword '{keyword}': {e}")
@@ -186,7 +190,7 @@ class Memory:
                 cursor.execute("SELECT * FROM interactions ORDER BY id DESC LIMIT 1")
                 interaction = cursor.fetchone()
             if interaction and self.logger:
-                self.logger.log_memory(f"Retrieved last interaction: {interaction}")
+                self.logger.log_memory("Retrieve Interaction", f"Retrieved last interaction: {interaction}")
             return interaction
         except MemoryError as e:
             if self.logger:
@@ -206,7 +210,7 @@ class Memory:
                 cursor.execute("DELETE FROM interactions WHERE timestamp < ?", (cutoff_date,))
                 rows_archived = cursor.rowcount
             if self.logger:
-                self.logger.log_memory(f"Archived {rows_archived} interactions older than {days} days.")
+                self.logger.log_memory("Archive Interactions", f"Archived {rows_archived} interactions older than {days} days.")
         except sqlite3.Error as e:
             self.logger.log_error(f"Error archiving old interactions: {e}")
 
@@ -214,4 +218,4 @@ class Memory:
         """Close the database connection properly."""
         self.conn.close()
         if self.logger:
-            self.logger.log_memory("Closed database connection.")
+            self.logger.log_memory("Close Connection", "Closed database connection.")
