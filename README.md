@@ -12,6 +12,18 @@ The language model is not Snowball itself. Models are replaceable reasoning engi
 
 ---
 
+### Technical Highlights
+
+- **Backend:** Python, FastAPI, REST APIs, modular service architecture
+- **Local AI:** Ollama inference, LLM-assisted structured extraction
+- **Memory:** JSONL episodic history, SQLite structured knowledge, ChromaDB vector storage
+- **RAG:** Document ingestion, embeddings, semantic retrieval, and provenance-aware context
+- **Data integrity:** Entity resolution, historical fact supersession, controlled persistence
+- **Integrations:** n8n automation gateway, browser/mobile client
+- **Testing:** 187 passing automated tests in the local development environment
+
+---
+
 ## 🚧 Project Status
 
 Snowball is under active development.
@@ -24,7 +36,7 @@ The current focus is deliberately narrow: grow outward from a small, tested core
 - Local Ollama model integration
 - Persistent episodic memory
 - Memory retrieval across process restarts
-- Unified episodic and semantic memory coordination
+- Unified episodic, semantic, and structured memory coordination
 - Semantic document ingestion and retrieval
 - PDF, TXT, Markdown, and DOCX knowledge ingestion
 - DOCX paragraph and table preservation
@@ -41,6 +53,13 @@ The current focus is deliberately narrow: grow outward from a small, tested core
 - Browser-based web/mobile chat client
 - Verified Android local-network access
 - Automated regression, knowledge, memory, and API contract tests
+- Persistent SQLite structured memory
+- Entity, fact, and relationship management
+- Fact and relationship supersession with historical records
+- LLM-assisted conversational memory extraction
+- Memory resolution against existing structured knowledge
+- Controlled conversational learning with persistence disabled by default
+- Structured-memory API operations
 
 ### Planned / future layers
 
@@ -64,46 +83,81 @@ These systems will be added around the stable core rather than folded into one m
 Snowball is being developed as a collection of small layers with clear responsibilities.
 
 ```text
-                ┌─────────────────────────┐
-                │    Web / Mobile Client  │
-                │    Future Bots / Apps   │
-                └────────────┬────────────┘
-                             │
-                         Webhook / HTTP
-                             │
-                ┌────────────▼────────────┐
-                │          n8n            │
-                │ Integration / Automation│
-                └────────────┬────────────┘
-                             │
-                         HTTP / JSON
-                             │
-                ┌────────────▼────────────┐
-                │        FastAPI          │
-                │        core/api/        │
-                └────────────┬────────────┘
-                             │
-                ┌────────────▼────────────┐
-                │    Snowball AI Core     │
-                │       core/ai/          │
-                └──────┬─────────┬────────┘
-                       │         │
-             ┌─────────▼───┐ ┌───▼─────────┐
-             │   Memory    │ │   Ollama    │
-             │   Manager   │ │   Models    │
-             └──────┬──────┘ └─────────────┘
-                    │
-          ┌─────────┴──────────┐
-          │                    │
-    ┌─────▼──────┐      ┌──────▼────────┐
-    │ Episodic   │      │   Semantic    │
-    │ JSONL      │      │   Knowledge   │
-    └────────────┘      └──────┬────────┘
-                               │
-                        ┌──────▼────────┐
-                        │ Embedded      │
-                        │ ChromaDB      │
-                        └───────────────┘
+                         ┌──────────────────────────────┐
+                         │     Web / Mobile Client      │
+                         │     Future Bots / Apps       │
+                         └──────────────┬───────────────┘
+                                        │
+                                   Webhook / HTTP
+                                        │
+                         ┌──────────────▼───────────────┐
+                         │             n8n              │
+                         │   Integration / Automation   │
+                         └──────────────┬───────────────┘
+                                        │
+                                    HTTP / JSON
+                                        │
+                         ┌──────────────▼───────────────┐
+                         │           FastAPI            │
+                         │          core/api/           │
+                         └──────────────┬───────────────┘
+                                        │
+                         ┌──────────────▼───────────────┐
+                         │       Snowball AI Core       │
+                         │           core/ai/           │
+                         └──────────────┬───────────────┘
+                                        │
+                         ┌──────────────▼───────────────┐
+                         │        MemoryManager         │
+                         │        core/memory/          │
+                         └──────────────┬───────────────┘
+                                        │
+               ┌────────────────────────┼────────────────────────┐
+               │                        │                        │
+               ▼                        ▼                        ▼
+    ┌────────────────────┐   ┌────────────────────┐   ┌────────────────────┐
+    │  Episodic Memory   │   │ Semantic Knowledge │   │ Structured Memory  │
+    │                    │   │                    │   │                    │
+    │       JSONL        │   │      ChromaDB      │   │       SQLite       │
+    │                    │   │                    │   │                    │
+    │ Conversation       │   │ Document chunks    │   │ Entities           │
+    │ history            │   │ Embeddings / RAG   │   │ Facts              │
+    │                    │   │ Provenance         │   │ Relationships      │
+    └────────────────────┘   └────────────────────┘   └────────────────────┘
+
+
+                     LOCAL AI / CONVERSATIONAL LEARNING
+
+                         ┌──────────────────────────────┐
+                         │         Ollama Models        │
+                         │                              │
+                         │  Conversation / Reasoning    │
+                         │  Embeddings / Extraction     │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │     Conversational Memory    │
+                         │          Extraction          │
+                         │                              │
+                         │  Entities / Facts / Relations│
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │      Memory Resolution       │
+                         │                              │
+                         │  Compare with existing       │
+                         │  structured knowledge        │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │     Controlled Persistence   │
+                         │                              │
+                         │  persist=False by default    │
+                         │  Optional SQLite writes      │
+                         └──────────────────────────────┘
 ```
 
 The working local-network chat path is:
@@ -159,10 +213,17 @@ Snowball/
 │   │   └── vector_store.py
 │   │
 │   ├── memory/
+│   │   ├── conversational_extractor.py
 │   │   ├── episodic.py
+│   │   ├── extraction.py
+│   │   ├── learning.py
 │   │   ├── manager.py
+│   │   ├── persistence.py
+│   │   ├── resolution.py
 │   │   ├── retrieval.py
-│   │   └── semantic.py
+│   │   ├── semantic.py
+│   │   ├── structured.py
+│   │   └── structured_store.py
 │   │
 │   └── system/
 │       ├── advanced_logger.py
@@ -210,7 +271,28 @@ Runtime memory, vector databases, caches, and other generated storage are intent
 
 Memory is one of Snowball's core architectural requirements.
 
-Snowball currently has two complementary persistent information systems.
+Snowball currently combines three complementary persistent information systems: JSONL-based episodic memory, ChromaDB-based semantic knowledge, and SQLite-based structured memory.
+
+### Structured Memory and Controlled Conversational Learning
+
+Snowball extends traditional conversational history and retrieval-augmented generation (RAG) with an LLM-assisted structured-memory pipeline.
+
+The system uses a locally hosted Ollama model to extract candidate entities, facts, and relationships from user messages. Extraction follows a constrained JSON schema designed to prioritize explicitly stated, durable information while avoiding unsupported inferences, hypothetical claims, and temporary conversational details.
+
+Extracted memories are processed through a separate resolution layer that compares them against existing structured knowledge.
+
+**The learning pipeline separates analysis from persistence:**
+
+1. **Extract:** Identify candidate entities, facts, and relationships.
+2. **Resolve:** Reconcile extracted information against existing structured memory.
+3. **Review or return:** Produce structured results without requiring a database write.
+4. **Persist when enabled:** Invoke the persistence layer only when the caller explicitly requests it.
+
+Persistence is disabled by default (`persist=False`), allowing callers to analyze proposed memory changes without automatically modifying stored information.
+
+This architecture provides a foundation for more sophisticated long-term memory management, including entity reconciliation, relationship tracking, provenance, and future authorization policies.
+
+**Current limitations:** Extraction accuracy depends on the local language model and schema validation. The persistence flag is controlled by the calling application; it does not independently implement end-user consent or comprehensive sensitive-information filtering.
 
 ### Episodic memory
 
@@ -269,7 +351,7 @@ When Snowball receives a question, it can semantically retrieve relevant documen
 core/memory/manager.py
 ```
 
-provides a unified coordination layer for episodic memory and semantic knowledge.
+provides a unified coordination layer for episodic memory, semantic knowledge, and structured entities, facts, and relationships.
 
 ---
 
@@ -446,6 +528,8 @@ The `/chat` endpoint passes the message through Snowball's internal chat API and
 
 It uses the same Snowball memory and knowledge systems rather than creating a separate AI identity for HTTP clients.
 
+Snowball also implements structured-memory API operations for working with entities, facts, relationships, and conversational learning. The available routes and request schemas are defined in core/api/server.py and exposed through FastAPI's interactive API documentation.
+
 ---
 
 ## ⚡ n8n Integration
@@ -579,11 +663,12 @@ Run the complete test suite from the project root:
 pytest -v
 ```
 
-As of **2026-09-23**, the complete suite contains:
+As of **2026-10-19**, the complete test suite passed locally
+with Ollama running:
 
-```text
-80 passed, 2 warnings
-```
+**187 tests passed.**
+
+Some tests require locally available Ollama models and embeddings.
 
 The current suite protects behavior including:
 
@@ -610,8 +695,13 @@ The current suite protects behavior including:
 - FastAPI service behavior
 - `/status` API contract
 - `/chat` HTTP contract
-
-The two current warnings are known dependency deprecation warnings involving Starlette/httpx TestClient behavior and the AnyIO BlockingPortal alias.
+- SQLite structured-memory persistence
+- Entity, fact, and relationship management
+- Fact and relationship supersession
+- Conversational memory extraction
+- Memory resolution
+- Controlled learning and persistence
+- Structured-memory API behavior
 
 The goal is to make Snowball easier to evolve without silently breaking functionality that already works.
 
@@ -643,24 +733,6 @@ n8n Gateway
 Web / Mobile Client
 ```
 
-and:
-
-```text
-Episodic Memory
-       │
-       ├─────────────┐
-       │             │
-       ▼             ▼
- Conversation    Semantic Knowledge
-                     │
-                     ▼
-                  ChromaDB
-                     │
-                     ▼
-               Provenance-aware
-                  Retrieval
-```
-
 Future integrations can now grow around these tested boundaries.
 
 Only components that make Snowball uniquely Snowball should require custom implementation.
@@ -681,7 +753,7 @@ They should be different interfaces to the same underlying system.
 
 Memory is not an optional chat feature.
 
-Persistent episodic context and semantic knowledge are part of Snowball's foundation.
+Persistent episodic memory, semantic knowledge, and structured memory form Snowball's foundational memory architecture.
 
 ### Models are replaceable
 
@@ -707,12 +779,11 @@ Build the part that makes it Snowball.
 
 ## 🗺️ Long-Term Vision
 
-Snowball's current episodic and semantic systems establish the beginning of a broader long-term memory architecture.
+Snowball's episodic, semantic, and structured memory systems establish the foundation for a broader long-term memory architecture.
 
 Future layers may include:
 
 - richer working memory
-- structured personal facts
 - project memory
 - preference memory
 - procedural memory

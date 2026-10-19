@@ -1,6 +1,6 @@
 # Snowball AI/OS Current State
 
-**State date:** 2026-09-23  
+**State date:** 2026-10-19
 **Document role:** Canonical current-state reference  
 **Authority:** `current_reference`  
 **Project:** Snowball AI/OS
@@ -44,10 +44,12 @@ Snowball currently consists of several cooperating layers:
 1. Python AI core
 2. Persistent episodic memory
 3. Semantic knowledge and retrieval
-4. Local Ollama models
-5. FastAPI HTTP interface
-6. n8n automation gateway
-7. Web/mobile chat client
+4. Persistent structured memory (entities, facts, and relationships)
+5. LLM-assisted conversational memory extraction and resolution
+6. Local Ollama models
+7. FastAPI HTTP interface
+8. n8n automation gateway
+9. Web/mobile chat client
 
 External systems are intended to communicate with Snowball through stable
 interfaces rather than becoming tightly coupled to the AI core.
@@ -109,14 +111,75 @@ Snowball has a unified memory coordination layer located in:
 
 `core/memory/manager.py`
 
-`MemoryManager` coordinates episodic conversational memory and semantic
-knowledge retrieval.
+`MemoryManager` coordinates episodic conversational memory, semantic knowledge retrieval, and structured memory operations.
 
-The conversational AI can retrieve both types of context for a user request
-and provide relevant information to the model before generating a response.
+The memory architecture combines conversational history, semantically retrieved document knowledge, and persistent structured information about entities, facts, and relationships.
 
-This allows Snowball to combine remembered interactions with information from
-ingested project and knowledge documents.
+Structured memory can be incorporated into the conversational context, allowing Snowball to use previously recorded information alongside relevant conversation history and retrieved documents.
+
+These capabilities are implemented through separate components with defined responsibilities, rather than a single monolithic memory system.
+
+---
+
+## Structured Memory and Controlled Learning
+
+Snowball includes a persistent structured-memory system alongside its existing episodic memory and semantic knowledge retrieval.
+
+### Structured Memory Storage
+
+The structured-memory domain model is implemented in `core/memory/structured.py`, with SQLite persistence handled by `core/memory/structured_store.py`.
+
+Structured memory represents information as:
+
+- **Entities:** Identifiable people, devices, projects, places, and other objects.
+- **Facts:** Properties associated with entities.
+- **Relationships:** Connections between entities.
+
+Facts and relationships include source metadata, timestamps, status information, and references to superseded records.
+
+The storage layer supports retrieving current facts and relationships, looking up entities, and superseding outdated information. Fact and relationship supersession operations use SQLite transactions to update historical records and insert replacements.
+
+### Conversational Memory Extraction
+
+`core/memory/conversational_extractor.py` uses a local Ollama language model to extract candidate structured memories from user messages.
+
+The extractor requests JSON containing entities, facts, and relationships. Its instructions prioritize explicitly stated, durable information and discourage treating questions, hypothetical situations, or attributed claims as established facts.
+
+Extraction output is parsed into structured domain objects before further processing.
+
+### Memory Resolution
+
+`core/memory/resolution.py` provides a separate resolution layer for reconciling extracted information with existing entities, facts, and relationships.
+
+Separating extraction from resolution allows the system to distinguish candidate information from its representation in persistent memory.
+
+### Controlled Persistence
+
+`core/memory/learning.py` coordinates the learning pipeline through `learn_from_message()`.
+
+The pipeline:
+
+1. Extracts candidate structured memories from a user message.
+2. Loads existing entities, current facts, and current relationships.
+3. Resolves the extracted information against existing memory.
+4. Returns the extraction and resolution results.
+5. Invokes persistence only when explicitly enabled by the caller.
+
+Persistence is disabled by default through `persist=False`.
+
+This provides a caller-controlled boundary between analyzing conversational information and modifying stored structured memory.
+
+The current implementation should not be interpreted as autonomous learning with independent user-consent enforcement. Extraction remains dependent on local model behavior, and persistence authorization is the responsibility of the calling application.
+
+### Relationship to Existing Memory Systems
+
+Snowball's memory architecture currently combines:
+
+- JSONL-based episodic conversational memory.
+- ChromaDB-based semantic document knowledge.
+- SQLite-based structured entities, facts, and relationships.
+
+These systems support different retrieval and persistence needs within the broader Snowball architecture.
 
 ---
 
@@ -267,7 +330,7 @@ The current API version identifies itself as:
 
 `0.1.0`
 
-Currently implemented endpoints include:
+Core endpoints include:
 
 ### `GET /health`
 
@@ -391,18 +454,13 @@ These remain known security debt.
 
 ## Automated Tests
 
-As of 2026-09-23, the complete automated test suite contains:
+As of 2026-10-19, the complete automated test suite was executed locally with Ollama running.
 
-**80 passing tests**
+**187 tests passed.**
 
-The current full-suite result is:
+The suite covers persistent conversational memory, semantic knowledge retrieval, structured-memory storage, memory extraction and resolution, controlled learning, and API behavior.
 
-`80 passed, 2 warnings`
-
-The two current warnings are known dependency deprecation warnings involving
-Starlette/httpx TestClient behavior and the AnyIO BlockingPortal alias.
-
-They are warnings rather than test failures.
+Some tests depend on locally available Ollama models and embeddings. A fully passing local test suite does not necessarily imply that the same tests will pass in an environment without those dependencies.
 
 The test suite currently protects behavior including:
 
@@ -426,6 +484,13 @@ The test suite currently protects behavior including:
 - operation when Ollama is unavailable
 - decision-making behavior
 - logging
+- Structured entities, facts, and relationships
+- SQLite persistence
+- Fact and relationship supersession
+- Conversational memory extraction
+- Memory resolution
+- Controlled learning and persistence
+- Structured-memory API behavior
 
 ---
 
@@ -461,6 +526,20 @@ may not have been realized.
 
 This behavior represents provenance-aware model reasoning over supplied context.
 It is not evidence of consciousness or subjective self-awareness.
+
+### Structured memory persistence
+
+Snowball can store structured entities, facts, and relationships using SQLite.
+
+The storage layer supports retrieving current information and superseding outdated facts or relationships while retaining historical records.
+
+### Controlled conversational learning
+
+Snowball can use a local Ollama model to extract candidate entities, facts, and relationships from conversational input.
+
+The extracted information is processed through a separate resolution layer that compares it with existing structured memory.
+
+The learning interface supports non-persistent analysis by default. Structured-memory persistence must be explicitly enabled by the calling application.
 
 ### API persistence
 
